@@ -51,7 +51,7 @@
         <DockPanel Grid.Row="3">
             <DataGrid  Height="300" 
                   Width="600" x:Name="dataSQL" 
-                  ItemsSource="{Binding DataTable}"
+                  ItemsSource="{Binding DataBaseTable}"
                   LoadingRow="DataGrid_LoadingRow"
                   AutoGenerateColumns="True" IsReadOnly="True">
                 <!--

@@ -8,50 +8,51 @@ namespace DataBase1WPF.ViewModels
 {
     public class MainVM : BasicVM
     {
-        private Handbook _handbooks = new();
-        private ObservableCollection<Handbook> _handbookTable = new();
+        //private Handbook _handbooks = new();
+        //private ObservableCollection<Handbook> _handbookTable = new();
         private DataTable _dataTable = new();
         private string _query;
         private string _errorMessage;
-        public ObservableCollection<Handbook> HandbookTable
-        {
-            get
-            {
-                //_banks = _banksDB.GetData();
-                /*string connectionString = "SERVER=localhost;DATABASE=rentapp;UID=root;PASSWORD=humanrazum0425;";
 
-                using (MySqlConnection connection = new(connectionString))
-                {
-                    connection.Open();
+        //public ObservableCollection<Handbook> HandbookTable
+        //{
+        //    get
+        //    {
+        //        //_banks = _banksDB.GetData();
+        //        /*string connectionString = "SERVER=localhost;DATABASE=rentapp;UID=root;PASSWORD=humanrazum0425;";
 
-                    MySqlCommand command = new("select * from banks", connection);
+        //        using (MySqlConnection connection = new(connectionString))
+        //        {
+        //            connection.Open();
 
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            // Заполняем коллекцию данных
-                            _banks.Add(new Banks
-                            {
-                                Id = reader.GetInt32("id"),
-                                Name = reader.GetString("name")
-                            });
-                        }
-                    }
+        //            MySqlCommand command = new("select * from banks", connection);
 
-                    connection.Close();
-                }*/
-                return _handbookTable;
-            }
+        //            using (MySqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    // Заполняем коллекцию данных
+        //                    _banks.Add(new Banks
+        //                    {
+        //                        Id = reader.GetInt32("id"),
+        //                        Name = reader.GetString("name")
+        //                    });
+        //                }
+        //            }
 
-            set
-            {
-                Set<ObservableCollection<Handbook>>(ref _handbookTable, value);
-            }
+        //            connection.Close();
+        //        }*/
+        //        return _handbookTable;
+        //    }
 
-        }
+        //    set
+        //    {
+        //        Set<ObservableCollection<Handbook>>(ref _handbookTable, value);
+        //    }
 
-        public DataTable DataTable 
+        //}
+
+        public DataTable DataBaseTable 
         {
             get { return _dataTable; }
             set
@@ -86,19 +87,23 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     string exception = string.Empty;
-                    DataTable table = _handbooks.GetData(Query, out exception); ;
+                    DataTable table = RentappSQLConnection.GetInstance().GetData(
+                        Query, out exception
+                    ); 
+                    //DataTable table = _handbooks.GetData(Query, out exception); ;
                     //ObservableCollection<Handbook> testingHandbook = _handbooks.GetData(Query, out exception);
                     
                     if (exception != string.Empty) 
                     {
-                        HandbookTable.Clear();
+                        DataBaseTable.Clear();
+                        //HandbookTable.Clear();
                         MessageBox.Show(exception);
                         
                     }
                     else 
                     {
                         //HandbookTable = testingHandbook;
-                        DataTable = table;
+                        DataBaseTable = table;
                     }
                     
                     

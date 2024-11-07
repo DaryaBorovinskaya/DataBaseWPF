@@ -9,63 +9,63 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models
 {
-    public class Handbook
-    {
-        private string _exceptionText;
-        public string Title { get; set; }
+    //public class Handbook
+    //{
+    //    private string _exceptionText;
+    //    public string Title { get; set; }
 
-        public string GetExceptionText()
-        {
-            return _exceptionText;
-        }
+    //    public string GetExceptionText()
+    //    {
+    //        return _exceptionText;
+    //    }
 
-        public DataTable GetData(string query, out string exception)
-        //public ObservableCollection<Handbook> GetData(string query, out string exception)
-        {
+    //    public DataTable GetData(string query, out string exception)
+    //    //public ObservableCollection<Handbook> GetData(string query, out string exception)
+    //    {
             
-            RentappSQLConnection db_connection = RentappSQLConnection.GetInstance();
+    //        RentappSQLConnection db_connection = RentappSQLConnection.GetInstance();
 
-            MySqlConnection connection = db_connection.CreateConnection();
+    //        MySqlConnection connection = db_connection.CreateConnection();
             
-            connection.Open();
+    //        connection.Open();
 
-            MySqlCommand command = new(query, connection);
+    //        MySqlCommand command = new(query, connection);
 
-            MySqlDataReader reader;
-            try
-            {
-                reader = command.ExecuteReader();
-            }
+    //        MySqlDataReader reader;
+    //        try
+    //        {
+    //            reader = command.ExecuteReader();
+    //        }
 
-            catch (MySqlException ex) 
-            {
-                exception = ex.Message;
-                connection.Close();
-                return null;
-                /*command.CommandText = "select title from banks";
-                reader = command.ExecuteReader();*/
-            }
+    //        catch (MySqlException ex) 
+    //        {
+    //            exception = ex.Message;
+    //            connection.Close();
+    //            return null;
+    //            /*command.CommandText = "select title from banks";
+    //            reader = command.ExecuteReader();*/
+    //        }
             
                 
             
-            ObservableCollection<Handbook> _handbooks = new();
+    //        ObservableCollection<Handbook> _handbooks = new();
 
-            //while (reader.Read())
-            //{
-            //    _handbooks.Add(new Handbook
-            //    {
-            //        //Id = reader.GetInt32("id"),
-            //        Title = reader.GetString("title")
-            //    });
+    //        //while (reader.Read())
+    //        //{
+    //        //    _handbooks.Add(new Handbook
+    //        //    {
+    //        //        //Id = reader.GetInt32("id"),
+    //        //        Title = reader.GetString("title")
+    //        //    });
                 
-            //}
+    //        //}
             
-            exception = string.Empty;
-            DataTable dt = new DataTable();
-            dt.Load(reader);
-            connection.Close();
-            return dt;
-            //return _handbooks;
-        }
-    }
+    //        exception = string.Empty;
+    //        DataTable dt = new DataTable();
+    //        dt.Load(reader);
+    //        connection.Close();
+    //        return dt;
+    //        //return _handbooks;
+    //    }
+    //}
 }
