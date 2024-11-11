@@ -11,7 +11,7 @@ namespace DataBase1WPF.Models
 { 
     public class RentappSQLConnection
     {
-        private readonly string _connectionString = "SERVER=localhost;DATABASE=rentapp;UID=root;PASSWORD=humanrazum0425;";
+        private readonly string _connectionString = "SERVER=localhost;DATABASE=rentapp;UID=root;PASSWORD=root;";
         private readonly MySqlConnection _connection;
 
         private static RentappSQLConnection _instance;
