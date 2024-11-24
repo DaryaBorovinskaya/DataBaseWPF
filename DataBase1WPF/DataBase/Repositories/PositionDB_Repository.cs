@@ -31,7 +31,7 @@ namespace DataBase1WPF.DataBase.Repositories
 
         public void Update(IPositionDB entity)
         {
-            _query = $"update positions set name={entity.Name}, salary={entity.Salary} " +
+            _query = $"update positions set name='{entity.Name}', salary={entity.Salary} " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
