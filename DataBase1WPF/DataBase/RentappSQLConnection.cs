@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase1WPF.Models
+namespace DataBase1WPF.DataBase
 { 
     public class RentappSQLConnection
     {
@@ -28,7 +28,7 @@ namespace DataBase1WPF.Models
             return _instance;
         }
 
-        public DataTable GetData(string query, out string exception)
+        public DataTable ExecuteRequest(string query, ref string exception)
         {
             _connection.Open();
 
@@ -53,6 +53,7 @@ namespace DataBase1WPF.Models
             _connection.Close();
             return dataTable;
         }
+
 
     }
 }

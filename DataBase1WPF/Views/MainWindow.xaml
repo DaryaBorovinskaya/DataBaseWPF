@@ -49,7 +49,7 @@
         </DockPanel>
         
         <DockPanel Grid.Row="3">
-            <DataGrid  Height="300" 
+            <DataGrid  Height="300" ColumnWidth="*"
                   Width="600" x:Name="dataSQL" 
                   ItemsSource="{Binding DataBaseTable}"
                   LoadingRow="DataGrid_LoadingRow"

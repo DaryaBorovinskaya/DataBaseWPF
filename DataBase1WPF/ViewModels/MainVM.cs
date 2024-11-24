@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Input;
+using DataBase1WPF.DataBase;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -87,8 +88,8 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     string exception = string.Empty;
-                    DataTable table = RentappSQLConnection.GetInstance().GetData(
-                        Query, out exception
+                    DataTable table = RentappSQLConnection.GetInstance().ExecuteRequest(
+                        Query, ref exception
                     ); 
                     //DataTable table = _handbooks.GetData(Query, out exception); ;
                     //ObservableCollection<Handbook> testingHandbook = _handbooks.GetData(Query, out exception);
@@ -104,6 +105,7 @@ namespace DataBase1WPF.ViewModels
                     {
                         //HandbookTable = testingHandbook;
                         DataBaseTable = table;
+                        
                     }
                     
                     
