@@ -16,7 +16,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Create(IFineDB entity)
         {
             _query = $"insert into fine " +
-                     $"(amount)" +
+                     $"(amount) " +
                      $"values ({entity.Amount})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -38,7 +38,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Update(IFineDB entity)
         {
             _query = $"update fine set " +
-                     $"amount={entity.Amount}" +
+                     $"amount={entity.Amount} " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

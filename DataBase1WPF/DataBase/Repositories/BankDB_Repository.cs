@@ -38,7 +38,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Update(IHandbookDB entity)
         {
             _query = $"update banks set " +
-                     $"title='{entity.Title}'" +
+                     $"title='{entity.Title}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

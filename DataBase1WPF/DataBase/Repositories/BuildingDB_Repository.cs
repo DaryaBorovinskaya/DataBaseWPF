@@ -49,7 +49,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"district_id={entity.DistrictId}, street_id={entity.StreetId}, " +
                      $"house_number='{entity.HouseNumber}', number_of_floors={entity.NumberOfFloors}, " +
                      $"count_rental_premises={entity.CountRentalPremises}, " +
-                     $"commandant_phone_number='{entity.CommandantPhoneNumber}', " +
+                     $"commandant_phone_number='{entity.CommandantPhoneNumber}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

@@ -46,7 +46,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
                      $"patronymic='{entity.Patronymic}', phone_number='{entity.PhoneNumber}', " +
                      $"passport_series='{entity.PassportSeries}', passport_number='{entity.PassportNumber}', " +
-                     $"date_of_issue={entity.DateOfIssue}, issued_by='{entity.IssuedBy}'" +
+                     $"date_of_issue={entity.DateOfIssue}, issued_by='{entity.IssuedBy}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

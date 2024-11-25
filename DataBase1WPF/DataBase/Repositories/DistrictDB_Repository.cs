@@ -15,7 +15,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Create(IHandbookDB entity)
         {
             _query = $"insert into districts " +
-                     $"(title)" +
+                     $"(title) " +
                      $"values ('{entity.Title}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -37,7 +37,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Update(IHandbookDB entity)
         {
             _query = $"update districts set " +
-                     $"title='{entity.Title}'" +
+                     $"title='{entity.Title}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

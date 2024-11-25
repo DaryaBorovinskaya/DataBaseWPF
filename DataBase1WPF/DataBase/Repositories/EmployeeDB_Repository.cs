@@ -51,7 +51,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"district_id={entity.DistrictId}, street_id={entity.StreetId}, " +
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
                      $"patronymic='{entity.Patronymic}', date_of_birth={entity.DateOfBirth}, " +
-                     $"house_number='{entity.HouseNumber}'" +
+                     $"house_number='{entity.HouseNumber}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
