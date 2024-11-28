@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Handbook
 {
-    interface IHandbookDB
+    public interface IHandbookDB
     {
         public uint Id { get; set; }
 

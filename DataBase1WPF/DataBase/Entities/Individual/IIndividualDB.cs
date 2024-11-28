@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Individual
 {
-    interface IIndividualDB
+    public interface IIndividualDB
     {
         public uint Id { get; set; }
 

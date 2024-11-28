@@ -21,8 +21,8 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"begin_of_action, end_of_action, additional_conditions, fine) " +
                      $"values ({entity.IndividualId}, {entity.JuridicalPersonId}," +
                      $"{entity.EmployeeId}, {entity.PaymentFrequencyId}," +
-                     $"'{entity.RegistrationNumber}', {entity.BeginOfAction}, " +
-                     $"{entity.EndOfAction}, '{entity.AdditionalConditions}'," +
+                     $"'{entity.RegistrationNumber}', '{entity.BeginOfAction.ToString("yyyy-MM-dd")}', " +
+                     $"'{entity.EndOfAction.ToString("yyyy-MM-dd")}', '{entity.AdditionalConditions}'," +
                      $"{entity.Fine})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -54,8 +54,8 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"update contracts set " +
                      $"individual_id={entity.IndividualId}, juridical_person_id={entity.JuridicalPersonId}," +
                      $"employee_id={entity.EmployeeId}, payment_frequency_id={entity.PaymentFrequencyId}," +
-                     $"registration_number='{entity.RegistrationNumber}', begin_of_action={entity.BeginOfAction}," +
-                     $"end_of_action={entity.EndOfAction}, additional_conditions='{entity.AdditionalConditions}'," +
+                     $"registration_number='{entity.RegistrationNumber}', begin_of_action='{entity.BeginOfAction.ToString("yyyy-MM-dd")}'," +
+                     $"end_of_action='{entity.EndOfAction.ToString("yyyy-MM-dd")}', additional_conditions='{entity.AdditionalConditions}'," +
                      $"fine={entity.Fine} " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);

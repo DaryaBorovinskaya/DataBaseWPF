@@ -20,7 +20,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"date_of_birth, house_number) " +
                      $"values ({entity.DistrictId}, {entity.StreetId}," +
                      $" '{entity.Surname}', '{entity.Name}'," +
-                     $"'{entity.Patronymic}', {entity.DateOfBirth}, " +
+                     $"'{entity.Patronymic}', '{entity.DateOfBirth.ToString("yyyy-MM-dd")}', " +
                      $"'{entity.HouseNumber}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -50,7 +50,7 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"update employees set " +
                      $"district_id={entity.DistrictId}, street_id={entity.StreetId}, " +
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
-                     $"patronymic='{entity.Patronymic}', date_of_birth={entity.DateOfBirth}, " +
+                     $"patronymic='{entity.Patronymic}', date_of_birth='{entity.DateOfBirth.ToString("yyyy-MM-dd")}', " +
                      $"house_number='{entity.HouseNumber}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);

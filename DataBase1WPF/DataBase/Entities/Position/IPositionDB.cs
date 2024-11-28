@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Position
 {
-    interface IPositionDB
+    public interface IPositionDB
     {
         uint Id { get; set; }
 

@@ -19,7 +19,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"(premise_id, rental_purpose_id, contract_id, begin_of_rent, " +
                      $"end_of_rent, rental_payment) " +
                      $"values ({entity.PremiseID}, {entity.RentalPurposeId}," +
-                     $"{entity.ContractId}, {entity.BeginOfRent}, {entity.EndOfRent}," +
+                     $"{entity.ContractId}, '{entity.BeginOfRent.ToString("yyyy-MM-dd")}', '{entity.EndOfRent.ToString("yyyy-MM-dd")}'," +
                      $"{entity.RentalPayment})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -47,8 +47,8 @@ namespace DataBase1WPF.DataBase.Repositories
         {
             _query = $"update orders set " +
                      $"premise_id={entity.PremiseID}, rental_purpose_id={entity.RentalPurposeId}, " +
-                     $"contract_id={entity.ContractId}, begin_of_rent={entity.BeginOfRent}, " +
-                     $"end_of_rent={entity.EndOfRent}, rental_payment={entity.RentalPayment} " +
+                     $"contract_id={entity.ContractId}, begin_of_rent='{entity.BeginOfRent.ToString("yyyy-MM-dd")}', " +
+                     $"end_of_rent='{entity.EndOfRent.ToString("yyyy-MM-dd")}', rental_payment={entity.RentalPayment} " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
