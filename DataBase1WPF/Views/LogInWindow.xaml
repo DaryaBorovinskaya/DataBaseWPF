@@ -122,7 +122,7 @@
                     <Button  HorizontalAlignment="Left" Width="100" Height="30"
                     Margin="100 40 0 0" Template="{StaticResource NoMouseOverButtonTemplate}"
                     Background="#f0f0f0" FontSize="20"
-                    Click="Button_Click">
+                    Command="{Binding ClickLogIn}">
                         Вход
                     </Button>
                     <Button Command="{Binding ClickCancellation}" HorizontalAlignment="Right" Width="100" Height="30"

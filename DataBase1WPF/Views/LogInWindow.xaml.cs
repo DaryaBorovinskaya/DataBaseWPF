@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using DataBase1WPF.ViewModels;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,6 +18,11 @@ namespace DataBase1WPF.Views
         public LogInWindow()
         {
             InitializeComponent();
+
+            if (DataContext is LogInVM loginVM)
+            {
+                loginVM.OnLogInSuccess += LogInSuccess;
+            }
         }
 
        
@@ -55,13 +61,14 @@ namespace DataBase1WPF.Views
         {
             if (this.DataContext != null)
             { 
-                ((dynamic)this.DataContext).Password = ((PasswordBox)sender).SecurePassword; 
+                ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password; 
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void LogInSuccess()
         {
-            SQLqueryWindow sqlQueryWindow = new ();
+            SQLqueryWindow sqlQueryWindow = new();
             sqlQueryWindow.Show();
             this.Close();
         }

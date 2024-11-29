@@ -68,7 +68,7 @@
                     Выполнить</Button>
             </DockPanel>
         </DockPanel>
-        <DockPanel Grid.Row="2" >
+        <DockPanel Grid.Row="2" Margin="0 15 0 0">
             <TextBlock HorizontalAlignment="Center" FontSize="20" Height="30"
                        Text="Полученные данные"/>
         </DockPanel>
@@ -78,7 +78,7 @@
                   Width="700" x:Name="dataSQL" 
                   ItemsSource="{Binding DataBaseTable}"
                   LoadingRow="DataGrid_LoadingRow"
-                  AutoGenerateColumns="True" IsReadOnly="True">
+                  AutoGenerateColumns="True" IsReadOnly="True" VerticalAlignment="Center">
                 <!--
     <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width="Auto" IsReadOnly="True"  Binding="{Binding Id}" />

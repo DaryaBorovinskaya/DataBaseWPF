@@ -1,9 +1,13 @@
-﻿using System;
+﻿using DataBase1WPF.Models.Encryptors;
+using DataBase1WPF.Models.Services.LogIn;
+using DataBase1WPF.Models.Services.Registration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
@@ -11,18 +15,26 @@ namespace DataBase1WPF.ViewModels
     public class LogInVM : BasicVM
     {
         private string _name;
-        private SecureString _password;
+        private string _password;
+        //private SecureString _password;
+
+        public Action OnLogInSuccess;
         public string Name 
         {
             get { return _name; }
             set { Set<string> (ref _name, value); }
         }
 
-        public SecureString Password
+        public string Password
+        {
+            private get { return _password; }
+            set { Set<string>(ref _password, value); }
+        }
+        /*public SecureString Password
         {
             private get { return _password; }
             set { Set<SecureString>(ref _password, value); }
-        }
+        }*/
 
 
         public ICommand ClickCancellation
@@ -37,6 +49,24 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        public ICommand ClickLogIn
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    LogInService logIn = new(new Encryptor());
+
+                    if (logIn.LogIn(Name, Password))
+                    {
+                        OnLogInSuccess?.Invoke();
+                    }
+                    else
+                        MessageBox.Show("Ошибка входа: неверный логин или пароль");
+
+                });
+            }
+        }
 
     }
 }
