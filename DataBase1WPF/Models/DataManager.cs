@@ -67,7 +67,6 @@ namespace DataBase1WPF.Models
             IRepositoryDB<IHandbookDB> typeOfFinishingDB_Repository, 
             IRepositoryDB<IWorkRecordCardDB> workRecordCardDB_Repository)
         {
-            CurrentUser = currentUser;
             UserDB_Repository = userDB_Repository;
             MenuElemDB_Repository = menuElemDB_Repository;
             UserAbilitiesDB_Repository = userAbilitiesDB_Repository;
