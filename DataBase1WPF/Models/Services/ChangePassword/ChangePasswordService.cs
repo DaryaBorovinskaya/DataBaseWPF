@@ -26,7 +26,7 @@ namespace DataBase1WPF.Models.Services.ChangePassword
             }
             else
             {
-                throw new ArgumentException("Неверный текущий пароль");
+                throw new ArgumentException("Неверный прежний пароль");
             }
 
         }

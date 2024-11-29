@@ -22,7 +22,10 @@ namespace DataBase1WPF.Models.Services.LogIn
             foreach (IUserDB userDB in usersDB)
             {
                 if (userDB.Login == login && userDB.Password == _encryptor.Encrypt(password))
+                {
+                    DataManager.GetInstance().CurrentUser = userDB;
                     return true;
+                }
             }
 
             return false;

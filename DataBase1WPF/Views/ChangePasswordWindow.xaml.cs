@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Timer = System.Windows.Threading.DispatcherTimer;
 
@@ -9,7 +10,7 @@ namespace DataBase1WPF.Views
     /// <summary>
     /// Логика взаимодействия для ChangePassword.xaml
     /// </summary>
-    public partial class ChangePassword : Window
+    public partial class ChangePasswordWindow : Window
     {
         Timer timerForWindow = new();
         Assembly assembly = Assembly.GetExecutingAssembly();
@@ -23,7 +24,7 @@ namespace DataBase1WPF.Views
 
             textBlockVersion.Text = "Версия" + assembly.GetName().Version.ToString();
         }
-        public ChangePassword()
+        public ChangePasswordWindow()
         {
             InitializeComponent();
         }
@@ -48,17 +49,26 @@ namespace DataBase1WPF.Views
 
         private void textBoxOldPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (this.DataContext != null)
+            {
+                ((dynamic)this.DataContext).OldPassword = ((PasswordBox)sender).Password;
+            }
         }
 
         private void textBoxNewPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (this.DataContext != null)
+            {
+                ((dynamic)this.DataContext).NewPassword = ((PasswordBox)sender).Password;
+            }
         }
 
         private void textBoxConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (this.DataContext != null)
+            {
+                ((dynamic)this.DataContext).RepeatedPassword = ((PasswordBox)sender).Password;
+            }
         }
     }
 }

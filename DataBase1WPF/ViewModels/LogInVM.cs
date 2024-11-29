@@ -16,7 +16,6 @@ namespace DataBase1WPF.ViewModels
     {
         private string _name;
         private string _password;
-        //private SecureString _password;
 
         public Action OnLogInSuccess;
         public string Name 
@@ -30,11 +29,6 @@ namespace DataBase1WPF.ViewModels
             private get { return _password; }
             set { Set<string>(ref _password, value); }
         }
-        /*public SecureString Password
-        {
-            private get { return _password; }
-            set { Set<SecureString>(ref _password, value); }
-        }*/
 
 
         public ICommand ClickCancellation
@@ -57,13 +51,14 @@ namespace DataBase1WPF.ViewModels
                 {
                     LogInService logIn = new(new Encryptor());
 
+                    //OnLogInSuccess?.Invoke();
                     if (logIn.LogIn(Name, Password))
                     {
                         OnLogInSuccess?.Invoke();
                     }
                     else
                         MessageBox.Show("Ошибка входа: неверный логин или пароль");
-
+                    
                 });
             }
         }

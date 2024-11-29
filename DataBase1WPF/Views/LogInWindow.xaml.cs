@@ -68,8 +68,8 @@ namespace DataBase1WPF.Views
         
         private void LogInSuccess()
         {
-            SQLqueryWindow sqlQueryWindow = new();
-            sqlQueryWindow.Show();
+            MainWindow window = new();
+            window.Show();
             this.Close();
         }
     }
