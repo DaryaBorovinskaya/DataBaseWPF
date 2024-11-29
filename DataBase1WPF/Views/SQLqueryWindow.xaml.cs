@@ -21,9 +21,9 @@ namespace DataBase1WPF.Views
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SQLqueryWindow : Window
     {
-        public MainWindow()
+        public SQLqueryWindow()
         {
             InitializeComponent();
 

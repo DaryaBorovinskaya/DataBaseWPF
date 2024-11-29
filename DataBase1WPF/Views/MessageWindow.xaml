@@ -9,11 +9,10 @@
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
     <Window.DataContext>
-        <viewmodels:MainVM/>
+        <viewmodels:SQLqueryVM/>
     </Window.DataContext>
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock HorizontalAlignment="Center" FontSize="20" Height="30"
-                       Text="{Binding ErrorMessage}"/>
+        <TextBlock HorizontalAlignment="Center" FontSize="20" Height="30"/>
     </StackPanel>
 </Window>

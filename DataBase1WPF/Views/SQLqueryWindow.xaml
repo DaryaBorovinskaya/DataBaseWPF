@@ -1,18 +1,41 @@
-﻿<Window x:Class="DataBase1WPF.Views.MainWindow"
+﻿<Window x:Class="DataBase1WPF.Views.SQLqueryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DataBase1WPF.Views" xmlns:viewmodels="clr-namespace:DataBase1WPF.ViewModels"
+        xmlns:local="clr-namespace:DataBase1WPF.Views" 
+        xmlns:viewmodels="clr-namespace:DataBase1WPF.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Окно запросов SQL" Height="450" Width="800"
         WindowStartupLocation="CenterScreen" Closing="Window_Closing">
 
     <Window.DataContext>
-        <viewmodels:MainVM/>
+        <viewmodels:SQLqueryVM/>
     </Window.DataContext>
 
-    <Grid>
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
+         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+  BorderBrush="{TemplateBinding BorderBrush}"  
+  BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"  
+     Value="False">
+                    <Setter Property="Background"  
+      Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"  
+      Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid Background="#b9d1ea">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -39,7 +62,9 @@
                     Margin="30 0 0 0"
                     Width="100"
                     Height="30" 
-                    Command="{Binding ClickExecuteQuery}">
+                    Background="#f0f0f0"
+                    Command="{Binding ClickExecuteQuery}"
+                    Template="{StaticResource NoMouseOverButtonTemplate}">
                     Выполнить</Button>
             </DockPanel>
         </DockPanel>
@@ -48,9 +73,9 @@
                        Text="Полученные данные"/>
         </DockPanel>
         
-        <DockPanel Grid.Row="3">
-            <DataGrid  Height="300" ColumnWidth="*"
-                  Width="600" x:Name="dataSQL" 
+        <DockPanel Grid.Row="3" >
+            <DataGrid  Height="250" ColumnWidth="*"
+                  Width="700" x:Name="dataSQL" 
                   ItemsSource="{Binding DataBaseTable}"
                   LoadingRow="DataGrid_LoadingRow"
                   AutoGenerateColumns="True" IsReadOnly="True">
