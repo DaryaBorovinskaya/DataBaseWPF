@@ -28,4 +28,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Services\Registration\" />
+    <Folder Include="Models\Services\ChangePassword\" />
+    <Folder Include="Models\Services\LogIn\" />
+  </ItemGroup>
+
 </Project>

@@ -17,7 +17,6 @@ namespace DataBase1WPF.Views.Constructors
         private List<IMenuElemDB> _menuElems;
         private IList<IUserAbilitiesDB> _userAbilities;
 
-
         private void GetUserAbilities()
         {
             IList<IUserAbilitiesDB> allUserAbilities = 
@@ -78,7 +77,6 @@ namespace DataBase1WPF.Views.Constructors
                 AddMenuItems(menuItem, menuElem.Id);
             }
         }
-
 
         public MenuConstructor()
         {
