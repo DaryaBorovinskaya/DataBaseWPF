@@ -19,10 +19,10 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         public string RegistrationNumber { get; set; }
 
         [DisplayName("Начало действия")]
-        public DateOnly BeginOfAction {  get; set; }
+        public DateTime BeginOfAction {  get; set; }
 
         [DisplayName("Конец действия")]
-        public DateOnly EndOfAction { get; set; }
+        public DateTime EndOfAction { get; set; }
 
         [DisplayName("Доп. условия")]
         public string AdditionalConditions {  get; set; }

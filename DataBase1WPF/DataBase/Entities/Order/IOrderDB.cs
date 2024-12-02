@@ -15,10 +15,10 @@ namespace DataBase1WPF.DataBase.Entities.Order
         public uint ContractId { get; set; }
 
         [DisplayName("Начало срока аренды")]
-        public DateOnly BeginOfRent { get; set; }
+        public DateTime BeginOfRent { get; set; }
 
         [DisplayName("Конец срока аренды")]
-        public DateOnly EndOfRent { get; set; }
+        public DateTime EndOfRent { get; set; }
 
         [DisplayName("Арендная плата")]
         public float RentalPayment { get; set; }

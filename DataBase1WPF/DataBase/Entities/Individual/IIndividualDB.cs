@@ -30,7 +30,7 @@ namespace DataBase1WPF.DataBase.Entities.Individual
         public string PassportNumber { get; set; }
 
         [DisplayName("Когда выдан")]
-        public DateOnly DateOfIssue { get; set; }
+        public DateTime DateOfIssue { get; set; }
 
         [DisplayName("Кем выдан")]
         public string IssuedBy { get; set; }

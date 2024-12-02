@@ -19,12 +19,12 @@ namespace DataBase1WPF.DataBase.Entities.Employee
 
         public string? Patronymic { get; set; }
 
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public string HouseNumber { get; set; }
 
         public EmployeeDB(uint id, uint districtId, uint streetId, string surname, string name, 
-            string? patronymic, DateOnly dateOfBirth, string houseNumber)
+            string? patronymic, DateTime dateOfBirth, string houseNumber)
         {
             Id = id;
             DistrictId = districtId;
@@ -37,7 +37,7 @@ namespace DataBase1WPF.DataBase.Entities.Employee
         }
 
         public EmployeeDB(uint districtId, uint streetId, string surname, string name, 
-            string? patronymic, DateOnly dateOfBirth, string houseNumber)
+            string? patronymic, DateTime dateOfBirth, string houseNumber)
         {
             DistrictId = districtId;
             StreetId = streetId;

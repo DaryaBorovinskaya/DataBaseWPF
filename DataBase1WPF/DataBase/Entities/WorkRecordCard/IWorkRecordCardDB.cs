@@ -17,7 +17,7 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
         public string OrderNumber { get; set; }
 
         [DisplayName("Дата приказа")]
-        public DateOnly OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
         [DisplayName("Причина записи")]
         public string ReasonOfRecording { get; set; }

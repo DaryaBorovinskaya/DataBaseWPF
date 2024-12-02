@@ -14,12 +14,12 @@ namespace DataBase1WPF.DataBase.Entities.Payment
         public uint JuridicalPersonId { get; set; }
         public uint ContractId { get; set; }
 
-        public DateOnly DateOfPayment { get; set; }
+        public DateTime DateOfPayment { get; set; }
 
         public float AmountOfPayment { get; set; }
 
         public PaymentDB(uint id, uint individualId, uint juridicalPersonId, 
-            uint contractId, DateOnly dateOfPayment, float amountOfPayment)
+            uint contractId, DateTime dateOfPayment, float amountOfPayment)
         {
             Id = id;
             IndividualId = individualId;
@@ -30,7 +30,7 @@ namespace DataBase1WPF.DataBase.Entities.Payment
         }
 
         public PaymentDB(uint individualId, uint juridicalPersonId, uint contractId, 
-            DateOnly dateOfPayment, float amountOfPayment)
+            DateTime dateOfPayment, float amountOfPayment)
         {
             IndividualId = individualId;
             JuridicalPersonId = juridicalPersonId;

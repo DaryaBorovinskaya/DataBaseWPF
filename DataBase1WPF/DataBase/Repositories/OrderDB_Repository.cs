@@ -35,8 +35,8 @@ namespace DataBase1WPF.DataBase.Repositories
                     uint.Parse(row[1].ToString()),
                     uint.Parse(row[2].ToString()),
                     uint.Parse(row[3].ToString()),
-                    DateOnly.Parse(row[4].ToString()),
-                    DateOnly.Parse(row[5].ToString()),
+                    DateTime.Parse(row[4].ToString()),
+                    DateTime.Parse(row[5].ToString()),
                     float.Parse(row[6].ToString())
                 ));
             }

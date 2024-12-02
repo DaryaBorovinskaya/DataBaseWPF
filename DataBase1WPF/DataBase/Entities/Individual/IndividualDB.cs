@@ -15,10 +15,10 @@ namespace DataBase1WPF.DataBase.Entities.Individual
         public string PhoneNumber { get; set; }
         public string PassportSeries { get; set; }
         public string PassportNumber { get; set; }
-        public DateOnly DateOfIssue { get; set; }
+        public DateTime DateOfIssue { get; set; }
         public string IssuedBy { get; set; }
 
-        public IndividualDB(uint id, string surname, string name, string? patronymic, string phoneNumber, string passportSeries, string passportNumber, DateOnly dateOfIssue, string issuedBy)
+        public IndividualDB(uint id, string surname, string name, string? patronymic, string phoneNumber, string passportSeries, string passportNumber, DateTime dateOfIssue, string issuedBy)
         {
             Id = id;
             Surname = surname;
@@ -31,7 +31,7 @@ namespace DataBase1WPF.DataBase.Entities.Individual
             IssuedBy = issuedBy;
         }
 
-        public IndividualDB(string surname, string name, string? patronymic, string phoneNumber, string passportSeries, string passportNumber, DateOnly dateOfIssue, string issuedBy)
+        public IndividualDB(string surname, string name, string? patronymic, string phoneNumber, string passportSeries, string passportNumber, DateTime dateOfIssue, string issuedBy)
         {
             Surname = surname;
             Name = name;

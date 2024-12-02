@@ -15,7 +15,7 @@ namespace DataBase1WPF.DataBase.Entities.Payment
         public uint ContractId { get; set; }
 
         [DisplayName("Дата платежа")]
-        public DateOnly DateOfPayment { get; set; }
+        public DateTime DateOfPayment { get; set; }
 
         [DisplayName("Сумма платежа")]
         public float AmountOfPayment { get; set; }

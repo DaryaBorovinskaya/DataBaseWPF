@@ -17,9 +17,9 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public string RegistrationNumber { get; set; }
 
-        public DateOnly BeginOfAction { get; set; }
+        public DateTime BeginOfAction { get; set; }
 
-        public DateOnly EndOfAction { get; set; }
+        public DateTime EndOfAction { get; set; }
 
         public string AdditionalConditions { get; set; }
 
@@ -27,7 +27,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public ContractDB(uint id, uint individualId, uint juridicalPersonId, 
             uint employeeId, uint paymentFrequencyId, string registrationNumber, 
-            DateOnly beginOfAction, DateOnly endOfAction, string additionalConditions, 
+            DateTime beginOfAction, DateTime endOfAction, string additionalConditions, 
             float fine)
         {
             Id = id;
@@ -44,7 +44,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public ContractDB(uint individualId, uint juridicalPersonId,
             uint employeeId, uint paymentFrequencyId, string registrationNumber,
-            DateOnly beginOfAction, DateOnly endOfAction, string additionalConditions,
+            DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
             float fine)
         {
             IndividualId = individualId;

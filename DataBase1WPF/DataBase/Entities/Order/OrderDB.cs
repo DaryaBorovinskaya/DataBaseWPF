@@ -14,14 +14,14 @@ namespace DataBase1WPF.DataBase.Entities.Order
         public uint RentalPurposeId { get; set; }
         public uint ContractId { get; set; }
 
-        public DateOnly BeginOfRent { get; set; }
+        public DateTime BeginOfRent { get; set; }
 
-        public DateOnly EndOfRent { get; set; }
+        public DateTime EndOfRent { get; set; }
 
         public float RentalPayment { get; set; }
 
         public OrderDB(uint id, uint premiseID, uint rentalPurposeId, 
-            uint contractId, DateOnly beginOfRent, DateOnly endOfRent, 
+            uint contractId, DateTime beginOfRent, DateTime endOfRent, 
             float rentalPayment)
         {
             Id = id;
@@ -34,7 +34,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
         }
 
         public OrderDB(uint premiseID, uint rentalPurposeId,
-            uint contractId, DateOnly beginOfRent, DateOnly endOfRent,
+            uint contractId, DateTime beginOfRent, DateTime endOfRent,
             float rentalPayment)
         {
             PremiseID = premiseID;
