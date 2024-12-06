@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:DataBase1WPF.ViewModels"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Окно регистрации" Height="400" Width="500">
+        Title="Окно регистрации" Height="300" Width="500">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -49,35 +49,36 @@ BorderThickness="{TemplateBinding BorderThickness}">
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock  Grid.Row="0"
-                       FontSize="30" 
-                       FontWeight="Medium" HorizontalAlignment="Center">Регистрация пользователей
+                       FontSize="20" 
+                       FontWeight="Medium" HorizontalAlignment="Center"
+                    VerticalAlignment="Center">Регистрация пользователей
         </TextBlock>
         <TextBlock Grid.Row="1" 
-            FontSize="18" 
+            FontSize="16" 
                FontWeight="Medium"
                HorizontalAlignment="Center" VerticalAlignment="Center">Имя пользователя
         </TextBlock>
-        <TextBox Grid.Row="2" Height="30" Width="300" FontSize="20"
+        <TextBox Grid.Row="2" Height="30" Width="300" FontSize="16"
                  Text="{Binding Name}"></TextBox>
         <TextBlock Grid.Row="3"
-            FontSize="18" 
+            FontSize="16" 
             FontWeight="Medium"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             >Пароль
         </TextBlock>
-        <PasswordBox Grid.Row="4" Height="30" Width="300" FontSize="20"
+        <PasswordBox Grid.Row="4" Height="30" Width="300" FontSize="16"
                  PasswordChanged="textBoxPassword_PasswordChanged"></PasswordBox>
         <TextBlock Grid.Row="5"
-            FontSize="18" 
+            FontSize="16" 
        FontWeight="Medium"
        HorizontalAlignment="Center"
         VerticalAlignment="Center">Повторите пароль
         </TextBlock>
-        <PasswordBox Grid.Row="6" Height="30" Width="300" FontSize="20"
+        <PasswordBox Grid.Row="6" Height="30" Width="300" FontSize="16"
                      PasswordChanged="textBoxRepeatedPassword_PasswordChanged">
         </PasswordBox>
-        <Button FontSize="22" Grid.Row="7" Height="30" Width="200"
+        <Button FontSize="16" Grid.Row="7" Height="30" Width="150"
                 Background="#f0f0f0" 
                 Template="{StaticResource NoMouseOverButtonTemplate}"
                 Command="{Binding ClickRegistrate}">

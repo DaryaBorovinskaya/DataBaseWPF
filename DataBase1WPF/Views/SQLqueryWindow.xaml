@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DataBase1WPF.Views" 
         xmlns:viewmodels="clr-namespace:DataBase1WPF.ViewModels"
         mc:Ignorable="d"
-        Title="Окно запросов SQL" Height="450" Width="800"
+        Title="Окно запросов SQL" Height="450" Width="700"
         WindowStartupLocation="CenterScreen" >
 
     <Window.DataContext>
@@ -43,25 +43,26 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Margin="30 30 0 0">
+        <DockPanel Grid.Row="0" Margin="35 30 0 0">
             <TextBlock HorizontalAlignment="Left"
-                       FontSize="20">
+                       FontSize="16">
     Введите свой запрос
             </TextBlock>
         </DockPanel>
         <DockPanel Grid.Row="1" Margin="0 0 0 0">
             <DockPanel HorizontalAlignment="Center">
                 <TextBox x:Name="textBoxQuery" Text="{Binding Query}" 
-                     FontSize="20" HorizontalAlignment="Center" 
+                     FontSize="16" HorizontalAlignment="Center" 
                      VerticalAlignment="Bottom"
                   
-                     Width="600" Height="30">
+                     Width="500" Height="30">
                 </TextBox>
-                <Button HorizontalAlignment="Center"
+                <Button HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Margin="30 0 0 0"
                     Width="100"
                     Height="30" 
+                    FontSize="16"
                     Background="#f0f0f0"
                     Command="{Binding ClickExecuteQuery}"
                     Template="{StaticResource NoMouseOverButtonTemplate}">
@@ -69,7 +70,7 @@
             </DockPanel>
         </DockPanel>
         <DockPanel Grid.Row="2" Margin="0 15 0 0">
-            <TextBlock HorizontalAlignment="Center" FontSize="20" Height="30"
+            <TextBlock HorizontalAlignment="Center" FontSize="16" Height="30"
                        Text="Полученные данные"/>
         </DockPanel>
         

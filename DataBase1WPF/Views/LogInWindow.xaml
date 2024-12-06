@@ -46,7 +46,7 @@
         <Border Background="White"  Height="30" VerticalAlignment="Top">
 
             <DockPanel>
-                <TextBlock FontSize="20" Padding="20 0 0 0" VerticalAlignment="Bottom">
+                <TextBlock FontSize="16" Padding="20 0 0 0" VerticalAlignment="Bottom">
                 Вход
                 </TextBlock>
 
@@ -82,13 +82,13 @@
                     <StackPanel HorizontalAlignment="Right" Width="580" Height="95">
                         <DockPanel Margin="0 0 8 0" VerticalAlignment="Top" Height="40" Background="#fffacd" >
                             <TextBlock HorizontalAlignment="Right" Margin="0 0 5 0"
-                               VerticalAlignment="Center" FontSize="20">
+                               VerticalAlignment="Center" FontSize="16">
                         АИС Аренда помещений
                             </TextBlock>
                         </DockPanel>
                         <DockPanel Background="#ffd700" Height="40" VerticalAlignment="Bottom" Margin="0 11 8 0">
                             <TextBlock x:Name="textBlockVersion" HorizontalAlignment="Right" Margin="0 0 5 0"
-                               VerticalAlignment="Center" FontSize="20">
+                               VerticalAlignment="Center" FontSize="16">
                         Версия 1.0.0.0
                             </TextBlock>
                         </DockPanel>
@@ -96,45 +96,49 @@
                 </Grid>
                 <DockPanel Margin="8 5 8 0" VerticalAlignment="Bottom" Height="40" Background="White">
                     <TextBlock HorizontalAlignment="Right" Margin="0 0 5 0"
-                       VerticalAlignment="Center" FontSize="20">
+                       VerticalAlignment="Center" FontSize="16">
                 Введите имя пользователя и пароль
                     </TextBlock>
                 </DockPanel>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
                 <DockPanel>
-                    <TextBlock HorizontalAlignment="Left" Margin="8 35 0 0" FontSize="20">
+                    <TextBlock HorizontalAlignment="Left" Margin="40 35 0 0" FontSize="16">
                 Имя пользователя
                     </TextBlock>
-                    <TextBox x:Name="textBoxName" Text="{Binding Name}" FontSize="20" HorizontalAlignment="Right" Margin="0 30 8 0" Width="400"></TextBox>
+                    <TextBox x:Name="textBoxName" Text="{Binding Name}" FontSize="16" HorizontalAlignment="Right" Margin="0 30 8 0" Width="400"></TextBox>
                 </DockPanel>
                 <DockPanel>
-                    <TextBlock HorizontalAlignment="Left" Margin="8 35 0 0" FontSize="20">
+                    <TextBlock HorizontalAlignment="Left" Margin="40 35 0 0" FontSize="16">
                 Пароль
                     </TextBlock>
                     <PasswordBox  
                         x:Name="textBoxPassword" 
                         PasswordChanged="textBoxPassword_PasswordChanged" 
-                        FontSize="20" HorizontalAlignment="Right" Margin="0 30 8 0" 
+                        FontSize="16" HorizontalAlignment="Right" Margin="0 30 8 0" 
                         Width="400"/>
                 </DockPanel>
                 <DockPanel >
-                    <Button  HorizontalAlignment="Left" Width="100" Height="30"
+                    <Button  HorizontalAlignment="Left" Width="80" Height="30"
                     Margin="100 40 0 0" Template="{StaticResource NoMouseOverButtonTemplate}"
-                    Background="#f0f0f0" FontSize="20"
+                    Background="#f0f0f0" FontSize="16"
                     Command="{Binding ClickLogIn}">
                         Вход
                     </Button>
-                    <Button Command="{Binding ClickCancellation}" HorizontalAlignment="Right" Width="100" Height="30"
+                    <Button Command="{Binding ClickCancellation}" HorizontalAlignment="Right" Width="80" Height="30"
                     Margin="0 40 100 0" Template="{StaticResource NoMouseOverButtonTemplate}"
-                    Background="#f0f0f0" FontSize="20">
+                    Background="#f0f0f0" FontSize="16">
                         Отмена
                     </Button>
                 </DockPanel>
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="0 35 0 0" Background="#f0f0f0" Grid.ColumnSpan="2" >
                 <Grid >
-                    <DockPanel Height="32" HorizontalAlignment="Left" Width="665" Background="#b9d1ea" Margin="0 4 30 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="51*"/>
+                        <ColumnDefinition Width="89*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Height="32" HorizontalAlignment="Left" Width="665" Background="#b9d1ea" Margin="0,4,0,0" Grid.ColumnSpan="2">
                         <TextBlock x:Name="textBlockRusEng" Margin="8 0 0 0" VerticalAlignment="Center"
                        FontSize="20" HorizontalAlignment="Left">
                 Язык ввода Русский
@@ -144,7 +148,7 @@
                     Клавиша CapsLock нажата
                         </TextBlock>
                     </DockPanel>
-                    <DockPanel HorizontalAlignment="Right" Margin="2 0 5 0">
+                    <DockPanel HorizontalAlignment="Left" Margin="419,0,0,0" Grid.Column="1">
                         <Image Width="20" Height="20" HorizontalAlignment="Right" Margin="0 10 1 1" Source="\Resources\points.png"></Image>
 
                     </DockPanel>

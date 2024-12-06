@@ -3,6 +3,7 @@ using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Controls;
 using DataBase1WPF.Views.Constructors;
+using System.Windows.Data;
 
 namespace DataBase1WPF.Views
 {
@@ -22,6 +23,16 @@ namespace DataBase1WPF.Views
                 mainVM.OnRegistration += Registration;
                 mainVM.OnChangePassword += ChangePassword;
                 mainVM.OnSQLquery += SQLquery;
+
+                mainVM.OnDistricts += Districts;
+                mainVM.OnStreets += Streets;
+                mainVM.OnBanks += Banks;
+                mainVM.OnPositions += Positions;
+                mainVM.OnPaymentFrequency += PaymentFrequency;
+                mainVM.OnRentalPurposes += RentalPurposes;
+                mainVM.OnTypesOfFinishing += TypesOfFinishing;
+                mainVM.OnFine += Fine;
+
             }
         }
 
@@ -42,6 +53,43 @@ namespace DataBase1WPF.Views
         {
             SQLqueryWindow window = new ();
             window.Show();
+        }
+
+        private void Districts()
+        {
+            DataGrid dataGrid = new();
+            Binding binding = new ("DataTableHandbooks");
+            binding.Source = DataContext is MainVM;
+            dataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
+             
+        }
+        private void Streets()
+        {
+
+        }
+        private void Banks()
+        {
+
+        }
+        private void Positions()
+        {
+
+        }
+        private void PaymentFrequency()
+        {
+
+        }
+        private void RentalPurposes()
+        {
+
+        }
+        private void TypesOfFinishing()
+        {
+
+        }
+        private void Fine()
+        {
+
         }
 
 

@@ -36,6 +36,7 @@ namespace DataBase1WPF.Views.Constructors
                 Header = menuElemDB.Name,
                 Tag = menuElemDB
             };
+            menuItem.FontSize = 16;
 
             if (!string.IsNullOrEmpty(menuElemDB.FuncName))
             {

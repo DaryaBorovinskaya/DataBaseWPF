@@ -12,6 +12,8 @@
     <None Remove="Resources\iconClose.png" />
     <None Remove="Resources\iconClose1.png" />
     <None Remove="Resources\keys.png" />
+    <None Remove="Resources\lease %281%29 - Копировать.png" />
+    <None Remove="Resources\lease %281%29.png" />
     <None Remove="Resources\points.png" />
   </ItemGroup>
 
@@ -19,6 +21,7 @@
     <Resource Include="Resources\iconClose.png" />
     <Resource Include="Resources\iconClose1.png" />
     <Resource Include="Resources\keys.png" />
+    <Resource Include="Resources\lease (1) - Копировать.png" />
     <Resource Include="Resources\points.png" />
   </ItemGroup>
 

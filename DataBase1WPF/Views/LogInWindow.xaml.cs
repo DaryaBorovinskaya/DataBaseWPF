@@ -31,30 +31,30 @@ namespace DataBase1WPF.Views
         {
             timerForWindow.Interval = new System.TimeSpan(100);
             timerForWindow.Start();
-            //timerForWindow.Tick += Timer_Tick;
+            timerForWindow.Tick += Timer_Tick;
 
             textBlockVersion.Text = "Версия" + assembly.GetName().Version.ToString();
         }
 
 
 
-        //private void Timer_Tick(object sender, System.EventArgs e)
-        //{
-        //    if (Console.CapsLock)
-        //        textBlockCapsLock.Text = "Клавиша CapsLock нажата";
-        //    else
-        //        textBlockCapsLock.Text = "";
+        private void Timer_Tick(object sender, System.EventArgs e)
+        {
+            if (Console.CapsLock)
+                textBlockCapsLock.Text = "Клавиша CapsLock нажата";
+            else
+                textBlockCapsLock.Text = "";
 
-        //    string languageName = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
-        //    languageName = languageName.Split('(').First();
-        //    string newLanguageName = char.ToUpper(languageName[0]).ToString();
+            string languageName = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
+            languageName = languageName.Split('(').First();
+            string newLanguageName = char.ToUpper(languageName[0]).ToString();
 
-        //    for (int i = 1; i < languageName.Length; i++)
-        //        newLanguageName += languageName[i];
+            for (int i = 1; i < languageName.Length; i++)
+                newLanguageName += languageName[i];
 
 
-        //    textBlockRusEng.Text = "Язык ввода " + newLanguageName;
-        //}
+            textBlockRusEng.Text = "Язык ввода " + newLanguageName;
+        }
 
 
         private void textBoxPassword_PasswordChanged(object sender, RoutedEventArgs e)
