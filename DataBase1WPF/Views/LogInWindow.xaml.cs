@@ -51,7 +51,7 @@ namespace DataBase1WPF.Views
 
         //    for (int i = 1; i < languageName.Length; i++)
         //        newLanguageName += languageName[i];
-            
+
 
         //    textBlockRusEng.Text = "Язык ввода " + newLanguageName;
         //}

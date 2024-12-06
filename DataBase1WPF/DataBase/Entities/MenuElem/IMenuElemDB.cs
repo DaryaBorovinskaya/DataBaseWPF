@@ -16,10 +16,10 @@ namespace DataBase1WPF.DataBase.Entities.MenuElem
         public string Name { get; set; }
 
         [DisplayName("Имя DLL")]
-        public string DllName { get; set; }
+        public string? DllName { get; set; }
 
         [DisplayName("Имя функции")]
-        public string FuncName { get; set; }
+        public string? FuncName { get; set; }
 
         [DisplayName("Порядок")]
         public uint Order { get; set; }

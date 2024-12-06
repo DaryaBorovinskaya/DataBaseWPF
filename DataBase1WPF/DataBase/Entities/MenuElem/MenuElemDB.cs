@@ -12,12 +12,12 @@ namespace DataBase1WPF.DataBase.Entities.MenuElem
         public uint Id { get; set; }
         public uint ParentId { get; set; }
         public string Name { get; set; }
-        public string DllName { get; set; }
-        public string FuncName { get; set; }
+        public string? DllName { get; set; }
+        public string? FuncName { get; set; }
         public uint Order { get; set; }
 
-        public MenuElemDB(uint id, uint parentId, string name, string dllName, 
-            string funcName, uint order)
+        public MenuElemDB(uint id, uint parentId, string name, string? dllName, 
+            string? funcName, uint order)
         {
             Id = id;
             ParentId = parentId;
@@ -27,8 +27,8 @@ namespace DataBase1WPF.DataBase.Entities.MenuElem
             Order = order;
         }
 
-        public MenuElemDB(uint parentId, string name, string dllName,
-            string funcName, uint order)
+        public MenuElemDB(uint parentId, string name, string? dllName,
+            string? funcName, uint order)
         {
             ParentId = parentId;
             Name = name;

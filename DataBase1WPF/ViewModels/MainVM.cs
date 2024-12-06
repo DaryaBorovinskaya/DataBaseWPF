@@ -14,6 +14,7 @@ namespace DataBase1WPF.ViewModels
     {
         public Action OnRegistration;
         public Action OnChangePassword;
+        public Action OnSQLquery;
 
         public ICommand ClickRegistration
         {
@@ -37,5 +38,15 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        public ICommand ClickSQLquery
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnSQLquery?.Invoke();
+                });
+            }
+        }
     }
 }

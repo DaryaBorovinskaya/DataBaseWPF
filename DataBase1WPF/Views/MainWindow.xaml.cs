@@ -1,5 +1,8 @@
 ﻿using DataBase1WPF.ViewModels;
+using System.Reflection.Emit;
 using System.Windows;
+using System.Windows.Controls;
+using DataBase1WPF.Views.Constructors;
 
 namespace DataBase1WPF.Views
 {
@@ -11,10 +14,14 @@ namespace DataBase1WPF.Views
         public MainWindow()
         {
             InitializeComponent();
+            MenuConstructor menuConstructor = new();
+            constructedMenu.Children.Add(menuConstructor.Construct());
+
             if (DataContext is MainVM mainVM)
             {
                 mainVM.OnRegistration += Registration;
                 mainVM.OnChangePassword += ChangePassword;
+                mainVM.OnSQLquery += SQLquery;
             }
         }
 
@@ -28,6 +35,12 @@ namespace DataBase1WPF.Views
         private void ChangePassword()
         {
             ChangePasswordWindow window = new();
+            window.Show();
+        }
+
+        private void SQLquery()
+        {
+            SQLqueryWindow window = new ();
             window.Show();
         }
 

@@ -46,9 +46,6 @@ namespace DataBase1WPF.Views
             //e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
+        
     }
 }

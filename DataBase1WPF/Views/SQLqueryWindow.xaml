@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:DataBase1WPF.ViewModels"
         mc:Ignorable="d"
         Title="Окно запросов SQL" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        WindowStartupLocation="CenterScreen" >
 
     <Window.DataContext>
         <viewmodels:SQLqueryVM/>
@@ -74,11 +74,11 @@
         </DockPanel>
         
         <DockPanel Grid.Row="3" >
-            <DataGrid  Height="250" ColumnWidth="*"
+            <DataGrid  Height="250" 
                   Width="700" x:Name="dataSQL" 
                   ItemsSource="{Binding DataBaseTable}"
                   LoadingRow="DataGrid_LoadingRow"
-                  AutoGenerateColumns="True" IsReadOnly="True" VerticalAlignment="Center">
+                  IsReadOnly="True" VerticalAlignment="Center">
                 <!--
     <DataGrid.Columns>
         <DataGridTextColumn Header="ID" Width="Auto" IsReadOnly="True"  Binding="{Binding Id}" />

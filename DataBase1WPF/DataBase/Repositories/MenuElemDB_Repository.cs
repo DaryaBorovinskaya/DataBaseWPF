@@ -20,7 +20,7 @@ namespace DataBase1WPF.DataBase.Repositories
 
         public IList<IMenuElemDB> Read()
         {
-            _query = "select * from users";
+            _query = "select * from menu_elements";
             IList<IMenuElemDB> result = new List<IMenuElemDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -29,9 +29,9 @@ namespace DataBase1WPF.DataBase.Repositories
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
                     row[2].ToString(),
-                    row[3].ToString(),
-                    row[4].ToString(),
-                    uint.Parse(row[2].ToString())
+                    row[3]?.ToString(),
+                    row[4]?.ToString(),
+                    uint.Parse(row[5].ToString())
                 ));
             }
             return result;
