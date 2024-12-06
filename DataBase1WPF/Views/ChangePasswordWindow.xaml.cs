@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using DataBase1WPF.ViewModels;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,6 +28,15 @@ namespace DataBase1WPF.Views
         public ChangePasswordWindow()
         {
             InitializeComponent();
+            if (DataContext is ChangePasswordVM changePasswordVM)
+            {
+                changePasswordVM.OnSuccessChangePassword += SuccessChangePassword;
+            }
+        }
+
+        private void SuccessChangePassword()
+        {
+            this.Close();
         }
 
         private void Timer_Tick(object sender, System.EventArgs e)
@@ -70,5 +80,7 @@ namespace DataBase1WPF.Views
                 ((dynamic)this.DataContext).RepeatedPassword = ((PasswordBox)sender).Password;
             }
         }
+
+        
     }
 }

@@ -20,6 +20,7 @@ namespace DataBase1WPF.ViewModels
         private string _newPassword;
         private string _repeatedPassword;
 
+        public Action OnSuccessChangePassword;
         public string OldPassword
         {
             get { return _oldPassword; }
@@ -86,9 +87,7 @@ namespace DataBase1WPF.ViewModels
                         {
                             changePassword.ChangePassword(OldPassword, NewPassword);
                             MessageBox.Show("Смена пароля прошла успешно");
-                            OldPassword = string.Empty;
-                            NewPassword = string.Empty;
-                            RepeatedPassword = string.Empty;
+                            OnSuccessChangePassword?.Invoke();
                         }
                         catch(ArgumentException ex)
                         {

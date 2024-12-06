@@ -140,11 +140,11 @@
                     </Grid.ColumnDefinitions>
                     <DockPanel Height="32" HorizontalAlignment="Left" Width="665" Background="#b9d1ea" Margin="0,4,0,0" Grid.ColumnSpan="2">
                         <TextBlock x:Name="textBlockRusEng" Margin="8 0 0 0" VerticalAlignment="Center"
-                       FontSize="20" HorizontalAlignment="Left">
+                       FontSize="16" HorizontalAlignment="Left">
                 Язык ввода Русский
                         </TextBlock>
                         <TextBlock x:Name="textBlockCapsLock" HorizontalAlignment="Right" Margin="0 0 8 0" VerticalAlignment="Center"
-                           FontSize="20">
+                           FontSize="16">
                     Клавиша CapsLock нажата
                         </TextBlock>
                     </DockPanel>

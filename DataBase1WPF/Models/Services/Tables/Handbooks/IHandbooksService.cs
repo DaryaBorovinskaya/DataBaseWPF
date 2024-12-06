@@ -10,9 +10,5 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public interface IHandbooksService<T> where T : class
-    {
-        public IList<T> GetValues();
-        public DataTable GetValuesTable(IList<T> values);
-    }
+    
 }

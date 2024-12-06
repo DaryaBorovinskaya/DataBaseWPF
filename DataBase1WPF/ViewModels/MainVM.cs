@@ -18,15 +18,6 @@ namespace DataBase1WPF.ViewModels
 {
     public class MainVM : BasicVM
     {
-        private DistrictsService _districtsService = new();
-        private StreetsService _streetsService = new();
-        private BanksService _banksService = new();
-        private RentalPurposesService _rentalPurposesService = new();
-        private PaymentFrequencyService _paymentFrequencyService = new();
-        private TypesOfFinishingService _typesOfFinishingService = new();
-
-        private DataTable _dataTableHandbooks = new();
-        private string _dataTableTitle;
 
         public Action OnRegistration;
         public Action OnChangePassword;
@@ -82,8 +73,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnDistricts?.Invoke();
-                    DataTableHandbooks = _districtsService.GetValuesTable(_districtsService.GetValues());
-                    DataTableTitle = _districtsService.GetTableName();
                 });
             }
         }
@@ -94,8 +83,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnStreets?.Invoke();
-                    DataTableHandbooks = _streetsService.GetValuesTable(_streetsService.GetValues());
-                    DataTableTitle = _streetsService.GetTableName();
                 });
             }
         }
@@ -106,8 +93,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnBanks?.Invoke();
-                    DataTableHandbooks = _banksService.GetValuesTable(_banksService.GetValues());
-                    DataTableTitle = _banksService.GetTableName();
                 });
             }
         }
@@ -128,8 +113,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnPaymentFrequency?.Invoke();
-                    DataTableHandbooks = _paymentFrequencyService.GetValuesTable(_paymentFrequencyService.GetValues());
-                    DataTableTitle = _paymentFrequencyService.GetTableName();
                 });
             }
         }
@@ -140,8 +123,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnRentalPurposes?.Invoke();
-                    DataTableHandbooks = _rentalPurposesService.GetValuesTable(_rentalPurposesService.GetValues());
-                    DataTableTitle = _rentalPurposesService.GetTableName();
                 });
             }
         }
@@ -152,8 +133,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnTypesOfFinishing?.Invoke();
-                    DataTableHandbooks = _typesOfFinishingService.GetValuesTable(_typesOfFinishingService.GetValues());
-                    DataTableTitle = _typesOfFinishingService.GetTableName();
                 });
             }
         }
@@ -170,22 +149,6 @@ namespace DataBase1WPF.ViewModels
 
          
 
-        public DataTable DataTableHandbooks
-        {
-            get { return _dataTableHandbooks; }
-            set
-            {
-                Set(ref _dataTableHandbooks, value);
-            }
-        }
-
-        public string DataTableTitle
-        {
-            get { return _dataTableTitle; }
-            set
-            {
-                Set(ref _dataTableTitle, value);
-            }
-        }
+        
     }
 }

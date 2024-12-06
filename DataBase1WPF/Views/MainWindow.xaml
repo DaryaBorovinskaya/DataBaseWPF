@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Главное окно" Height="450" Width="700" Closed="Window_Closed"
+        Title="Главное окно" Height="60" Width="700" Closed="Window_Closed"
         ResizeMode="CanMinimize">
 
     <Window.DataContext>
@@ -36,28 +36,12 @@
         </ControlTemplate>
     </Window.Resources>
 
-    <Grid Background="#b9d1ea">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="constructedMenu" Grid.Row="0"/>
-        <Grid Grid.Row="1" >
-
-            
-                <Image Source="\Resources\lease (1) - Копировать.png" HorizontalAlignment="Center" 
-        Width="200" Height="200">
-                </Image>
-
-            <TextBlock VerticalAlignment="Top" FontSize="16" Text="{Binding DataTableTitle}"></TextBlock>
-            <DataGrid FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
-                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-                      SelectionMode="Single" ItemsSource="{Binding DataTableHandbooks}" IsReadOnly="True"
-                      />
-            
-
-
-        </Grid>
+        
     </Grid>
 </Window>

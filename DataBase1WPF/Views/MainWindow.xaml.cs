@@ -57,39 +57,51 @@ namespace DataBase1WPF.Views
 
         private void Districts()
         {
-            DataGrid dataGrid = new();
-            Binding binding = new ("DataTableHandbooks");
-            binding.Source = DataContext is MainVM;
-            dataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
+            HandbooksWindow window = new(HandbooksEnum.Districts);
+            window.Show();
+
+
+
+            //DataGrid dataGrid = new();
+            //Binding binding = new ("DataTableHandbooks");
+            //binding.Source = DataContext is MainVM;
+            //dataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
              
         }
         private void Streets()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.Streets);
+            window.Show();
         }
         private void Banks()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.Banks);
+            window.Show();
         }
         private void Positions()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.Positions);
+            window.Show();
         }
         private void PaymentFrequency()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.PaymentFrequency);
+            window.Show();
         }
         private void RentalPurposes()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.RentalPurposes);
+            window.Show();
         }
         private void TypesOfFinishing()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.TypesOfFinishing);
+            window.Show();
         }
         private void Fine()
         {
-
+            HandbooksWindow window = new(HandbooksEnum.Fine);
+            window.Show();
         }
 
 

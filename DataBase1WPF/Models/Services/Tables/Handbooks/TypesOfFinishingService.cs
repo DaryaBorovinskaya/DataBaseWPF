@@ -8,24 +8,23 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public class TypesOfFinishingService : IHandbooksService<IHandbookDB>,  ITableName
+    public class TypesOfFinishingService :  ITableName, ITableService
     {
-        public IList<IHandbookDB> GetValues()
+        private IList<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
             return values;
         }
 
-        public DataTable GetValuesTable(IList<IHandbookDB> values)
+        public DataTable GetValuesTable()
         {
-            DataTable table = DataTableConverter.ToDataTable(values);
+            DataTable table = DataTableConverter.ToDataTable(GetValues());
             table.Columns.Remove(table.Columns[0]);
-
             return table;
         }
         public string GetTableName()
         {
-            return "Типы отделки";
+            return "Виды отделки";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
+﻿using DataBase1WPF.DataBase.Entities.Fine;
+using DataBase1WPF.DataBase.Entities.Handbook;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public class DistrictsService :  ITableName, ITableService
+    public class FineService : ITableName, ITableService
     {
-        private IList<IHandbookDB> GetValues()
+        private IList<IFineDB> GetValues()
         {
-            List<IHandbookDB> values = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+            List<IFineDB> values = DataManager.GetInstance().FineDB_Repository.Read().ToList();
             return values;
         }
 
@@ -25,7 +26,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
         public string GetTableName()
         {
-            return "Районы";
+            return "Штраф";
         }
     }
 }
