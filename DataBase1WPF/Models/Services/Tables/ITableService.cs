@@ -11,5 +11,7 @@ namespace DataBase1WPF.Models.Services.Tables
     {
         public DataTable GetValuesTable();
         public string GetTableName();
+
+        public DataTable SearchDataInTable(string searchLine);
     }
 }

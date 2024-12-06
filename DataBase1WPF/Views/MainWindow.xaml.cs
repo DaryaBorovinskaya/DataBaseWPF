@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DataBase1WPF.Views.Constructors;
 using System.Windows.Data;
+using DataBase1WPF.Models.Services.Tables;
 
 namespace DataBase1WPF.Views
 {
@@ -24,14 +25,14 @@ namespace DataBase1WPF.Views
                 mainVM.OnChangePassword += ChangePassword;
                 mainVM.OnSQLquery += SQLquery;
 
-                mainVM.OnDistricts += Districts;
-                mainVM.OnStreets += Streets;
-                mainVM.OnBanks += Banks;
-                mainVM.OnPositions += Positions;
-                mainVM.OnPaymentFrequency += PaymentFrequency;
-                mainVM.OnRentalPurposes += RentalPurposes;
-                mainVM.OnTypesOfFinishing += TypesOfFinishing;
-                mainVM.OnFine += Fine;
+                mainVM.OnDistricts += Handbooks;
+                mainVM.OnStreets += Handbooks;
+                mainVM.OnBanks += Handbooks;
+                mainVM.OnPositions += Handbooks;
+                mainVM.OnPaymentFrequency += Handbooks;
+                mainVM.OnRentalPurposes += Handbooks;
+                mainVM.OnTypesOfFinishing += Handbooks;
+                mainVM.OnFine += Handbooks;
 
             }
         }
@@ -55,9 +56,9 @@ namespace DataBase1WPF.Views
             window.Show();
         }
 
-        private void Districts()
+        private void Handbooks(ITableService tableService)
         {
-            HandbooksWindow window = new(HandbooksEnum.Districts);
+            HandbooksWindow window = new(tableService);
             window.Show();
 
 
@@ -68,41 +69,7 @@ namespace DataBase1WPF.Views
             //dataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
              
         }
-        private void Streets()
-        {
-            HandbooksWindow window = new(HandbooksEnum.Streets);
-            window.Show();
-        }
-        private void Banks()
-        {
-            HandbooksWindow window = new(HandbooksEnum.Banks);
-            window.Show();
-        }
-        private void Positions()
-        {
-            HandbooksWindow window = new(HandbooksEnum.Positions);
-            window.Show();
-        }
-        private void PaymentFrequency()
-        {
-            HandbooksWindow window = new(HandbooksEnum.PaymentFrequency);
-            window.Show();
-        }
-        private void RentalPurposes()
-        {
-            HandbooksWindow window = new(HandbooksEnum.RentalPurposes);
-            window.Show();
-        }
-        private void TypesOfFinishing()
-        {
-            HandbooksWindow window = new(HandbooksEnum.TypesOfFinishing);
-            window.Show();
-        }
-        private void Fine()
-        {
-            HandbooksWindow window = new(HandbooksEnum.Fine);
-            window.Show();
-        }
+        
 
 
         private void Window_Closed(object sender, EventArgs e)

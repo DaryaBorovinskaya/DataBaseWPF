@@ -19,6 +19,7 @@ namespace DataBase1WPF.ViewModels
         private static TypesOfFinishingService _typesOfFinishingService;
         private static FineService _fineService;
         private static PositionsService _positionsService;
+        private ITableService _tableService;
 
         private Dictionary<HandbooksEnum, ITableService> _handbooks = new()
         {
@@ -36,16 +37,27 @@ namespace DataBase1WPF.ViewModels
 
         private DataTable _dataTableHandbooks;
         private string _dataTableTitle;
-
+        private string _searchDataInTable;
         
 
-        public HandbooksVM(HandbooksEnum handbook)
+        public HandbooksVM(ITableService tableService)
         {
-            DataTableHandbooks = _handbooks[handbook].GetValuesTable();
-            DataTableTitle = _handbooks[handbook].GetTableName();
+            _tableService = tableService;
+            DataTableHandbooks = _tableService.GetValuesTable();
+            DataTableTitle = _tableService.GetTableName();
         }
 
 
+
+        public string SearchDataInTable
+        {
+            get { return _searchDataInTable; }
+            set
+            {
+                Set(ref _searchDataInTable, value);
+                DataTableHandbooks = _tableService.SearchDataInTable(_searchDataInTable);
+            }
+        }
 
         public DataTable DataTableHandbooks
         {

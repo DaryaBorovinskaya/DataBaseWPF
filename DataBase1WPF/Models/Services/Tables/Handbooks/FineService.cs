@@ -11,7 +11,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class FineService : ITableName, ITableService
     {
-        private IList<IFineDB> GetValues()
+        private List<IFineDB> GetValues()
         {
             List<IFineDB> values = DataManager.GetInstance().FineDB_Repository.Read().ToList();
             return values;
@@ -27,6 +27,12 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         public string GetTableName()
         {
             return "Штраф";
+        }
+        public DataTable SearchDataInTable(string searchLine)
+        {
+            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Amount.ToString().Contains(searchLine)).ToList());
+            table.Columns.Remove(table.Columns[0]);
+            return table;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class DistrictsService :  ITableName, ITableService
     {
-        private IList<IHandbookDB> GetValues()
+        private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
             return values;
@@ -26,6 +26,12 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         public string GetTableName()
         {
             return "Районы";
+        }
+        public DataTable SearchDataInTable(string searchLine)
+        {
+            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Title.Contains(searchLine)).ToList());
+            table.Columns.Remove(table.Columns[0]);
+            return table;
         }
     }
 }

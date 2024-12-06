@@ -13,6 +13,7 @@ using System.Collections;
 using DataBase1WPF.Models;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.Models.Services.Tables.Handbooks;
+using DataBase1WPF.Models.Services.Tables;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -23,14 +24,14 @@ namespace DataBase1WPF.ViewModels
         public Action OnChangePassword;
         public Action OnSQLquery;
 
-        public Action OnDistricts;
-        public Action OnStreets;
-        public Action OnBanks;
-        public Action OnPositions;
-        public Action OnPaymentFrequency;
-        public Action OnRentalPurposes;
-        public Action OnTypesOfFinishing;
-        public Action OnFine;
+        public Action<ITableService> OnDistricts;
+        public Action<ITableService> OnStreets;
+        public Action<ITableService> OnBanks;
+        public Action<ITableService> OnPositions;
+        public Action<ITableService> OnPaymentFrequency;
+        public Action<ITableService> OnRentalPurposes;
+        public Action<ITableService> OnTypesOfFinishing;
+        public Action<ITableService> OnFine;
 
         public ICommand ClickRegistration
         {
@@ -72,7 +73,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnDistricts?.Invoke();
+                    OnDistricts?.Invoke(new DistrictsService());
                 });
             }
         }
@@ -82,7 +83,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnStreets?.Invoke();
+                    OnStreets?.Invoke(new StreetsService());
                 });
             }
         }
@@ -92,7 +93,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnBanks?.Invoke();
+                    OnBanks?.Invoke(new BanksService());
                 });
             }
         }
@@ -102,7 +103,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnPositions?.Invoke();
+                    OnPositions?.Invoke(new PositionsService());
                 });
             }
         }
@@ -112,7 +113,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnPaymentFrequency?.Invoke();
+                    OnPaymentFrequency?.Invoke(new PaymentFrequencyService());
                 });
             }
         }
@@ -122,7 +123,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnRentalPurposes?.Invoke();
+                    OnRentalPurposes?.Invoke(new RentalPurposesService());
                 });
             }
         }
@@ -132,7 +133,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnTypesOfFinishing?.Invoke();
+                    OnTypesOfFinishing?.Invoke(new TypesOfFinishingService());
                 });
             }
         }
@@ -142,7 +143,7 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnFine?.Invoke();
+                    OnFine?.Invoke(new FineService());
                 });
             }
         }

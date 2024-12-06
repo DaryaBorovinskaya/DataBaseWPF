@@ -9,16 +9,25 @@
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
 
-    
-
-
     <Grid>
         <TabControl>
             <TabItem Header="{Binding DataTableTitle}" FontSize="16">
-                <DataGrid FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
-CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-SelectionMode="Single" ItemsSource="{Binding DataTableHandbooks}" IsReadOnly="True"
-/>
+                <DockPanel>
+                <DataGrid DockPanel.Dock="Top" FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
+                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                          SelectionMode="Single" Height="300"
+                          ItemsSource="{Binding DataTableHandbooks}" IsReadOnly="True"
+                />
+                    <TextBlock FontSize="16" HorizontalAlignment="Left" 
+                             Margin="30 15 0 0" DockPanel.Dock="Top">
+                        Поиск
+                    </TextBlock>
+                    <TextBox Height="30" Width="300" HorizontalAlignment="Left" 
+                             Margin="30 0 0 0" DockPanel.Dock="Top" VerticalAlignment="Top"
+                             Text="{Binding SearchDataInTable, UpdateSourceTrigger=PropertyChanged}">
+                     
+                    </TextBox>
+                </DockPanel>
             </TabItem>
 
 

@@ -10,7 +10,7 @@ namespace DataBase1WPF.Models.Services
 {
     public static class DataTableConverter
     {
-        public static DataTable ToDataTable<T>(IList<T> list)
+        public static DataTable ToDataTable<T>(List<T> list)
         {
             PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new ();

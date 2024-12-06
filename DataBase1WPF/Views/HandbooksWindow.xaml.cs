@@ -1,4 +1,5 @@
-﻿using DataBase1WPF.ViewModels;
+﻿using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace DataBase1WPF.Views
     /// </summary>
     public partial class HandbooksWindow : Window
     {
-        public HandbooksWindow(HandbooksEnum handbooks)
+        public HandbooksWindow(ITableService tableService)
         {
             InitializeComponent();
-            DataContext = new HandbooksVM(handbooks);
+            DataContext = new HandbooksVM(tableService);
             
         }
 
