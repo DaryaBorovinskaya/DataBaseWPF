@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Главное окно" Height="60" Width="700" Closed="Window_Closed"
+        Title="Главное окно" Height="60" Width="900" Closed="Window_Closed"
         ResizeMode="CanMinimize">
 
     <Window.DataContext>

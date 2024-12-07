@@ -14,24 +14,26 @@ using DataBase1WPF.Models;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.Models.Services.Tables.Handbooks;
 using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Models.Services.MenuElems;
 
 namespace DataBase1WPF.ViewModels
 {
     public class MainVM : BasicVM
     {
+        private IMenuElemsService _menuElemsService = new MenuElemsService();
 
         public Action OnRegistration;
         public Action OnChangePassword;
         public Action OnSQLquery;
 
-        public Action<ITableService> OnDistricts;
-        public Action<ITableService> OnStreets;
-        public Action<ITableService> OnBanks;
-        public Action<ITableService> OnPositions;
-        public Action<ITableService> OnPaymentFrequency;
-        public Action<ITableService> OnRentalPurposes;
-        public Action<ITableService> OnTypesOfFinishing;
-        public Action<ITableService> OnFine;
+        public Action<ITableService, uint> OnDistricts;
+        public Action<ITableService, uint> OnStreets;
+        public Action<ITableService, uint> OnBanks;
+        public Action<ITableService, uint> OnPositions;
+        public Action<ITableService, uint> OnPaymentFrequency;
+        public Action<ITableService, uint> OnRentalPurposes;
+        public Action<ITableService, uint> OnTypesOfFinishing;
+        public Action<ITableService, uint> OnFine;
 
         public ICommand ClickRegistration
         {
@@ -73,7 +75,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnDistricts?.Invoke(new DistrictsService());
+                    OnDistricts?.Invoke(
+                        new DistrictsService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickDistricts))
+                        );
                 });
             }
         }
@@ -83,7 +87,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnStreets?.Invoke(new StreetsService());
+                    OnStreets?.Invoke(
+                        new StreetsService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickStreets))
+                        );
                 });
             }
         }
@@ -93,7 +99,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnBanks?.Invoke(new BanksService());
+                    OnBanks?.Invoke(
+                        new BanksService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickBanks))
+                        );
                 });
             }
         }
@@ -103,7 +111,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnPositions?.Invoke(new PositionsService());
+                    OnPositions?.Invoke(
+                        new PositionsService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickPositions))
+                        );
                 });
             }
         }
@@ -113,7 +123,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnPaymentFrequency?.Invoke(new PaymentFrequencyService());
+                    OnPaymentFrequency?.Invoke(
+                        new PaymentFrequencyService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickPaymentFrequency))
+                        );
                 });
             }
         }
@@ -123,7 +135,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnRentalPurposes?.Invoke(new RentalPurposesService());
+                    OnRentalPurposes?.Invoke(
+                        new RentalPurposesService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickRentalPurposes))
+                        );
                 });
             }
         }
@@ -133,7 +147,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnTypesOfFinishing?.Invoke(new TypesOfFinishingService());
+                    OnTypesOfFinishing?.Invoke(
+                        new TypesOfFinishingService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickTypesOfFinishing))
+                        );
                 });
             }
         }
@@ -143,7 +159,9 @@ namespace DataBase1WPF.ViewModels
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnFine?.Invoke(new FineService());
+                    OnFine?.Invoke(
+                        new FineService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickFine))
+                        );
                 });
             }
         }

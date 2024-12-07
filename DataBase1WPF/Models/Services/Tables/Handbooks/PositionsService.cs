@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public class PositionsService : ITableName, ITableService
+    public class PositionsService :  ITableService
     {
         private List<IPositionDB> GetValues()
         {
@@ -33,6 +33,11 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Name.Contains(searchLine)).ToList());
             table.Columns.Remove(table.Columns[0]);
             return table;
+        }
+
+        public UserAbilitiesType GetUserAbilities(uint menuElemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

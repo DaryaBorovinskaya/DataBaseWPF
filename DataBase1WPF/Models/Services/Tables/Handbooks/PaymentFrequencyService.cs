@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public class PaymentFrequencyService :  ITableName, ITableService
+    public class PaymentFrequencyService :  ITableService
     {
         public List<IHandbookDB> GetValues()
         {
@@ -32,6 +32,11 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Title.Contains(searchLine)).ToList());
             table.Columns.Remove(table.Columns[0]);
             return table;
+        }
+
+        public UserAbilitiesType GetUserAbilities(uint menuElemId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

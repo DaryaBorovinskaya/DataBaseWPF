@@ -1,4 +1,5 @@
 ﻿using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
-    public class BanksService :  ITableName, ITableService
+    public class BanksService :   ITableService
     {
         private List<IHandbookDB> GetValues()
         {
@@ -33,5 +34,27 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             table.Columns.Remove(table.Columns[0]);
             return table;
         }
+        public UserAbilitiesType GetUserAbilities(uint menuElemId)
+        {
+            UserAbilitiesType userAbilities = new();
+            List<IUserAbilitiesDB> userAbilitiesDB = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
+            
+
+            foreach(IUserAbilitiesDB userAbilityDB in userAbilitiesDB) 
+            { 
+                if (userAbilityDB.UserId == DataManager.GetInstance().CurrentUser.Id
+                    && userAbilityDB.MenuElemId == menuElemId) 
+                {
+                    userAbilities.CanRead = userAbilityDB.R;
+                    userAbilities.CanWrite = userAbilityDB.W;
+                    userAbilities.CanEdit = userAbilityDB.E;
+                    userAbilities.CanDelete = userAbilityDB.D;
+                }
+            }
+
+            return userAbilities;
+        }
+
+
     }
 }

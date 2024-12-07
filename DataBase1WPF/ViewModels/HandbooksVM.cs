@@ -6,45 +6,35 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace DataBase1WPF.ViewModels
 {
     public class HandbooksVM : BasicVM
     {
-        private static DistrictsService _districtsService;
-        private static StreetsService _streetsService;
-        private static BanksService _banksService;
-        private static RentalPurposesService _rentalPurposesService;
-        private static PaymentFrequencyService _paymentFrequencyService;
-        private static TypesOfFinishingService _typesOfFinishingService;
-        private static FineService _fineService;
-        private static PositionsService _positionsService;
         private ITableService _tableService;
-
-        private Dictionary<HandbooksEnum, ITableService> _handbooks = new()
-        {
-            {HandbooksEnum.Districts, _districtsService=new()},
-            {HandbooksEnum.Streets, _streetsService=new()},
-            {HandbooksEnum.Banks, _banksService = new()},
-            {HandbooksEnum.RentalPurposes, _rentalPurposesService=new()},
-            {HandbooksEnum.PaymentFrequency, _paymentFrequencyService = new()},
-            {HandbooksEnum.TypesOfFinishing, _typesOfFinishingService=new()},
-            {HandbooksEnum.Fine, _fineService = new()},
-            {HandbooksEnum.Positions, _positionsService = new()}
-        };
-
-
 
         private DataTable _dataTableHandbooks;
         private string _dataTableTitle;
         private string _searchDataInTable;
-        
+        private int _selectedItemIndex;
+        private Visibility _writeVisibility;
+        private Visibility _editVisibility;
+        private Visibility _deleteVisibility;
+        private UserAbilitiesType _userAbilities;
 
-        public HandbooksVM(ITableService tableService)
+
+        public HandbooksVM(ITableService tableService, uint menuElemId)
         {
             _tableService = tableService;
             DataTableHandbooks = _tableService.GetValuesTable();
             DataTableTitle = _tableService.GetTableName();
+            _userAbilities = _tableService.GetUserAbilities(menuElemId);
+            _writeVisibility = _userAbilities.CanWrite? Visibility.Visible: Visibility.Collapsed;
+            _editVisibility = Visibility.Collapsed;
+            _deleteVisibility = Visibility.Collapsed;
         }
 
 
@@ -80,6 +70,63 @@ namespace DataBase1WPF.ViewModels
                     _dataTableTitle = value;
                 else
                     Set(ref _dataTableTitle, value);
+            }
+        }
+
+        public int SelectedItemIndex
+        {
+            get { return _selectedItemIndex; }
+            set 
+            {
+                Set(ref _selectedItemIndex, value);
+                //WriteVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
+                //EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
+                //DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public void DataTableMouseDown()
+        {
+            EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
+            DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
+                
+        }
+
+        public void DataTableMouseLeave()
+        {
+            EditVisibility = Visibility.Collapsed;
+            DeleteVisibility = Visibility.Collapsed;
+            
+        }
+
+
+        public Visibility WriteVisibility
+        {
+            get { return _writeVisibility; }
+            set
+            {
+                Set(ref _writeVisibility, value);
+
+            }
+        }
+
+        public Visibility EditVisibility
+        {
+            get { return _editVisibility; }
+            set
+            {
+                Set(ref _editVisibility, value);
+
+            }
+        }
+
+        public Visibility DeleteVisibility
+        {
+            get { return _deleteVisibility; }
+            set
+            {
+                Set(ref _deleteVisibility, value);
+
             }
         }
     }

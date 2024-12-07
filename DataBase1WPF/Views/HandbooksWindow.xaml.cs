@@ -21,16 +21,33 @@ namespace DataBase1WPF.Views
     /// </summary>
     public partial class HandbooksWindow : Window
     {
-        public HandbooksWindow(ITableService tableService)
+        public HandbooksWindow(ITableService tableService, uint menuElemId)
         {
             InitializeComponent();
-            DataContext = new HandbooksVM(tableService);
+            DataContext = new HandbooksVM(tableService, menuElemId);
             
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is HandbooksVM handbooksVM)
+                handbooksVM.DataTableMouseDown();
+        }
+
+        private void DataGrid_MouseLeave(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is HandbooksVM handbooksVM)
+                handbooksVM.DataTableMouseLeave();
         }
     }
 }

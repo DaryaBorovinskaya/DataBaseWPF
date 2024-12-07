@@ -13,5 +13,8 @@ namespace DataBase1WPF.Models.Services.Tables
         public string GetTableName();
 
         public DataTable SearchDataInTable(string searchLine);
+
+        public UserAbilitiesType GetUserAbilities(uint menuElemId);
+
     }
 }

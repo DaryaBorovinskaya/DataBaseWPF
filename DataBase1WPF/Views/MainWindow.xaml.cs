@@ -56,9 +56,9 @@ namespace DataBase1WPF.Views
             window.Show();
         }
 
-        private void Handbooks(ITableService tableService)
+        private void Handbooks(ITableService tableService, uint menuElemId)
         {
-            HandbooksWindow window = new(tableService);
+            HandbooksWindow window = new(tableService, menuElemId);
             window.Show();
 
 
