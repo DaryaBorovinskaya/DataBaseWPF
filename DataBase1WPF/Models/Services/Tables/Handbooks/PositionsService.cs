@@ -1,5 +1,6 @@
 ﻿using DataBase1WPF.DataBase.Entities.Fine;
 using DataBase1WPF.DataBase.Entities.Position;
+using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,14 +31,31 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Name.Contains(searchLine)).ToList());
+            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(
+                item => (item.Name.Contains(searchLine) || item.Salary.ToString().Contains(searchLine))).ToList());
             table.Columns.Remove(table.Columns[0]);
             return table;
         }
 
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
-            throw new NotImplementedException();
+            UserAbilitiesType userAbilities = new();
+            List<IUserAbilitiesDB> userAbilitiesDB = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
+
+
+            foreach (IUserAbilitiesDB userAbilityDB in userAbilitiesDB)
+            {
+                if (userAbilityDB.UserId == DataManager.GetInstance().CurrentUser.Id
+                    && userAbilityDB.MenuElemId == menuElemId)
+                {
+                    userAbilities.CanRead = userAbilityDB.R;
+                    userAbilities.CanWrite = userAbilityDB.W;
+                    userAbilities.CanEdit = userAbilityDB.E;
+                    userAbilities.CanDelete = userAbilityDB.D;
+                }
+            }
+
+            return userAbilities;
         }
     }
 }
