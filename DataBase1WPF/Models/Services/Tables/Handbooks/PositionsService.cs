@@ -2,6 +2,7 @@
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.Position;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
+using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class PositionsService :  ITableService
     {
-        private Dictionary<DataRowWithIndex, IPositionDB> _dataDictionary;
+        private Dictionary<DataRow, IPositionDB> _dataDictionary;
         private List<IPositionDB> GetValues()
         {
             List<IPositionDB> values = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
@@ -28,7 +29,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add(table.Rows[i], values[i]);
 
             return table;
         }
@@ -39,9 +40,16 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(
-                item => (item.Name.Contains(searchLine) || item.Salary.ToString().Contains(searchLine))).ToList());
+            List<IPositionDB> values = GetValues().Where(
+                item => (item.Name.Contains(searchLine) || item.Salary.ToString().Contains(searchLine))).ToList();
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(table.Rows[i], values[i]);
+
+
             return table;
         }
 
@@ -71,16 +79,14 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             DataManager.GetInstance().PositionDB_Repository.Create(new PositionDB(title, salary));
         }
 
+        public void Update(DataRow row, string title, float salary) 
+        {
+            DataManager.GetInstance().PositionDB_Repository.Update(new PositionDB(_dataDictionary[row].Id, title, salary));
+        }
+
         public void Delete(DataRow row)
         {
-            uint id = 0;
-            foreach (KeyValuePair<DataRowWithIndex, IPositionDB> data in _dataDictionary)
-            {
-                if (data.Key.DataRow == row)
-                    id = data.Value.Id;
-            }
-
-            DataManager.GetInstance().PositionDB_Repository.Delete(id);
+            DataManager.GetInstance().PositionDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

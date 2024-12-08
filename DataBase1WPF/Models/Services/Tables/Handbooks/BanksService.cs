@@ -1,5 +1,7 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
+﻿using DataBase1WPF.DataBase.Entities.Fine;
+using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
+using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +13,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class BanksService :   ITableService
     {
-        private Dictionary<DataRowWithIndex, IHandbookDB> _dataDictionary;
+        private Dictionary<DataRow, IHandbookDB> _dataDictionary;
         private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().BankDB_Repository.Read().ToList();
@@ -26,7 +28,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0;i< values.Count;i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add(table.Rows[i], values[i]);
             
             return table;
         }
@@ -37,8 +39,15 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Title.Contains(searchLine)).ToList());
+            List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(table.Rows[i], values[i]);
+
+
             return table;
         }
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
@@ -68,17 +77,14 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             DataManager.GetInstance().BankDB_Repository.Create(new HandbookDB(title));
         }
 
+        public void Update(DataRow row, string title)
+        {
+            DataManager.GetInstance().BankDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+        }
 
         public void Delete(DataRow row)
         {
-            uint id = 0;
-            foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
-            {
-                if (data.Key.DataRow == row)
-                    id = data.Value.Id;
-            }
-
-            DataManager.GetInstance().BankDB_Repository.Delete(id);
+            DataManager.GetInstance().BankDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

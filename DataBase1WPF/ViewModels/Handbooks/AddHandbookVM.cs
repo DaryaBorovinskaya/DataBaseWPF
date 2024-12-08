@@ -114,8 +114,12 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (!CheckLengthString(Title))
-                        MessageBox.Show("ОШИБКА: длина введенного значения больше 50 символов");
+                     if (string.IsNullOrEmpty(Title))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+
+                    //else if(!CheckLengthString(Title))
+                    //    MessageBox.Show("ОШИБКА: длина введенного значения больше 50 символов");
+
 
                     else if (_tableService is PositionsService positionsService)
                     {
@@ -135,9 +139,35 @@ namespace DataBase1WPF.ViewModels.Handbooks
                             OnApply?.Invoke();
                         }
                     }
-                    else
+                    else if (_tableService is BanksService bankService)
                     {
-
+                        bankService.Add(Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is DistrictsService districtService)
+                    {
+                        districtService.Add(Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is PaymentFrequencyService paymentFrequencyService)
+                    {
+                        paymentFrequencyService.Add(Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is RentalPurposesService rentalPurposesService)
+                    {
+                        rentalPurposesService.Add(Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is StreetsService streetsService)
+                    {
+                        streetsService.Add(Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is TypesOfFinishingService typesOfFinishingService)
+                    {
+                        typesOfFinishingService.Add(Title);
+                        OnApply?.Invoke();
                     }
                 });
             }

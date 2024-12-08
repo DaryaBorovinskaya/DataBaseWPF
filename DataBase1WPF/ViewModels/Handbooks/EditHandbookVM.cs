@@ -112,21 +112,26 @@ namespace DataBase1WPF.ViewModels.Handbooks
             return true;
         }
 
+        
+
         public ICommand Click
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (!CheckLengthString(Title))
-                        MessageBox.Show("ОШИБКА: длина введенного значения больше 50 символов");
+                    if (string.IsNullOrEmpty(Title))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+
+                    //else if (!CheckLengthString(Title))
+                    //    MessageBox.Show("ОШИБКА: длина введенного значения больше 50 символов");
 
                     else if (_tableService is PositionsService positionsService)
                     {
                         float value = CheckValuesFloat(Salary);
                         if (value != -1)
                         {
-                            positionsService.Add(Title, float.Parse(Salary));
+                            positionsService.Update(_row,Title, float.Parse(Salary));
                             OnApply?.Invoke();
                         }
                     }
@@ -139,9 +144,35 @@ namespace DataBase1WPF.ViewModels.Handbooks
                             OnApply?.Invoke();
                         }
                     }
-                    else
+                    else if (_tableService is BanksService bankService)
                     {
-
+                        bankService.Update(_row, Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is DistrictsService districtService)
+                    {
+                        districtService.Update(_row, Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is PaymentFrequencyService paymentFrequencyService)
+                    {
+                        paymentFrequencyService.Update(_row, Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is RentalPurposesService rentalPurposesService)
+                    {
+                        rentalPurposesService.Update(_row, Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is StreetsService streetsService)
+                    {
+                        streetsService.Update(_row, Title);
+                        OnApply?.Invoke();
+                    }
+                    else if (_tableService is TypesOfFinishingService typesOfFinishingService)
+                    {
+                        typesOfFinishingService.Update(_row, Title);
+                        OnApply?.Invoke();
                     }
                 });
             }

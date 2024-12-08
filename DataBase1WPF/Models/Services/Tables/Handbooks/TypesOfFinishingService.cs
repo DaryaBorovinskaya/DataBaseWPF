@@ -11,7 +11,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class TypesOfFinishingService :   ITableService
     {
-        private Dictionary<DataRowWithIndex, IHandbookDB> _dataDictionary;
+        private Dictionary<DataRow, IHandbookDB> _dataDictionary;
         private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
@@ -26,7 +26,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add( table.Rows[i], values[i]);
 
             return table;
         }
@@ -37,8 +37,14 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item=> item.Title.Contains(searchLine)).ToList());
+            List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
+
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(table.Rows[i], values[i]);
+
             return table;
         }
 
@@ -62,16 +68,20 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
+
+
+        public void Add(string title)
+        {
+            DataManager.GetInstance().TypeOfFinishingDB_Repository.Create(new HandbookDB(title));
+        }
+
+        public void Update(DataRow row, string title)
+        {
+            DataManager.GetInstance().TypeOfFinishingDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+        }
         public void Delete(DataRow row)
         {
-            uint id = 0;
-            foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
-            {
-                if (data.Key.DataRow == row)
-                    id = data.Value.Id;
-            }
-
-            DataManager.GetInstance().TypeOfFinishingDB_Repository.Delete(id);
+            DataManager.GetInstance().TypeOfFinishingDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

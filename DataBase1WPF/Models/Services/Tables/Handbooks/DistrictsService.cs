@@ -1,4 +1,5 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
+﻿using DataBase1WPF.DataBase.Entities.Fine;
+using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class DistrictsService :   ITableService
     {
-        private Dictionary<DataRowWithIndex, IHandbookDB> _dataDictionary;
+        private Dictionary<DataRow, IHandbookDB> _dataDictionary;
         
         private List<IHandbookDB> GetValues()
         {
@@ -27,7 +28,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add(table.Rows[i], values[i]);
 
 
             return table;
@@ -45,7 +46,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add(table.Rows[i], values[i]);
 
 
             return table;
@@ -72,16 +73,20 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             return userAbilities;
         }
 
+
+        public void Add(string title)
+        {
+            DataManager.GetInstance().DistrictDB_Repository.Create(new HandbookDB(title));
+        }
+
+        public void Update(DataRow row, string title)
+        {
+            DataManager.GetInstance().DistrictDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+        }
+
         public void Delete(DataRow row)
         {
-            uint id = 0;
-            foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
-            {
-                if (data.Key.DataRow == row)
-                    id = data.Value.Id;
-            }
-
-            DataManager.GetInstance().DistrictDB_Repository.Delete(id);
+            DataManager.GetInstance().DistrictDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }
