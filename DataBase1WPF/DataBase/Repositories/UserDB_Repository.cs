@@ -43,9 +43,9 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
-        public void Delete(IUserDB entity)
+        public void Delete(uint id)
         {
-            _query = $"delete from users where id={entity.Id}";
+            _query = $"delete from users where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
     }

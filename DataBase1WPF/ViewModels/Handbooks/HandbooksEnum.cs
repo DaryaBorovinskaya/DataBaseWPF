@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase1WPF.ViewModels
+namespace DataBase1WPF.ViewModels.Handbooks
 {
     public enum HandbooksEnum
     {

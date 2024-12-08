@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 
-namespace DataBase1WPF.ViewModels
+namespace DataBase1WPF.ViewModels.Handbooks
 {
     public class HandbooksVM : BasicVM
     {
@@ -19,11 +19,16 @@ namespace DataBase1WPF.ViewModels
         private DataTable _dataTableHandbooks;
         private string _dataTableTitle;
         private string _searchDataInTable;
-        private int _selectedItemIndex;
+        private int _selectedIndex;
         private Visibility _writeVisibility;
         private Visibility _editVisibility;
         private Visibility _deleteVisibility;
         private UserAbilitiesType _userAbilities;
+
+
+        public Action<DataRow, ITableService> OnAdd;
+        public Action<DataRow, int, ITableService> OnEdit;
+        public Action<DataRow, int, ITableService> OnDelete;
 
 
         public HandbooksVM(ITableService tableService, uint menuElemId)
@@ -32,9 +37,10 @@ namespace DataBase1WPF.ViewModels
             DataTableHandbooks = _tableService.GetValuesTable();
             DataTableTitle = _tableService.GetTableName();
             _userAbilities = _tableService.GetUserAbilities(menuElemId);
-            _writeVisibility = _userAbilities.CanWrite? Visibility.Visible: Visibility.Collapsed;
+            _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
+            _selectedIndex = -1;
         }
 
 
@@ -54,7 +60,7 @@ namespace DataBase1WPF.ViewModels
             get { return _dataTableHandbooks; }
             set
             {
-                if (_dataTableHandbooks == null )
+                if (_dataTableHandbooks == null)
                     _dataTableHandbooks = value;
                 else
                     Set(ref _dataTableHandbooks, value);
@@ -73,15 +79,12 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-        public int SelectedItemIndex
+        public int SelectedIndex
         {
-            get { return _selectedItemIndex; }
-            set 
+            get { return _selectedIndex; }
+            set
             {
-                Set(ref _selectedItemIndex, value);
-                //WriteVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
-                //EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
-                //DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
+                Set(ref _selectedIndex, value);
             }
         }
 
@@ -89,14 +92,14 @@ namespace DataBase1WPF.ViewModels
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
             DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
-                
+
         }
 
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
             DeleteVisibility = Visibility.Collapsed;
-            
+
         }
 
 
@@ -128,6 +131,47 @@ namespace DataBase1WPF.ViewModels
                 Set(ref _deleteVisibility, value);
 
             }
+        }
+
+        public ICommand ClickAdd
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnAdd?.Invoke(DataTableHandbooks.Rows[SelectedIndex], _tableService);
+                });
+            }
+        }
+
+        public ICommand ClickEdit
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnEdit?.Invoke(DataTableHandbooks.Rows[SelectedIndex], SelectedIndex, _tableService);
+                });
+            }
+        }
+
+        
+
+        public ICommand ClickDelete
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndex >= 0 && SelectedIndex < DataTableHandbooks.Rows.Count)
+                        OnDelete?.Invoke(DataTableHandbooks.Rows[SelectedIndex], SelectedIndex, _tableService);
+                });
+            }
+        }
+
+        public void UpdateDataTable()
+        {
+            DataTableHandbooks = _tableService.GetValuesTable();
         }
     }
 }

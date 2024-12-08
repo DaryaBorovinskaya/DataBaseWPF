@@ -56,5 +56,9 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
+        public void Delete(uint selectedIndex)
+        {
+            DataManager.GetInstance().FineDB_Repository.Delete(uint.Parse(selectedIndex.ToString()));
+        }
     }
 }

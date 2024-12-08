@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="{Binding DataTableTitle}" Height="450" Width="700"
         ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -82,7 +82,7 @@
                 <DockPanel>
                     <DataGrid DockPanel.Dock="Top" FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
                           CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-                          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedItemIndex}"
+                          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
                           ItemsSource="{Binding DataTableHandbooks}" 
                           MouseDown="DataGrid_MouseDown"
                               

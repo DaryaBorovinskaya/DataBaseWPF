@@ -11,7 +11,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Create(T entity);
         public IList<T> Read();
         public void Update(T entity);
-        public void Delete(T entity);
+        public void Delete(uint id);
         
     }
 }

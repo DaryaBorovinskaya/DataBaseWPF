@@ -55,6 +55,9 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             return userAbilities;
         }
 
-
+        public void Delete(int selectedIndex)
+        {
+            DataManager.GetInstance().BankDB_Repository.Delete(uint.Parse(selectedIndex.ToString()));
+        }
     }
 }

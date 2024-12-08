@@ -42,9 +42,9 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
-        public void Delete(IFineDB entity)
+        public void Delete(uint id)
         {
-            _query = $"delete from fine where id={entity.Id}";
+            _query = $"delete from fine where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
     }

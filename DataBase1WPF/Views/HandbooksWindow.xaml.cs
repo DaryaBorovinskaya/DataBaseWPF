@@ -1,7 +1,8 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
-using DataBase1WPF.ViewModels;
+using DataBase1WPF.ViewModels.Handbooks;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +26,30 @@ namespace DataBase1WPF.Views
         {
             InitializeComponent();
             DataContext = new HandbooksVM(tableService, menuElemId);
-            
+            if (DataContext is HandbooksVM handbooksVM)
+            {
+                handbooksVM.OnAdd += AddHandbook;
+                handbooksVM.OnEdit += EditHandbook;
+                handbooksVM.OnDelete += DeleteHandbook;
+            }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        public void AddHandbook(DataRow row, ITableService tableService) 
         {
+            AddOrEditHandbookWindow window = new(row, AddOrEditEnum.Add, 0, tableService);
+            window.Show();
+        }
 
+        public void EditHandbook(DataRow row, int selectedIndex, ITableService tableService)
+        {
+            AddOrEditHandbookWindow window = new(row, AddOrEditEnum.Edit, selectedIndex, tableService);
+            window.Show();
+        }
+
+        public void DeleteHandbook(DataRow row, int selectedIndex, ITableService tableService)
+        {
+            DeleteWindow window = new(row, selectedIndex,  tableService );
+            window.Show();
         }
 
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)

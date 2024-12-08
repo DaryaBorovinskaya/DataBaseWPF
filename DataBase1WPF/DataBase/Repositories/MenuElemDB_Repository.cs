@@ -42,7 +42,7 @@ namespace DataBase1WPF.DataBase.Repositories
             throw new NotImplementedException();
         }
 
-        public void Delete(IMenuElemDB entity)
+        public void Delete(uint id)
         {
             throw new NotImplementedException();
         }
