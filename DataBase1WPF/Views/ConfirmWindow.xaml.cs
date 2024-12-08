@@ -20,15 +20,15 @@ namespace DataBase1WPF.Views
     /// <summary>
     /// Логика взаимодействия для DeleteWindow.xaml
     /// </summary>
-    public partial class DeleteWindow : Window
+    public partial class ConfirmWindow : Window
     {
         private Window _confirmWindow;
-        public DeleteWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window, DataRow row=null, string confirmText=null )
+        public ConfirmWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window, DataRow row=null, string confirmText=null )
         {
 
             InitializeComponent();
-            DataContext = new DeleteHandbookVM(addEditDelete, tableService, row, confirmText);
-            if (DataContext is DeleteHandbookVM deleteVM)
+            DataContext = new ConfirmVM(addEditDelete, tableService, row, confirmText);
+            if (DataContext is ConfirmVM deleteVM)
             {
                 _confirmWindow = window;
                 deleteVM.OnExit += Exit;

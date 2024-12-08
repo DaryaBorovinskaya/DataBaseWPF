@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace DataBase1WPF.ViewModels.Handbooks
 {
-    public class DeleteHandbookVM : BasicVM
+    public class ConfirmVM : BasicVM
     {
         private string _confirmLine;
         private ITableService _tableService;
@@ -26,7 +26,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
             get { return _confirmLine; }
         }
 
-        public DeleteHandbookVM(AddEditDeleteEnum addEditDelete, ITableService tableService, DataRow row=null, string confirmText=null) 
+        public ConfirmVM(AddEditDeleteEnum addEditDelete, ITableService tableService, DataRow row=null, string confirmText=null) 
         {
             _row = row;
             if (row != null)
