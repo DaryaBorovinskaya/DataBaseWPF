@@ -22,10 +22,10 @@ namespace DataBase1WPF.Views
     /// </summary>
     public partial class AddOrEditHandbookWindow : Window
     {
-        public AddOrEditHandbookWindow(DataRow row, AddOrEditEnum addOrEdit, int selectedIndex, ITableService tableService)
+        public AddOrEditHandbookWindow(AddOrEditEnum addOrEdit,  ITableService tableService, DataRow row = null, int selectedIndex= 0)
         {
             InitializeComponent();
-            DataContext = addOrEdit == AddOrEditEnum.Add ? new AddHandbookVM(row, selectedIndex, tableService) : new EditHandbookVM(row, selectedIndex, tableService);
+            DataContext = addOrEdit == AddOrEditEnum.Add ? new AddHandbookVM(tableService) : new EditHandbookVM(row, selectedIndex, tableService);
         }
     }
 }

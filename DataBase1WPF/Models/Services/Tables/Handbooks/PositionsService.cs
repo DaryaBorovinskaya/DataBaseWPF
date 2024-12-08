@@ -57,7 +57,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
-        public void Delete(uint selectedIndex)
+        public void Delete(int selectedIndex)
         {
             DataManager.GetInstance().PositionDB_Repository.Delete(uint.Parse(selectedIndex.ToString()));
         }

@@ -55,7 +55,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
-        public void Delete(uint selectedIndex)
+        public void Delete(int selectedIndex)
         {
             DataManager.GetInstance().PaymentFrequencyDB_Repository.Delete(uint.Parse(selectedIndex.ToString()));
         }

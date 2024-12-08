@@ -22,10 +22,30 @@ namespace DataBase1WPF.Views
     /// </summary>
     public partial class DeleteWindow : Window
     {
-        public DeleteWindow(DataRow row, int selectedIndex, ITableService tableService)
+        private Window _delWindow;
+        public DeleteWindow(DataRow row, int selectedIndex, ITableService tableService, Window window)
         {
+
             InitializeComponent();
             DataContext = new DeleteHandbookVM(row, selectedIndex, tableService);
+            if (DataContext is DeleteHandbookVM deleteVM)
+            {
+                _delWindow = window;
+                deleteVM.OnExit += Exit;
+                deleteVM.OnApply += Apply;
+            }
+        }
+
+        public void Apply()
+        {
+            if (_delWindow.DataContext is HandbooksVM handbooksVM)
+            {
+                handbooksVM.UpdateDataTable();
+            }
+        }
+        public void Exit()
+        {
+            Close();
         }
     }
 }

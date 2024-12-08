@@ -26,7 +26,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
         private UserAbilitiesType _userAbilities;
 
 
-        public Action<DataRow, ITableService> OnAdd;
+        public Action<ITableService> OnAdd;
         public Action<DataRow, int, ITableService> OnEdit;
         public Action<DataRow, int, ITableService> OnDelete;
 
@@ -139,7 +139,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnAdd?.Invoke(DataTableHandbooks.Rows[SelectedIndex], _tableService);
+                    OnAdd?.Invoke( _tableService);
                 });
             }
         }
@@ -150,7 +150,8 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnEdit?.Invoke(DataTableHandbooks.Rows[SelectedIndex], SelectedIndex, _tableService);
+                    if (SelectedIndex >= 0 && SelectedIndex < DataTableHandbooks.Rows.Count)
+                        OnEdit?.Invoke(DataTableHandbooks.Rows[SelectedIndex], SelectedIndex, _tableService);
                 });
             }
         }

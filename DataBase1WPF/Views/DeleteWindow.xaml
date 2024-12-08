@@ -5,7 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
-        Title="DeleteWindow" Height="450" Width="800">
+        Title="DeleteWindow" Height="250" Width="400">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
+         TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+  BorderBrush="{TemplateBinding BorderBrush}"  
+  BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"  
+     Value="False">
+                    <Setter Property="Background"  
+      Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"  
+      Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -17,6 +40,12 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Text="{Binding ConfirmLine}"></TextBlock>
+        <TextBlock Grid.ColumnSpan="2" Text="{Binding ConfirmLine}"></TextBlock>
+        <Button Grid.Row="1" Grid.Column="0" Width="100" Height="40"
+                Template="{StaticResource NoMouseOverButtonTemplate}"
+                Command="{Binding ClickConfirm}">Да</Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="100"  Height="40"
+                Template="{StaticResource NoMouseOverButtonTemplate}"
+                Command="{Binding ClickCancellation}">Отмена</Button>
     </Grid>
 </Window>

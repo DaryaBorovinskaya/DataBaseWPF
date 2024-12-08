@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 
@@ -16,6 +17,8 @@ namespace DataBase1WPF.ViewModels.Handbooks
         private ITableService _tableService;
         private int _selectedIndex;
 
+        public Action OnExit;
+        public Action OnApply;
         public string ConfirmLine
         {
             get { return _confirmLine; }
@@ -35,6 +38,8 @@ namespace DataBase1WPF.ViewModels.Handbooks
                 return new DelegateCommand((obj) =>
                 {
                     _tableService.Delete(_selectedIndex);
+                    OnApply?.Invoke();
+                    OnExit?.Invoke();
                 });
             }
         }
@@ -46,7 +51,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    
+                    OnExit?.Invoke();
                 });
             }
         }

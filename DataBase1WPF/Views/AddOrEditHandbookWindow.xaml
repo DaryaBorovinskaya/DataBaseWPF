@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
-        Title="AddOrEditHandbookWindow" Height="450" Width="800">
+        Title="{Binding WindowTitle}" Height="450" Width="400">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
+       TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+BorderBrush="{TemplateBinding BorderBrush}"  
+BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"  
+   Value="False">
+                    <Setter Property="Background"  
+    Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"  
+    Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
     <Grid>
+        <TextBlock VerticalAlignment="Top" >Наименование</TextBlock>
+        <TextBox Height="50" VerticalAlignment="Top" Margin="50" 
+                   Background="Aqua" Text="{Binding Title}"></TextBox>
+        <TextBlock VerticalAlignment="Top" Margin="0 130 0 0" Visibility="{Binding SalaryVisibility}">Оклад</TextBlock>
+        <TextBox Height="50" VerticalAlignment="Top" Margin="50 150 50 0"  Background="Aqua"
+                   Visibility="{Binding SalaryVisibility}" Text="{Binding Salary}"></TextBox>
         
+        <Button VerticalAlignment="Bottom" Margin="20" Height="50" Template="{StaticResource NoMouseOverButtonTemplate}" 
+                Content="{Binding ButtonContent}"/>
     </Grid>
 </Window>

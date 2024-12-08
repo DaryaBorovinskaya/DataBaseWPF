@@ -34,21 +34,21 @@ namespace DataBase1WPF.Views
             }
         }
 
-        public void AddHandbook(DataRow row, ITableService tableService) 
+        public void AddHandbook(ITableService tableService) 
         {
-            AddOrEditHandbookWindow window = new(row, AddOrEditEnum.Add, 0, tableService);
+            AddOrEditHandbookWindow window = new(AddOrEditEnum.Add, tableService);
             window.Show();
         }
 
         public void EditHandbook(DataRow row, int selectedIndex, ITableService tableService)
         {
-            AddOrEditHandbookWindow window = new(row, AddOrEditEnum.Edit, selectedIndex, tableService);
+            AddOrEditHandbookWindow window = new(AddOrEditEnum.Edit, tableService, row, selectedIndex);
             window.Show();
         }
 
         public void DeleteHandbook(DataRow row, int selectedIndex, ITableService tableService)
         {
-            DeleteWindow window = new(row, selectedIndex,  tableService );
+            DeleteWindow window = new(row, selectedIndex,  tableService, this );
             window.Show();
         }
 

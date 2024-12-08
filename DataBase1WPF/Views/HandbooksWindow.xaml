@@ -111,6 +111,7 @@
                                     Height="35"
                                     Background="White"
                                     FontWeight="Bold" Content="Добавить"
+                                    Command="{Binding ClickAdd}"
                                     Visibility="{Binding WriteVisibility}"/>
                             
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
@@ -118,12 +119,14 @@
                                 Background="White" Width="85" 
                                 Height="35"
                                 FontWeight="Bold" Content="Изменить"
-                                    Visibility="{Binding EditVisibility}"/>
+                                    Visibility="{Binding EditVisibility}"
+                                    Command="{Binding ClickEdit}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
                                     Margin="20 0"            
                                     Background="White" Width="70" 
                                     Height="35"
                                     FontWeight="Bold" Content="Удалить"
+                                    Command="{Binding ClickDelete}"
                                     Visibility="{Binding DeleteVisibility}"/>
                         </StackPanel>
 
