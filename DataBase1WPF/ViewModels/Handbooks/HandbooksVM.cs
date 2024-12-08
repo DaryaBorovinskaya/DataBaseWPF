@@ -170,6 +170,12 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+        public void Delete()
+        {
+            _tableService.Delete(DataTableHandbooks.Rows[SelectedIndex]);
+            UpdateDataTable();
+        }
+
         public void UpdateDataTable()
         {
             DataTableHandbooks = _tableService.GetValuesTable();

@@ -1,4 +1,5 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,12 +26,18 @@ namespace DataBase1WPF.ViewModels.Handbooks
             get { return _confirmLine; }
         }
 
-        public DeleteHandbookVM(DataRow row, int selectedIndex, ITableService tableService) 
+        public DeleteHandbookVM(AddEditDeleteEnum addEditDelete, ITableService tableService, DataRow row=null, string confirmText=null) 
         {
             _row = row;
-            _confirmLine = $"Вы уверены, что хотите удалить {row[0]}?";
+            if (row != null)
+                _confirmLine = $"Вы уверены, что хотите удалить: {row[0]}?";
+            else if (confirmText != null && addEditDelete == AddEditDeleteEnum.Add)
+                _confirmLine = $"Вы уверены, что хотите добавить: {confirmText}?";
+            else if (confirmText != null && addEditDelete == AddEditDeleteEnum.Edit)
+                _confirmLine = $"Вы уверены, что хотите внести изменения: {confirmText}?";
+            else
+                _confirmLine = "Вы уверены?";
             _tableService = tableService;
-            _selectedIndex = selectedIndex; 
         }
 
         public ICommand ClickConfirm
@@ -39,7 +46,6 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    _tableService.Delete(_row);
                     OnApply?.Invoke();
                     OnExit?.Invoke();
                 });

@@ -22,15 +22,15 @@ namespace DataBase1WPF.Views
     /// </summary>
     public partial class DeleteWindow : Window
     {
-        private Window _delWindow;
-        public DeleteWindow(DataRow row, int selectedIndex, ITableService tableService, Window window)
+        private Window _confirmWindow;
+        public DeleteWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window, DataRow row=null, string confirmText=null )
         {
 
             InitializeComponent();
-            DataContext = new DeleteHandbookVM(row, selectedIndex, tableService);
+            DataContext = new DeleteHandbookVM(addEditDelete, tableService, row, confirmText);
             if (DataContext is DeleteHandbookVM deleteVM)
             {
-                _delWindow = window;
+                _confirmWindow = window;
                 deleteVM.OnExit += Exit;
                 deleteVM.OnApply += Apply;
             }
@@ -38,9 +38,17 @@ namespace DataBase1WPF.Views
 
         public void Apply()
         {
-            if (_delWindow.DataContext is HandbooksVM handbooksVM)
+            if (_confirmWindow.DataContext is HandbooksVM handbooksVM)
             {
-                handbooksVM.UpdateDataTable();
+                handbooksVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddHandbookVM addHandbookVM)
+            {
+                addHandbookVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditHandbookVM editHandbookVM)
+            {
+                editHandbookVM.Edit();
             }
         }
         public void Exit()

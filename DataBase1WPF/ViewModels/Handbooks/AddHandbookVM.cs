@@ -21,7 +21,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
         private string _title;
         private string _salary;
 
-        public Action OnApply;
+        public Action<string> OnApply;
 
         public string WindowTitle
         {
@@ -126,8 +126,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
                         float value = CheckValuesFloat(Salary);
                         if (value != -1)
                         {
-                            positionsService.Add(Title, float.Parse(Salary));
-                            OnApply?.Invoke();
+                            OnApply?.Invoke(value.ToString());
                         }
                     }
                     else if (_tableService is FineService fineService)
@@ -135,41 +134,62 @@ namespace DataBase1WPF.ViewModels.Handbooks
                         float value = CheckValuesFloat(Title);
                         if (value != -1)
                         {
-                            fineService.Add(value);
-                            OnApply?.Invoke();
+                            OnApply?.Invoke(value.ToString());
                         }
                     }
-                    else if (_tableService is BanksService bankService)
+                    else
                     {
-                        bankService.Add(Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is DistrictsService districtService)
-                    {
-                        districtService.Add(Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is PaymentFrequencyService paymentFrequencyService)
-                    {
-                        paymentFrequencyService.Add(Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is RentalPurposesService rentalPurposesService)
-                    {
-                        rentalPurposesService.Add(Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is StreetsService streetsService)
-                    {
-                        streetsService.Add(Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is TypesOfFinishingService typesOfFinishingService)
-                    {
-                        typesOfFinishingService.Add(Title);
-                        OnApply?.Invoke();
+                        OnApply?.Invoke(Title);
                     }
                 });
+            }
+        }
+
+        public void Add()
+        {
+            if (_tableService is PositionsService positionsService)
+            {
+                
+                positionsService.Add(Title, float.Parse(Salary));
+                
+                
+            }
+            else if (_tableService is FineService fineService)
+            {
+                
+                fineService.Add(float.Parse(Title));
+                
+                
+            }
+            else if (_tableService is BanksService bankService)
+            {
+                bankService.Add(Title);
+               
+            }
+            else if (_tableService is DistrictsService districtService)
+            {
+                districtService.Add(Title);
+                
+            }
+            else if (_tableService is PaymentFrequencyService paymentFrequencyService)
+            {
+                paymentFrequencyService.Add(Title);
+                
+            }
+            else if (_tableService is RentalPurposesService rentalPurposesService)
+            {
+                rentalPurposesService.Add(Title);
+                
+            }
+            else if (_tableService is StreetsService streetsService)
+            {
+                streetsService.Add(Title);
+                
+            }
+            else if (_tableService is TypesOfFinishingService typesOfFinishingService)
+            {
+                typesOfFinishingService.Add(Title);
+                
             }
         }
 

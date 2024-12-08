@@ -36,20 +36,20 @@ namespace DataBase1WPF.Views
 
         public void AddHandbook(ITableService tableService) 
         {
-            AddOrEditHandbookWindow window = new(AddOrEditEnum.Add, tableService, this);
+            AddOrEditHandbookWindow window = new(AddEditDeleteEnum.Add, tableService, this);
             window.ShowDialog();
         }
 
         public void EditHandbook(DataRow row, int selectedIndex, ITableService tableService)
         {
-            AddOrEditHandbookWindow window = new(AddOrEditEnum.Edit, tableService, this, row, selectedIndex);
+            AddOrEditHandbookWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row, selectedIndex);
             window.ShowDialog();
         }
 
         public void DeleteHandbook(DataRow row, int selectedIndex, ITableService tableService)
         {
-            DeleteWindow window = new(row, selectedIndex,  tableService, this );
-            window.Show();
+            DeleteWindow window = new(AddEditDeleteEnum.Delete ,tableService, this, row );
+            window.ShowDialog();
         }
 
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)

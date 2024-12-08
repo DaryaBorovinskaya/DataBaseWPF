@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Views
 {
-    public enum AddOrEditEnum
+    public enum AddEditDeleteEnum
     {
         Add,
-        Edit
+        Edit,
+        Delete
     }
 }

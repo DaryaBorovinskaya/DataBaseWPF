@@ -22,7 +22,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
         private string _title;
         private string _salary;
 
-        public Action OnApply;
+        public Action<string> OnApply;
         public string WindowTitle
         {
             get { return _windowTitle; }
@@ -131,8 +131,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
                         float value = CheckValuesFloat(Salary);
                         if (value != -1)
                         {
-                            positionsService.Update(_row,Title, float.Parse(Salary));
-                            OnApply?.Invoke();
+                            OnApply?.Invoke(value.ToString());
                         }
                     }
                     else if (_tableService is FineService fineService)
@@ -140,43 +139,60 @@ namespace DataBase1WPF.ViewModels.Handbooks
                         float value = CheckValuesFloat(Title);
                         if (value != -1)
                         {
-                            fineService.Update(_row, value);
-                            OnApply?.Invoke();
+                            OnApply?.Invoke(value.ToString());
                         }
                     }
-                    else if (_tableService is BanksService bankService)
+                    else 
                     {
-                        bankService.Update(_row, Title);
-                        OnApply?.Invoke();
+                        OnApply?.Invoke(Title);
                     }
-                    else if (_tableService is DistrictsService districtService)
-                    {
-                        districtService.Update(_row, Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is PaymentFrequencyService paymentFrequencyService)
-                    {
-                        paymentFrequencyService.Update(_row, Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is RentalPurposesService rentalPurposesService)
-                    {
-                        rentalPurposesService.Update(_row, Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is StreetsService streetsService)
-                    {
-                        streetsService.Update(_row, Title);
-                        OnApply?.Invoke();
-                    }
-                    else if (_tableService is TypesOfFinishingService typesOfFinishingService)
-                    {
-                        typesOfFinishingService.Update(_row, Title);
-                        OnApply?.Invoke();
-                    }
+                    
                 });
             }
         }
 
+        public void Edit()
+        {
+            if (_tableService is PositionsService positionsService)
+            {
+                positionsService.Update(_row, Title, float.Parse(Salary));
+                    
+            }
+            else if (_tableService is FineService fineService)
+            {
+                fineService.Update(_row, float.Parse(Title));
+                
+            }
+            else if (_tableService is BanksService bankService)
+            {
+                bankService.Update(_row, Title);
+                
+            }
+            else if (_tableService is DistrictsService districtService)
+            {
+                districtService.Update(_row, Title);
+                
+            }
+            else if (_tableService is PaymentFrequencyService paymentFrequencyService)
+            {
+                paymentFrequencyService.Update(_row, Title);
+                
+            }
+            else if (_tableService is RentalPurposesService rentalPurposesService)
+            {
+                rentalPurposesService.Update(_row, Title);
+                
+            }
+            else if (_tableService is StreetsService streetsService)
+            {
+                streetsService.Update(_row, Title);
+                
+            }
+            else if (_tableService is TypesOfFinishingService typesOfFinishingService)
+            {
+                typesOfFinishingService.Update(_row, Title);
+                
+            }
+        }
     }
 }
