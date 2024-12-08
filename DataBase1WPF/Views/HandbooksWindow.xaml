@@ -14,7 +14,7 @@
          TargetType="Button">
             <Border Background="{TemplateBinding Background}"  
   BorderBrush="{TemplateBinding BorderBrush}"  
-  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
@@ -46,7 +46,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}" >
-                        <Border x:Name="border" CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                        <Border x:Name="border" CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -81,7 +81,8 @@
             <TabItem Header="{Binding DataTableTitle}" FontSize="16">
                 <DockPanel>
                     <DataGrid DockPanel.Dock="Top" FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
-                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                          
+                              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                           SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
                           ItemsSource="{Binding DataTableHandbooks}" 
                           MouseDown="DataGrid_MouseDown"

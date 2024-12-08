@@ -12,6 +12,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
     public class DistrictsService :   ITableService
     {
         private Dictionary<DataRowWithIndex, IHandbookDB> _dataDictionary;
+        
         private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
@@ -28,6 +29,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             for (int i = 0; i < values.Count; i++)
                 _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
 
+
             return table;
         }
 
@@ -37,8 +39,15 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Title.Contains(searchLine)).ToList());
+            List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+
+
             return table;
         }
 
@@ -63,12 +72,12 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             return userAbilities;
         }
 
-        public void Delete(int selectedIndex)
+        public void Delete(DataRow row)
         {
             uint id = 0;
             foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
             {
-                if (data.Key.Index == selectedIndex)
+                if (data.Key.DataRow == row)
                     id = data.Value.Id;
             }
 

@@ -36,14 +36,14 @@ namespace DataBase1WPF.Views
 
         public void AddHandbook(ITableService tableService) 
         {
-            AddOrEditHandbookWindow window = new(AddOrEditEnum.Add, tableService);
-            window.Show();
+            AddOrEditHandbookWindow window = new(AddOrEditEnum.Add, tableService, this);
+            window.ShowDialog();
         }
 
         public void EditHandbook(DataRow row, int selectedIndex, ITableService tableService)
         {
-            AddOrEditHandbookWindow window = new(AddOrEditEnum.Edit, tableService, row, selectedIndex);
-            window.Show();
+            AddOrEditHandbookWindow window = new(AddOrEditEnum.Edit, tableService, this, row, selectedIndex);
+            window.ShowDialog();
         }
 
         public void DeleteHandbook(DataRow row, int selectedIndex, ITableService tableService)
@@ -68,5 +68,7 @@ namespace DataBase1WPF.Views
             if (DataContext is HandbooksVM handbooksVM)
                 handbooksVM.DataTableMouseLeave();
         }
+
+        
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="400">
+        Title="{Binding WindowTitle}" Height="250" Width="400" ResizeMode="CanMinimize">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -29,15 +29,19 @@ BorderThickness="{TemplateBinding BorderThickness}">
         </ControlTemplate>
     </Window.Resources>
 
-    <Grid>
-        <TextBlock VerticalAlignment="Top" Text="{Binding TitleText}"></TextBlock>
-        <TextBox Height="50" VerticalAlignment="Top" Margin="50" 
-                   Background="Aqua" Text="{Binding Title}"></TextBox>
-        <TextBlock VerticalAlignment="Top" Margin="0 130 0 0" Visibility="{Binding SalaryVisibility}">Оклад</TextBlock>
-        <TextBox Height="50" VerticalAlignment="Top" Margin="50 150 50 0"  Background="Aqua"
+    <Grid Background="#b9d1ea">
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 20 0 0"
+                   Text="{Binding TitleText}"></TextBlock>
+        <TextBox Height="30" VerticalAlignment="Top" Margin="50" 
+                    Text="{Binding Title}"></TextBox>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" 
+                   Margin="0 80 0 0" Visibility="{Binding SalaryVisibility}">Оклад</TextBlock>
+        <TextBox Height="30" VerticalAlignment="Top" Margin="50 110 50 0"  
                    Visibility="{Binding SalaryVisibility}" Text="{Binding Salary}"></TextBox>
         
-        <Button VerticalAlignment="Bottom" Margin="20" Height="50" Template="{StaticResource NoMouseOverButtonTemplate}" 
-                Content="{Binding ButtonContent}"/>
+        <Button VerticalAlignment="Bottom" Margin="20" Height="40"
+                Width="200" Background="White" Template="{StaticResource NoMouseOverButtonTemplate}" 
+                Content="{Binding ButtonContent}"
+                Command="{Binding Click}"/>
     </Grid>
 </Window>

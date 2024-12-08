@@ -12,7 +12,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class FineService :  ITableService
     {
-        private Dictionary<DataRowWithIndex, IFineDB> _dataDictionary;
+        private Dictionary<DataRow, IFineDB> _dataDictionary;
         private List<IFineDB> GetValues()
         {
             List<IFineDB> values = DataManager.GetInstance().FineDB_Repository.Read().ToList();
@@ -27,7 +27,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+                _dataDictionary.Add(table.Rows[i], values[i]);
 
             return table;
         }
@@ -38,8 +38,15 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues().Where(item => item.Amount.ToString().Contains(searchLine)).ToList());
+            List<IFineDB> values = GetValues().Where(item => item.Amount.ToString().Contains(searchLine)).ToList();
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(table.Rows[i], values[i]);
+
+
             return table;
         }
 
@@ -63,16 +70,21 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
-        public void Delete(int selectedIndex)
-        {
-            uint id = 0;
-            foreach (KeyValuePair<DataRowWithIndex, IFineDB> data in _dataDictionary)
-            {
-                if (data.Key.Index == selectedIndex)
-                    id = data.Value.Id;
-            }
 
-            DataManager.GetInstance().FineDB_Repository.Delete(id);
+
+        public void Add(float amount)
+        {
+            DataManager.GetInstance().FineDB_Repository.Create(new FineDB(amount));
+        }
+
+        public void Update(DataRow row, float amount) 
+        {
+            DataManager.GetInstance().FineDB_Repository.Update(new FineDB(_dataDictionary[row].Id, amount));
+        }
+
+        public void Delete(DataRow row)
+        {
+            DataManager.GetInstance().FineDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

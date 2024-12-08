@@ -65,12 +65,18 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
-        public void Delete(int selectedIndex)
+
+        public void Add(string title, float salary)
+        {
+            DataManager.GetInstance().PositionDB_Repository.Create(new PositionDB(title, salary));
+        }
+
+        public void Delete(DataRow row)
         {
             uint id = 0;
             foreach (KeyValuePair<DataRowWithIndex, IPositionDB> data in _dataDictionary)
             {
-                if (data.Key.Index == selectedIndex)
+                if (data.Key.DataRow == row)
                     id = data.Value.Id;
             }
 

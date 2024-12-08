@@ -16,6 +16,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
         private string _confirmLine;
         private ITableService _tableService;
         private int _selectedIndex;
+        private DataRow _row;
 
         public Action OnExit;
         public Action OnApply;
@@ -26,6 +27,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
 
         public DeleteHandbookVM(DataRow row, int selectedIndex, ITableService tableService) 
         {
+            _row = row;
             _confirmLine = $"Вы уверены, что хотите удалить {row[0]}?";
             _tableService = tableService;
             _selectedIndex = selectedIndex; 
@@ -37,7 +39,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 return new DelegateCommand((obj) =>
                 {
-                    _tableService.Delete(_selectedIndex);
+                    _tableService.Delete(_row);
                     OnApply?.Invoke();
                     OnExit?.Invoke();
                 });

@@ -62,12 +62,12 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return userAbilities;
         }
-        public void Delete(int selectedIndex)
+        public void Delete(DataRow row)
         {
             uint id = 0;
             foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
             {
-                if (data.Key.Index == selectedIndex)
+                if (data.Key.DataRow == row)
                     id = data.Value.Id;
             }
 
