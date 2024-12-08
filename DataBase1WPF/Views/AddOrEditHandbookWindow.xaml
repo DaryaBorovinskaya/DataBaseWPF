@@ -30,7 +30,7 @@ BorderThickness="{TemplateBinding BorderThickness}">
     </Window.Resources>
 
     <Grid>
-        <TextBlock VerticalAlignment="Top" >Наименование</TextBlock>
+        <TextBlock VerticalAlignment="Top" Text="{Binding TitleText}"></TextBlock>
         <TextBox Height="50" VerticalAlignment="Top" Margin="50" 
                    Background="Aqua" Text="{Binding Title}"></TextBox>
         <TextBlock VerticalAlignment="Top" Margin="0 130 0 0" Visibility="{Binding SalaryVisibility}">Оклад</TextBlock>

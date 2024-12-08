@@ -13,6 +13,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
     public class EditHandbookVM : BasicVM
     {
         private string _windowTitle;
+        private string _titleText;
         private string _buttonContent;
         private Visibility _salaryVisibility;
         private string _title;
@@ -25,6 +26,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
         public string ButtonContent
         {
             get { return _buttonContent; }
+        }
+        public string TitleText
+        {
+            get { return _titleText; }
         }
 
         public Visibility SalaryVisibility
@@ -60,6 +65,9 @@ namespace DataBase1WPF.ViewModels.Handbooks
             _salaryVisibility = tableService.GetTableName() == (new PositionsService()).GetTableName()
                 ? Visibility.Visible
                 : Visibility.Collapsed;
+            _titleText = tableService.GetTableName() == (new FineService()).GetTableName()
+               ? "Сумма"
+               : "Наименование";
         }
     }
 }

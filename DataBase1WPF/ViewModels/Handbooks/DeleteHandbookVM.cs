@@ -28,7 +28,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
         {
             _confirmLine = $"Вы уверены, что хотите удалить {row[0]}?";
             _tableService = tableService;
-            _selectedIndex = selectedIndex;
+            _selectedIndex = selectedIndex; 
         }
 
         public ICommand ClickConfirm

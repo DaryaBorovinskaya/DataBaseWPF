@@ -11,6 +11,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
     public class BanksService :   ITableService
     {
+        private Dictionary<DataRowWithIndex, IHandbookDB> _dataDictionary;
         private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().BankDB_Repository.Read().ToList();
@@ -19,8 +20,14 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
         public DataTable GetValuesTable()
         {
-            DataTable table = DataTableConverter.ToDataTable(GetValues());
+            List<IHandbookDB> values = GetValues();
+            DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+
+            _dataDictionary = new();
+            for (int i = 0;i< values.Count;i++)
+                _dataDictionary.Add(new DataRowWithIndex(table.Rows[i], i), values[i]);
+            
             return table;
         }
 
@@ -57,7 +64,14 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
         public void Delete(int selectedIndex)
         {
-            DataManager.GetInstance().BankDB_Repository.Delete(uint.Parse(selectedIndex.ToString()));
+            uint id = 0;
+            foreach (KeyValuePair<DataRowWithIndex, IHandbookDB> data in _dataDictionary)
+            {
+                if (data.Key.Index == selectedIndex)
+                    id = data.Value.Id;
+            }
+
+            DataManager.GetInstance().BankDB_Repository.Delete(id);
         }
     }
 }
