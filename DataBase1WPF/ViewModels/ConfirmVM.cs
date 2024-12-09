@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Linq;
 
-namespace DataBase1WPF.ViewModels.Handbooks
+namespace DataBase1WPF.ViewModels
 {
     public class ConfirmVM : BasicVM
     {
@@ -26,7 +26,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
             get { return _confirmLine; }
         }
 
-        public ConfirmVM(AddEditDeleteEnum addEditDelete, ITableService tableService, DataRow row=null, string confirmText=null) 
+        public ConfirmVM(AddEditDeleteEnum addEditDelete, ITableService tableService, DataRow row = null, string confirmText = null)
         {
             _row = row;
             if (row != null)

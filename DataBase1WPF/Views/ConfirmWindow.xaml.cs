@@ -1,4 +1,6 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.ViewModels;
+using DataBase1WPF.ViewModels.Building;
 using DataBase1WPF.ViewModels.Handbooks;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,11 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditHandbookVM editHandbookVM)
             {
                 editHandbookVM.Edit();
+            }
+
+            else if (_confirmWindow.DataContext is BuildingVM buildingVM)
+            {
+                buildingVM.Delete();
             }
         }
         public void Exit()

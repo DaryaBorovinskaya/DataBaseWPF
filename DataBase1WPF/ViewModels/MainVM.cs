@@ -15,6 +15,7 @@ using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.Models.Services.Tables.Handbooks;
 using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.MenuElems;
+using DataBase1WPF.Models.Services.Tables.Building;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -34,6 +35,12 @@ namespace DataBase1WPF.ViewModels
         public Action<ITableService, uint> OnRentalPurposes;
         public Action<ITableService, uint> OnTypesOfFinishing;
         public Action<ITableService, uint> OnFine;
+
+        public Action<ITableService, uint> OnBuilding;
+
+
+
+        public Action OnAboutProgram;
 
         public ICommand ClickRegistration
         {
@@ -166,8 +173,32 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-         
 
-        
+
+
+        public ICommand ClickBuildings
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnBuilding?.Invoke(
+                        new BuildingService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickBuildings))
+                        );
+                });
+            }
+        }
+
+        public ICommand ClickAboutProgram
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnAboutProgram?.Invoke();
+                });
+            }
+        }
+
     }
 }

@@ -1,7 +1,6 @@
-﻿using DataBase1WPF.DataBase.Entities.Fine;
+﻿using DataBase1WPF.DataBase.Entities.Building;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
-using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,46 +8,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase1WPF.Models.Services.Tables.Handbooks
+namespace DataBase1WPF.Models.Services.Tables.Building
 {
-    public class BanksService :   ITableService
+    public class BuildingService : IBuildingService, ITableService
     {
-        private Dictionary<DataRow, IHandbookDB> _dataDictionary;
-        private List<IHandbookDB> GetValues()
+        private Dictionary<DataRow, IBuildingDB> _dataDictionary;
+        private List<IBuildingDB> GetValues()
         {
-            List<IHandbookDB> values = DataManager.GetInstance().BankDB_Repository.Read().ToList();
+            List<IBuildingDB> values = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
             return values;
         }
 
         public DataTable GetValuesTable()
         {
-            List<IHandbookDB> values = GetValues();
+            List<IBuildingDB> values = GetValues();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
 
             _dataDictionary = new();
-            for (int i = 0;i< values.Count;i++)
+            for (int i = 0; i < values.Count; i++)
                 _dataDictionary.Add(table.Rows[i], values[i]);
-            
+
             return table;
         }
 
         public string GetTableName()
         {
-            return "Банки";
+            return "Здания";
+        }
+
+        public string GetOtherTableName()
+        {
+            return "Помещения";
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
-            DataTable table = DataTableConverter.ToDataTable(values);
-            table.Columns.Remove(table.Columns[0]);
-            
-            _dataDictionary = new();
-            for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(table.Rows[i], values[i]);
+            return new DataTable();
+            //List<IBuildingDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
+            //DataTable table = DataTableConverter.ToDataTable(values);
+            //table.Columns.Remove(table.Columns[0]);
+
+            //_dataDictionary = new();
+            //for (int i = 0; i < values.Count; i++)
+            //    _dataDictionary.Add(table.Rows[i], values[i]);
 
 
-            return table;
+            //return table;
         }
 
 
@@ -56,12 +61,12 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
         {
             UserAbilitiesType userAbilities = new();
             List<IUserAbilitiesDB> userAbilitiesDB = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
-            
 
-            foreach(IUserAbilitiesDB userAbilityDB in userAbilitiesDB) 
-            { 
+
+            foreach (IUserAbilitiesDB userAbilityDB in userAbilitiesDB)
+            {
                 if (userAbilityDB.UserId == DataManager.GetInstance().CurrentUser.Id
-                    && userAbilityDB.MenuElemId == menuElemId) 
+                    && userAbilityDB.MenuElemId == menuElemId)
                 {
                     userAbilities.CanRead = userAbilityDB.R;
                     userAbilities.CanWrite = userAbilityDB.W;
@@ -86,7 +91,7 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().BankDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().BuildingDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

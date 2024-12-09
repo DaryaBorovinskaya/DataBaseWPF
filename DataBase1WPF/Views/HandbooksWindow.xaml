@@ -80,8 +80,8 @@
         <TabControl>
             <TabItem Header="{Binding DataTableTitle}" FontSize="16">
                 <DockPanel>
-                    <DataGrid DockPanel.Dock="Top" FontSize="16" ColumnWidth="*" CanUserSortColumns="False"
-                          
+                    <DataGrid DockPanel.Dock="Top" FontSize="16"  CanUserSortColumns="False"
+                          HorizontalScrollBarVisibility="Auto"
                               CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                           SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
                           ItemsSource="{Binding DataTableHandbooks}" 
@@ -129,6 +129,7 @@
                                     FontWeight="Bold" Content="Удалить"
                                     Command="{Binding ClickDelete}"
                                     Visibility="{Binding DeleteVisibility}"/>
+                            
                         </StackPanel>
 
                     </DockPanel>

@@ -34,6 +34,9 @@ namespace DataBase1WPF.Views
                 mainVM.OnTypesOfFinishing += Handbooks;
                 mainVM.OnFine += Handbooks;
 
+                mainVM.OnBuilding += Building;
+
+                mainVM.OnAboutProgram += AboutProgram;
             }
         }
 
@@ -59,18 +62,21 @@ namespace DataBase1WPF.Views
         private void Handbooks(ITableService tableService, uint menuElemId)
         {
             HandbooksWindow window = new(tableService, menuElemId);
-            window.Show();
+            window.ShowDialog();
 
-
-
-            //DataGrid dataGrid = new();
-            //Binding binding = new ("DataTableHandbooks");
-            //binding.Source = DataContext is MainVM;
-            //dataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding);
-             
         }
         
+        private void Building(ITableService tableService, uint menuElemId)
+        {
+            BuildingWindow window = new(tableService, menuElemId);
+            window.ShowDialog();
+        }
 
+        private void AboutProgram()
+        {
+            AboutProgramWindow window = new();
+            window.ShowDialog();
+        }
 
         private void Window_Closed(object sender, EventArgs e)
         {
