@@ -3,6 +3,7 @@ using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.Premise;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.DataBase.Repositories;
+using DataBase1WPF.Models.Services.Tables.Premise;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,12 +15,19 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 {
     public class BuildingService : IBuildingService, ITableService
     {
+        private IPremiseService _premiseService; 
         private Dictionary<DataRow, IBuildingDB> _dataDictionary;
         private List<IBuildingDB> GetValues()
         {
             List<IBuildingDB> values = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
             return values;
         }
+
+        public BuildingService()
+        {
+            _premiseService = new PremiseService();
+        }
+
 
         public DataTable GetValuesTable()
         {
@@ -107,14 +115,7 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 
         public DataTable? GetPremisesByBuilding(DataRow row)
         {
-            DataTable table = null;
-            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
-            { 
-                List<IPremiseDB> values = repository.GetPremisesByBuildingId(_dataDictionary[row].Id).ToList();
-                table = DataTableConverter.ToDataTable(values);
-                table.Columns.Remove(table.Columns[0]);
-            }
-            return table;
+            return _premiseService.GetPremisesByBuilding(_dataDictionary[row].Id);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace DataBase1WPF.DataBase.Entities.Premise
         public uint Id { get; set; }
         public uint BuildingID { get; set; }
         public uint TypeOfFinishingId { get; set; }
+        [DisplayName("Вид отделки")]
+        public string TypeOfFinishingTitle { get; set; }
 
         [DisplayName("Номер помещения")]
         public string PremiseNumber { get; set; }

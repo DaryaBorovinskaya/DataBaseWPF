@@ -27,23 +27,7 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IPremiseDB> Read()
         {
-            _query = "select * from premises";
-            IList<IPremiseDB> result = new List<IPremiseDB>();
-            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
-            foreach (DataRow row in dataTable.Rows)
-            {
-                result.Add(new PremiseDB(
-                    uint.Parse(row[0].ToString()),
-                    uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
-                    row[3].ToString(),
-                    float.Parse(row[4].ToString()),
-                    int.Parse(row[5].ToString()),
-                    int.Parse(row[6].ToString()) == 1 ? true : false,
-                    float.Parse(row[7].ToString())
-                ));
-            }
-            return result;
+            throw new NotImplementedException();
         }
 
         public void Update(IPremiseDB entity)
@@ -66,7 +50,15 @@ namespace DataBase1WPF.DataBase.Repositories
 
         public IList<IPremiseDB> GetPremisesByBuildingId(uint building_id)
         {
-            _query = $"select * from premises where building_id = {building_id}";
+            _query = $"select rentapp.premises.id, rentapp.premises.building_id, " +
+                $"rentapp.premises.type_of_finishing_id,  rentapp.types_of_finishings.title, " +
+                $"rentapp.premises.premise_number, rentapp.premises.area, " +
+                $"rentapp.premises.floor_number, rentapp.premises.availability_of_phone_number,  " +
+                $"rentapp.premises.temp_rental_payment " +
+                $"from rentapp.premises  " +
+                $"join rentapp.buildings on rentapp.premises.building_id =  rentapp.buildings.id " +
+                $"join rentapp.types_of_finishings on rentapp.premises.type_of_finishing_id = rentapp.types_of_finishings.id " +
+                $"where rentapp.buildings.id = {building_id}; "; 
             IList<IPremiseDB> result = new List<IPremiseDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -76,10 +68,11 @@ namespace DataBase1WPF.DataBase.Repositories
                     uint.Parse(row[1].ToString()),
                     uint.Parse(row[2].ToString()),
                     row[3].ToString(),
-                    float.Parse(row[4].ToString()),
-                    int.Parse(row[5].ToString()),
-                    int.Parse(row[6].ToString()) == 1 ? true : false,
-                    float.Parse(row[7].ToString())
+                    row[4].ToString(),
+                    float.Parse(row[5].ToString()),
+                    int.Parse(row[6].ToString()),
+                    int.Parse(row[7].ToString()) == 1 ? true : false,
+                    float.Parse(row[8].ToString())
                 ));
             }
             return result;
