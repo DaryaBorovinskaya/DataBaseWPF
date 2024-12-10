@@ -25,7 +25,14 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IBuildingDB> Read()
         {
-            _query = "select * from buildings";
+            _query = "select rentapp.buildings.id, rentapp.buildings.district_id , rentapp.districts.title, " +
+                "rentapp.buildings.street_id , " +
+                "rentapp.streets.title , rentapp.buildings.house_number,  rentapp.buildings.number_of_floors," +
+                " rentapp.buildings.count_rental_premises , rentapp.buildings.commandant_phone_number " +
+                "from rentapp.buildings " +
+                "join rentapp.districts on rentapp.buildings.district_id = rentapp.districts.id " +
+                "join rentapp.streets on rentapp.buildings.street_id = rentapp.streets.id;";
+
             IList<IBuildingDB> result = new List<IBuildingDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -33,11 +40,13 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new BuildingDB(
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
-                    row[3].ToString(),
-                    uint.Parse(row[4].ToString()),
-                    uint.Parse(row[5].ToString()),
-                    row[6].ToString()
+                    row[2].ToString(),
+                    uint.Parse(row[3].ToString()),
+                    row[4].ToString(),
+                    row[5].ToString(),
+                    uint.Parse(row[6].ToString()),
+                    uint.Parse(row[7].ToString()),
+                    row[8].ToString()
                 ));
             }
             return result;
@@ -58,5 +67,8 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"delete from buildings where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+         
+
     }
 }

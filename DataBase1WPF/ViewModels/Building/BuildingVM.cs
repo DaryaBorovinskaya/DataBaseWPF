@@ -16,7 +16,9 @@ namespace DataBase1WPF.ViewModels.Building
     {
         private ITableService _tableService;
 
-        private DataTable _dataTableHandbooks;
+        private DataTable _dataTableBuildings;
+        private DataTable _dataTablePremises;
+        private Visibility _premisesVisibility;
         private string _dataTableTitle;
         private string _dataTableOtherTitle;
         private string _searchDataInTable;
@@ -42,9 +44,19 @@ namespace DataBase1WPF.ViewModels.Building
             _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
+            _premisesVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
         }
 
+
+        public Visibility PremisesVisibility
+        {
+            get { return _premisesVisibility; }
+            set
+            {
+                Set(ref _premisesVisibility, value);
+            }
+        }
 
         public string SearchDataInTable
         {
@@ -58,15 +70,25 @@ namespace DataBase1WPF.ViewModels.Building
 
         public DataTable DataTableBuildings
         {
-            get { return _dataTableHandbooks; }
+            get { return _dataTableBuildings; }
             set
             {
-                if (_dataTableHandbooks == null)
-                    _dataTableHandbooks = value;
+                if (_dataTableBuildings == null)
+                    _dataTableBuildings = value;
                 else
-                    Set(ref _dataTableHandbooks, value);
+                    Set(ref _dataTableBuildings, value);
             }
         }
+
+        public DataTable DataTablePremises
+        {
+            get { return _dataTablePremises; }
+            set
+            {
+                Set(ref _dataTablePremises, value);
+            }
+        }
+
 
         public string DataTableTitle
         {
@@ -94,12 +116,28 @@ namespace DataBase1WPF.ViewModels.Building
         }
 
 
+
+
         public int SelectedIndex
         {
             get { return _selectedIndex; }
             set
             {
                 Set(ref _selectedIndex, value);
+                if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count 
+                    && _tableService is BuildingService service)
+                {
+                    DataTable? table = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
+                    if (table != null && table.Rows.Count != 0)
+                    {
+                        PremisesVisibility = Visibility.Visible;
+                        DataTablePremises = table;
+                    }
+                    else
+                    {
+                        PremisesVisibility = Visibility.Collapsed;
+                    }
+                }
             }
         }
 

@@ -135,13 +135,14 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16">
+            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16"
+                     Visibility="{Binding PremisesVisibility}">
                 <DockPanel>
                     <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
           HorizontalScrollBarVisibility="Auto"
               CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
           SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
-          ItemsSource="{Binding DataTableHandbooks}" 
+          ItemsSource="{Binding DataTablePremises}" 
           MouseDown="DataGrid_MouseDown"
               
               IsReadOnly="True"

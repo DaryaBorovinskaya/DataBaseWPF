@@ -62,5 +62,27 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"delete from premises where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+
+        public IList<IPremiseDB> GetPremisesByBuildingId(uint building_id)
+        {
+            _query = $"select * from premises where building_id = {building_id}";
+            IList<IPremiseDB> result = new List<IPremiseDB>();
+            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result.Add(new PremiseDB(
+                    uint.Parse(row[0].ToString()),
+                    uint.Parse(row[1].ToString()),
+                    uint.Parse(row[2].ToString()),
+                    row[3].ToString(),
+                    float.Parse(row[4].ToString()),
+                    int.Parse(row[5].ToString()),
+                    int.Parse(row[6].ToString()) == 1 ? true : false,
+                    float.Parse(row[7].ToString())
+                ));
+            }
+            return result;
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using DataBase1WPF.DataBase.Entities.Building;
 using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.Premise;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
+using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,11 +26,19 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             List<IBuildingDB> values = GetValues();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[1]);
+            table.Columns.Remove(table.Columns[2]);
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
                 _dataDictionary.Add(table.Rows[i], values[i]);
 
+            //DataTable tableForView = table.Copy();
+            //tableForView.Columns.Remove(tableForView.Columns[1]);
+            //tableForView.Columns.Remove(tableForView.Columns[2]);
+            //return tableForView;
+
+            
             return table;
         }
 
@@ -92,6 +102,19 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().BuildingDB_Repository.Delete(_dataDictionary[row].Id);
+        }
+
+
+        public DataTable? GetPremisesByBuilding(DataRow row)
+        {
+            DataTable table = null;
+            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+            { 
+                List<IPremiseDB> values = repository.GetPremisesByBuildingId(_dataDictionary[row].Id).ToList();
+                table = DataTableConverter.ToDataTable(values);
+                table.Columns.Remove(table.Columns[0]);
+            }
+            return table;
         }
     }
 }
