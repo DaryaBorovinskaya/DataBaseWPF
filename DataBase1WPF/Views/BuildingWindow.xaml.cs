@@ -33,6 +33,9 @@ namespace DataBase1WPF.Views
                 buildingVM.OnAdd += Add;
                 buildingVM.OnEdit += Edit;
                 buildingVM.OnDelete += Delete;
+                buildingVM.OnAddPremise += AddPremise;
+                buildingVM.OnEditPremise += EditPremise;
+                buildingVM.OnDeletePremise += DeletePremise;
             }
         }
 
@@ -55,11 +58,39 @@ namespace DataBase1WPF.Views
         }
 
 
+        public void AddPremise(ITableService tableService)
+        {
+            AddOrEditPremiseWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            window.ShowDialog();
+        }
+
+        public void EditPremise(DataRow row, int selectedIndex, ITableService tableService)
+        {
+            AddOrEditPremiseWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row, selectedIndex);
+            window.ShowDialog();
+        }
+
+        public void DeletePremise(DataRow row, int selectedIndex, ITableService tableService)
+        {
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, row[0].ToString() + " номер " + row[1].ToString() + " площадь " + row[2].ToString(), OtherTablesEnum.Premises);
+            window.ShowDialog();
+        }
+
+
+
+
+
 
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is BuildingVM buildingVM)
                 buildingVM.DataTableMouseDown();
+        }
+
+        private void DataGridPremises_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is BuildingVM buildingVM)
+                buildingVM.DataTablePremisesMouseDown();
         }
 
         private void DataGrid_MouseLeave(object sender, MouseEventArgs e)
@@ -68,6 +99,12 @@ namespace DataBase1WPF.Views
         }
 
         private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is BuildingVM buildingVM)
+                buildingVM.DataTableMouseLeave();
+        }
+
+        private void TextBoxPremises_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is BuildingVM buildingVM)
                 buildingVM.DataTableMouseLeave();

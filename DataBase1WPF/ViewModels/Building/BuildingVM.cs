@@ -22,7 +22,9 @@ namespace DataBase1WPF.ViewModels.Building
         private string _dataTableTitle;
         private string _dataTableOtherTitle;
         private string _searchDataInTable;
+        private string _searchDataInTablePremises;
         private int _selectedIndex;
+        private int _selectedIndexPremises;
         private Visibility _writeVisibility;
         private Visibility _editVisibility;
         private Visibility _deleteVisibility;
@@ -32,6 +34,10 @@ namespace DataBase1WPF.ViewModels.Building
         public Action<ITableService> OnAdd;
         public Action<DataRow, int, ITableService> OnEdit;
         public Action<DataRow, int, ITableService> OnDelete;
+
+        public Action<ITableService> OnAddPremise;
+        public Action<DataRow, int, ITableService> OnEditPremise;
+        public Action<DataRow, int, ITableService> OnDeletePremise;
 
         public BuildingVM(ITableService tableService, uint menuElemId)
         {
@@ -67,6 +73,18 @@ namespace DataBase1WPF.ViewModels.Building
                 DataTableBuildings = _tableService.SearchDataInTable(_searchDataInTable);
             }
         }
+
+        public string SearchDataInTablePremises
+        {
+            get { return _searchDataInTablePremises; }
+            set
+            {
+                Set(ref _searchDataInTablePremises, value);
+                if (_tableService is BuildingService service)
+                    DataTableBuildings = service.SearchDataInTable(_searchDataInTable);
+            }
+        }
+
 
         public DataTable DataTableBuildings
         {
@@ -141,6 +159,16 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        public int SelectedIndexPremises
+        {
+            get { return _selectedIndexPremises; }
+            set
+            {
+                Set(ref _selectedIndexPremises, value);
+            }
+        }
+
+
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -148,7 +176,20 @@ namespace DataBase1WPF.ViewModels.Building
 
         }
 
+        public void DataTablePremisesMouseDown()
+        {
+            EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
+            DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         public void DataTableMouseLeave()
+        {
+            EditVisibility = Visibility.Collapsed;
+            DeleteVisibility = Visibility.Collapsed;
+
+        }
+
+        public void DataTablePremisesMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
             DeleteVisibility = Visibility.Collapsed;
@@ -223,6 +264,47 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+
+        public ICommand ClickAddPremises
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnAddPremise?.Invoke(_tableService);
+                });
+            }
+        }
+
+        public ICommand ClickEditPremises
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
+                        OnEditPremise?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], SelectedIndexPremises, _tableService);
+                });
+            }
+        }
+
+
+
+        public ICommand ClickDeletePremises
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
+                        OnDeletePremise?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], SelectedIndexPremises, _tableService);
+                });
+            }
+        }
+
+
+
+
         public void Delete()
         {
             PremisesVisibility = Visibility.Collapsed;
@@ -233,6 +315,19 @@ namespace DataBase1WPF.ViewModels.Building
         public void UpdateDataTable()
         {
             DataTableBuildings = _tableService.GetValuesTable();
+        }
+
+        public void DeletePremises()
+        {
+            if (_tableService is BuildingService service) 
+                service.DeletePremises(DataTablePremises.Rows[SelectedIndexPremises]);
+            UpdateDataTablePremises();
+        }
+
+        public void UpdateDataTablePremises()
+        {
+            if (_tableService is BuildingService service)
+                DataTablePremises = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
         }
     }
 }

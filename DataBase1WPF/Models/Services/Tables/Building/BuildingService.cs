@@ -117,5 +117,28 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         {
             return _premiseService.GetPremisesByBuilding(_dataDictionary[row].Id);
         }
+
+        public DataTable SearchDataInTablePremises(string searchLine)
+        {
+            return _premiseService.SearchDataInTable(searchLine);
+        }
+
+
+        public void AddPremises(string title)
+        {
+            _premiseService.Add(title);
+        }
+
+        public void UpdatePremises(DataRow row, string title)
+        {
+            _premiseService.Update(row, title);
+        }
+
+        public void DeletePremises(DataRow row)
+        {
+            _premiseService.Delete(row);
+        }
+
+
     }
 }

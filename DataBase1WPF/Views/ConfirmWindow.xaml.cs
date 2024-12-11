@@ -25,7 +25,9 @@ namespace DataBase1WPF.Views
     public partial class ConfirmWindow : Window
     {
         private Window _confirmWindow;
-        public ConfirmWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window,  string confirmText=null )
+        private OtherTablesEnum _otherTables;
+        public ConfirmWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window,  string confirmText=null,
+            OtherTablesEnum otherTables = OtherTablesEnum.None)
         {
 
             InitializeComponent();  
@@ -33,6 +35,7 @@ namespace DataBase1WPF.Views
             if (DataContext is ConfirmVM deleteVM)
             {
                 _confirmWindow = window;
+                _otherTables = otherTables;
                 deleteVM.OnExit += Exit;
                 deleteVM.OnApply += Apply;
             }
@@ -55,7 +58,10 @@ namespace DataBase1WPF.Views
 
             else if (_confirmWindow.DataContext is BuildingVM buildingVM)
             {
-                buildingVM.Delete();
+                if (_otherTables == OtherTablesEnum.Premises)
+                    buildingVM.DeletePremises();
+                else
+                    buildingVM.Delete();
             }
         }
         public void Exit()

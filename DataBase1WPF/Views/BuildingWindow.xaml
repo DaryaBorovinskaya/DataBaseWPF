@@ -141,13 +141,10 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
           HorizontalScrollBarVisibility="Auto"
               CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
+          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPremises}"
           ItemsSource="{Binding DataTablePremises}" 
-          MouseDown="DataGrid_MouseDown"
-              
-              IsReadOnly="True"
-/>
-
+          MouseDown="DataGridPremises_MouseDown"
+              IsReadOnly="True"   />
 
                     <DockPanel Background="#b9d1ea">
                         <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
@@ -157,8 +154,8 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                             </TextBlock>
                             <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
              Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
-                 MouseDown="TextBox_MouseDown"
-             Text="{Binding SearchDataInTable, UpdateSourceTrigger=PropertyChanged}">
+                 MouseDown="TextBoxPremises_MouseDown"
+             Text="{Binding SearchDataInTablePremises, UpdateSourceTrigger=PropertyChanged}">
 
                             </TextBox>
                         </StackPanel>
@@ -170,7 +167,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     Height="35"
                     Background="White"
                     FontWeight="Bold" Content="Добавить"
-                    Command="{Binding ClickAdd}"
+                    Command="{Binding ClickAddPremises}"
                     Visibility="{Binding WriteVisibility}"/>
 
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
@@ -179,13 +176,13 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                 Height="35"
                 FontWeight="Bold" Content="Изменить"
                     Visibility="{Binding EditVisibility}"
-                    Command="{Binding ClickEdit}"/>
+                    Command="{Binding ClickEditPremises}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
                     Margin="20 0"            
                     Background="White" Width="70" 
                     Height="35"
                     FontWeight="Bold" Content="Удалить"
-                    Command="{Binding ClickDelete}"
+                    Command="{Binding ClickDeletePremises}"
                     Visibility="{Binding DeleteVisibility}"/>
 
                         </StackPanel>
