@@ -40,14 +40,26 @@ namespace DataBase1WPF.DataBase.Entities.Premise
             TempRentalPayment = tempRentalPayment;
         }
 
+        public PremiseDB(uint id, uint buildingID, uint typeOfFinishingId,
+           string premiseNumber, float area, int floorNumber,
+           bool availabilityOfPhoneNumber, float tempRentalPayment)
+        {
+            Id = id;
+            BuildingID = buildingID;
+            TypeOfFinishingId = typeOfFinishingId;
+            PremiseNumber = premiseNumber;
+            Area = area;
+            FloorNumber = floorNumber;
+            AvailabilityOfPhoneNumber = availabilityOfPhoneNumber;
+            TempRentalPayment = tempRentalPayment;
+        }
+
         public PremiseDB(uint buildingID, uint typeOfFinishingId,
-            string typeOfFinishingTitle,
             string premiseNumber, float area, int floorNumber,
             bool availabilityOfPhoneNumber, float tempRentalPayment)
         {
             BuildingID = buildingID;
             TypeOfFinishingId = typeOfFinishingId;
-            TypeOfFinishingTitle = typeOfFinishingTitle;
             PremiseNumber = premiseNumber;
             Area = area;
             FloorNumber = floorNumber;

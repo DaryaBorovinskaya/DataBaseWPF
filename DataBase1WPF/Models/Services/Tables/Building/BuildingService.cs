@@ -15,7 +15,8 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 {
     public class BuildingService : IBuildingService, ITableService
     {
-        private IPremiseService _premiseService; 
+        private IPremiseService _premiseService;
+        private DataRow _selectedBuilding;
         
         private Dictionary<DataRow, IBuildingDB> _dataDictionary;
         private List<IBuildingDB> GetValues()
@@ -157,6 +158,10 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             return streetsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].StreetId);
 
         }
+        public int GetTypeOfFinishingSelectedIndex(DataRow row)
+        {
+            return _premiseService.GetTypeOfFinishingSelectedIndex(row);
+        }
 
 
         public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
@@ -182,7 +187,14 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 
         public DataTable? GetPremisesByBuilding(DataRow row)
         {
+            _selectedBuilding = row;
             return _premiseService.GetPremisesByBuilding(_dataDictionary[row].Id);
+        }
+        public string GetSelectedBuildingText()
+        {
+            return _dataDictionary[_selectedBuilding].DistrictTitle + " "
+                + _dataDictionary[_selectedBuilding].StreetTitle + " "
+                + _dataDictionary[_selectedBuilding].HouseNumber;
         }
 
         public DataTable SearchDataInTablePremises(string searchLine)
@@ -191,14 +203,29 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
 
 
-        public void AddPremises(string title)
+        public List<string> GetTypesOfFinishing()
         {
-            _premiseService.Add(title);
+           return _premiseService.GetTypesOfFinishing();
         }
 
-        public void UpdatePremises(DataRow row, string title)
+
+
+        public void AddPremises(int typeOfFinishingIndex, string premiseNumber,
+            float area, int floorNumber, bool availAbilityOfPhoneNumber,
+            float tempRentalPayment)
         {
-            _premiseService.Update(row, title);
+            _premiseService.Add(_dataDictionary[_selectedBuilding].Id,
+                typeOfFinishingIndex, premiseNumber, area, floorNumber, availAbilityOfPhoneNumber,
+                tempRentalPayment);
+        }
+
+        public void UpdatePremises(DataRow row, int typeOfFinishingIndex, string premiseNumber,
+            float area, int floorNumber, bool availAbilityOfPhoneNumber,
+            float tempRentalPayment)
+        {
+            _premiseService.Update(row, _dataDictionary[_selectedBuilding].Id,
+                typeOfFinishingIndex, premiseNumber, area, floorNumber, availAbilityOfPhoneNumber,
+                tempRentalPayment);
         }
 
         public void DeletePremises(DataRow row)

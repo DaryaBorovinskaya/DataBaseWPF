@@ -146,15 +146,18 @@ namespace DataBase1WPF.ViewModels.Building
                     && _tableService is BuildingService service)
                 {
                     DataTable? table = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
-                    if (table != null && table.Rows.Count != 0)
-                    {
-                        PremisesVisibility = Visibility.Visible;
-                        DataTablePremises = table;
-                    }
-                    else
-                    {
-                        PremisesVisibility = Visibility.Collapsed;
-                    }
+
+                    PremisesVisibility = Visibility.Visible;
+                    DataTablePremises = table;
+                    //if (table != null && table.Rows.Count != 0)
+                    //{
+                    //    PremisesVisibility = Visibility.Visible;
+                    //    DataTablePremises = table;
+                    //}
+                    //else
+                    //{
+                    //    PremisesVisibility = Visibility.Collapsed;
+                    //}
                 }
             }
         }

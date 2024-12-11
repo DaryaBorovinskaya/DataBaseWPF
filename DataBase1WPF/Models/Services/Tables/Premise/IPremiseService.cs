@@ -12,9 +12,17 @@ namespace DataBase1WPF.Models.Services.Tables.Premise
     {
         public DataTable? GetPremisesByBuilding(uint id);
         public DataTable SearchDataInTable(string searchLine);
-        public void Add(string title);
+        public List<string> GetTypesOfFinishing();
 
-        public void Update(DataRow row, string title);
+        public int GetTypeOfFinishingSelectedIndex(DataRow row);
+
+        public void Add(uint buildingId, int typeOfFinishingIndex, string premiseNumber,
+            float area, int floorNumber, bool availAbilityOfPhoneNumber,
+            float tempRentalPayment);
+
+        public void Update(DataRow row, uint buildingId, int typeOfFinishingIndex, string premiseNumber,
+            float area, int floorNumber, bool availAbilityOfPhoneNumber,
+            float tempRentalPayment);
 
         public void Delete(DataRow row);
     }

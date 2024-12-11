@@ -40,19 +40,63 @@ namespace DataBase1WPF.Models.Services.Tables.Premise
             throw new NotImplementedException();
         }
 
-        public void Add(string title)
+
+        public List<string> GetTypesOfFinishing()
         {
-            DataManager.GetInstance().BankDB_Repository.Create(new HandbookDB(title));
+            List<string> typesOfFinishing = new();
+
+            List<IHandbookDB> typesOfFinishingDB = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB typeOfFinishingDB in typesOfFinishingDB)
+                typesOfFinishing.Add(typeOfFinishingDB.Title);
+
+
+            return typesOfFinishing;
         }
 
-        public void Update(DataRow row, string title)
+        public int GetTypeOfFinishingSelectedIndex(DataRow row)
         {
-            DataManager.GetInstance().BankDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+            List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+
+            return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
+        }
+
+
+
+        public void Add(uint buildingId, int typeOfFinishingIndex, string premiseNumber,
+            float area, int floorNumber, bool availAbilityOfPhoneNumber, 
+            float tempRentalPayment )
+        {
+            DataManager.GetInstance().PremiseDB_Repository.Create(new PremiseDB(
+                buildingId,
+                DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList()[typeOfFinishingIndex].Id,
+                premiseNumber,
+                area,
+                floorNumber,
+                availAbilityOfPhoneNumber,
+                tempRentalPayment
+                ));
+        }
+
+        public void Update(DataRow row, uint buildingId, int typeOfFinishingIndex, string premiseNumber, float area, int floorNumber, bool availAbilityOfPhoneNumber, float tempRentalPayment)
+        {
+            DataManager.GetInstance().PremiseDB_Repository.Update(new PremiseDB(
+                _dataDictionary[row].Id,
+                buildingId,
+                DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList()[typeOfFinishingIndex].Id,
+                premiseNumber,
+                area,
+                floorNumber,
+                availAbilityOfPhoneNumber,
+                tempRentalPayment
+                ));
         }
 
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().PremiseDB_Repository.Delete(_dataDictionary[row].Id);
         }
+
+        
     }
 }

@@ -72,6 +72,15 @@ namespace DataBase1WPF.Views
             {
                 editBuildingVM.Edit();
             }
+
+            else if (_confirmWindow.DataContext is AddPremiseVM addPremiseVM)
+            {
+                addPremiseVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditPremiseVM editPremiseVM)
+            {
+                editPremiseVM.Edit();
+            }
         }
         public void Exit()
         {
