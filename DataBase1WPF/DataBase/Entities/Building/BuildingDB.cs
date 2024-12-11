@@ -31,14 +31,26 @@ namespace DataBase1WPF.DataBase.Entities.Building
             CommandantPhoneNumber = commandantPhoneNumber;
         }
 
-        public BuildingDB( uint districtId, string districtTitle, uint streetId, string streetTitle,
+        public BuildingDB(uint id, uint districtId, uint streetId,
+            string houseNumber, uint numberOfFloors,
+            uint countRentalPremises, string commandantPhoneNumber)
+        {
+            Id = id;
+            DistrictId = districtId;
+            StreetId = streetId;
+            HouseNumber = houseNumber;
+            NumberOfFloors = numberOfFloors;
+            CountRentalPremises = countRentalPremises;
+            CommandantPhoneNumber = commandantPhoneNumber;
+        }
+
+
+        public BuildingDB( uint districtId,  uint streetId, 
             string houseNumber, uint numberOfFloors,
             uint countRentalPremises, string commandantPhoneNumber)
         {
             DistrictId = districtId;
-            DistrictTitle = districtTitle;
             StreetId = streetId;
-            StreetTitle = streetTitle;
             HouseNumber = houseNumber;
             NumberOfFloors = numberOfFloors;
             CountRentalPremises = countRentalPremises;

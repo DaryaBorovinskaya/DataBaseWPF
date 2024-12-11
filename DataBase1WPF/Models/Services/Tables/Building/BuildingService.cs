@@ -16,6 +16,7 @@ namespace DataBase1WPF.Models.Services.Tables.Building
     public class BuildingService : IBuildingService, ITableService
     {
         private IPremiseService _premiseService; 
+        
         private Dictionary<DataRow, IBuildingDB> _dataDictionary;
         private List<IBuildingDB> GetValues()
         {
@@ -97,14 +98,80 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
 
 
-        public void Add(string title)
+        public List<string> GetDistricts()
         {
-            DataManager.GetInstance().BankDB_Repository.Create(new HandbookDB(title));
+            List<string> districts = new();
+
+            List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+
+            foreach(IHandbookDB districtDB in districtsDB) 
+                districts.Add(districtDB.Title);
+            
+
+            return districts;
         }
 
-        public void Update(DataRow row, string title)
+        public List<string> GetStreets()
         {
-            DataManager.GetInstance().BankDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+            List<string> streets = new();
+
+            List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB streetDB in streetsDB)
+                streets.Add(streetDB.Title);
+
+
+            return streets;
+        }
+
+
+
+
+        public void Add(int districtSelectedIndex, int streetSelectedIndex, 
+            string houseNumber, uint numberOfFloors, uint countRentalPremises, 
+            string commandantPhoneNumber)
+        {
+            DataManager.GetInstance().BuildingDB_Repository.Create(new BuildingDB(
+                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
+                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
+                houseNumber,
+                numberOfFloors,
+                countRentalPremises,
+                commandantPhoneNumber
+                ));
+        }
+
+
+        public int GetDistrictSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+
+            return districtsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].DistrictId);
+             
+        }
+
+        public int GetStreetsSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
+
+            return streetsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].StreetId);
+
+        }
+
+
+        public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
+            string houseNumber, uint numberOfFloors, uint countRentalPremises,
+            string commandantPhoneNumber)
+        {
+            DataManager.GetInstance().BuildingDB_Repository.Update( new BuildingDB(
+                _dataDictionary[row].Id,
+                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
+                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
+                houseNumber,
+                numberOfFloors,
+                countRentalPremises,
+                commandantPhoneNumber
+                ));
         }
 
         public void Delete(DataRow row)

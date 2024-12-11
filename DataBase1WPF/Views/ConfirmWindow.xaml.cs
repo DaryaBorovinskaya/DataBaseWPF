@@ -63,6 +63,15 @@ namespace DataBase1WPF.Views
                 else
                     buildingVM.Delete();
             }
+
+            else if (_confirmWindow.DataContext is AddBuildingVM addBuildingVM)
+            {
+                addBuildingVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditBuildingVM editBuildingVM)
+            {
+                editBuildingVM.Edit();
+            }
         }
         public void Exit()
         {

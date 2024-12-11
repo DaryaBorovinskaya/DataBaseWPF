@@ -31,19 +31,19 @@ namespace DataBase1WPF.Views
         {
             InitializeComponent();
             DataContext = addOrEdit == AddEditDeleteEnum.Add ? new AddBuildingVM(tableService) : new EditBuildingVM(row, selectedIndex, tableService);
-            if (DataContext is AddBuildingVM addHandbookVM)
+            if (DataContext is AddBuildingVM addBuildingVM)
             {
                 _addOrEditWindow = window;
                 _tableService = tableService;
                 _addOrEdit = addOrEdit;
-                addHandbookVM.OnApply += Apply;
+                addBuildingVM.OnApply += Apply;
             }
-            if (DataContext is EditBuildingVM editHandbookVM)
+            if (DataContext is EditBuildingVM editBuildingVM)
             {
                 _addOrEditWindow = window;
                 _tableService = tableService;
                 _addOrEdit = addOrEdit;
-                editHandbookVM.OnApply += Apply;
+                editBuildingVM.OnApply += Apply;
             }
         }
 
