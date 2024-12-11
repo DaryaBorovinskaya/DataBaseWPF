@@ -35,9 +35,27 @@ namespace DataBase1WPF.Models.Services.Tables.Premise
             return table;
         }
 
-        public DataTable SearchDataInTable(string searchLine)
+        public DataTable SearchDataInTable(uint buildingId, string searchLine)
         {
-            throw new NotImplementedException();
+            DataTable table = new ();
+            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+            {
+                List<IPremiseDB> values = repository.GetPremisesByBuildingId(buildingId).ToList().Where(
+                    item => item.TypeOfFinishingTitle.Contains(searchLine)
+                    || item.PremiseNumber.Contains(searchLine) || item.Area.ToString().Contains(searchLine)
+                    || item.FloorNumber.ToString().Contains(searchLine) 
+                    || item.TempRentalPayment.ToString().Contains(searchLine)).ToList();
+                table = DataTableConverter.ToDataTable(values);
+                table.Columns.Remove(table.Columns[0]);
+                table.Columns.Remove(table.Columns[0]);
+                table.Columns.Remove(table.Columns[0]);
+
+                _dataDictionary = new();
+                for (int i = 0; i < values.Count; i++)
+                    _dataDictionary.Add(table.Rows[i], values[i]);
+
+            }
+            return table;
         }
 
 

@@ -81,7 +81,7 @@ namespace DataBase1WPF.ViewModels.Building
             {
                 Set(ref _searchDataInTablePremises, value);
                 if (_tableService is BuildingService service)
-                    DataTableBuildings = service.SearchDataInTable(_searchDataInTable);
+                    DataTablePremises = service.SearchDataInTablePremises(_searchDataInTablePremises);
             }
         }
 

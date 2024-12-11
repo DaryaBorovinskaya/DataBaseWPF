@@ -63,17 +63,21 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            return new DataTable();
-            //List<IBuildingDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
-            //DataTable table = DataTableConverter.ToDataTable(values);
-            //table.Columns.Remove(table.Columns[0]);
+            List<IBuildingDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine) 
+            || item.StreetTitle.Contains(searchLine) || item.HouseNumber.Contains(searchLine)
+            || item.NumberOfFloors.ToString().Contains(searchLine) || item.CountRentalPremises.ToString().Contains(searchLine)
+            || item.CommandantPhoneNumber.Contains(searchLine)).ToList();
+            DataTable table = DataTableConverter.ToDataTable(values);
+            table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[1]);
+            table.Columns.Remove(table.Columns[2]);
 
-            //_dataDictionary = new();
-            //for (int i = 0; i < values.Count; i++)
-            //    _dataDictionary.Add(table.Rows[i], values[i]);
+            _dataDictionary = new();
+            for (int i = 0; i < values.Count; i++)
+                _dataDictionary.Add(table.Rows[i], values[i]);
 
 
-            //return table;
+            return table;
         }
 
 
@@ -199,7 +203,7 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 
         public DataTable SearchDataInTablePremises(string searchLine)
         {
-            return _premiseService.SearchDataInTable(searchLine);
+            return _premiseService.SearchDataInTable(_dataDictionary[_selectedBuilding].Id,searchLine);
         }
 
 

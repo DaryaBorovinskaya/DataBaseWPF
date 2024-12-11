@@ -11,7 +11,7 @@ namespace DataBase1WPF.Models.Services.Tables.Premise
     public interface IPremiseService
     {
         public DataTable? GetPremisesByBuilding(uint id);
-        public DataTable SearchDataInTable(string searchLine);
+        public DataTable SearchDataInTable(uint buildingId, string searchLine);
         public List<string> GetTypesOfFinishing();
 
         public int GetTypeOfFinishingSelectedIndex(DataRow row);
