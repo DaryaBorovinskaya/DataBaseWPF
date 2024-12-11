@@ -50,15 +50,20 @@ namespace DataBase1WPF.DataBase.Repositories
 
         public IList<IPremiseDB> GetPremisesByBuildingId(uint building_id)
         {
-            _query = $"select rentapp.premises.id, rentapp.premises.building_id, " +
-                $"rentapp.premises.type_of_finishing_id,  rentapp.types_of_finishings.title, " +
-                $"rentapp.premises.premise_number, rentapp.premises.area, " +
-                $"rentapp.premises.floor_number, rentapp.premises.availability_of_phone_number,  " +
-                $"rentapp.premises.temp_rental_payment " +
-                $"from rentapp.premises  " +
-                $"join rentapp.buildings on rentapp.premises.building_id =  rentapp.buildings.id " +
-                $"join rentapp.types_of_finishings on rentapp.premises.type_of_finishing_id = rentapp.types_of_finishings.id " +
-                $"where rentapp.buildings.id = {building_id}; "; 
+            _query = $"SELECT  rentapp.premises.id, rentapp.premises.building_id, " +
+                $" COALESCE(rentapp.premises.type_of_finishing_id, 0) AS type_of_finishing_id, " +
+                $" MAX(rentapp.types_of_finishings.title) AS type_of_finishing_title, " +
+                $"  rentapp.premises.premise_number, rentapp.premises.area," +
+                $"  rentapp.premises.floor_number, rentapp.premises.availability_of_phone_number, " +
+                $"   rentapp.premises.temp_rental_payment  FROM   rentapp.premises " +
+                $"left outer join rentapp.buildings on rentapp.premises.building_id =  rentapp.buildings.id " +
+                $" LEFT OUTER JOIN   rentapp.types_of_finishings ON " +
+                $"rentapp.premises.type_of_finishing_id = rentapp.types_of_finishings.id  " +
+                $" where rentapp.buildings.id = {building_id} " +
+                $"  GROUP BY   rentapp.premises.id,   rentapp.premises.premise_number, rentapp.premises.area, " +
+                $"  rentapp.premises.floor_number, " +
+                $" rentapp.premises.availability_of_phone_number,  " +
+                $" rentapp.premises.temp_rental_payment\r\nORDER BY \r\n    rentapp.premises.id;\r\n\r\n\r\n"; 
             IList<IPremiseDB> result = new List<IPremiseDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)

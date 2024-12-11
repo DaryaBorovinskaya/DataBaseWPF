@@ -48,7 +48,7 @@ namespace DataBase1WPF.Views
 
         public void Delete(DataRow row, int selectedIndex, ITableService tableService)
         {
-            ConfirmWindow window = new(AddEditDeleteEnum.Delete ,tableService, this, row );
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete ,tableService, this, row[0].ToString() );
             window.ShowDialog();
         }
 

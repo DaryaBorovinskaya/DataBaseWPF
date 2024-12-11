@@ -53,7 +53,7 @@ namespace DataBase1WPF.Views
                 && _addOrEdit == AddEditDeleteEnum.Add)
             {
 
-                ConfirmWindow window = new(_addOrEdit, _tableService, this, null, confirmText);
+                ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
                 buildingVM.UpdateDataTable();
@@ -61,7 +61,7 @@ namespace DataBase1WPF.Views
             else if (_addOrEditWindow.DataContext is BuildingVM buildingVM1
                 && _addOrEdit == AddEditDeleteEnum.Edit)
             {
-                ConfirmWindow window = new(_addOrEdit, _tableService, this, null, confirmText);
+                ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
                 buildingVM1.UpdateDataTable();

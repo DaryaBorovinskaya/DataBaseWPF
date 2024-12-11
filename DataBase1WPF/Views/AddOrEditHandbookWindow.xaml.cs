@@ -26,7 +26,7 @@ namespace DataBase1WPF.Views
         private AddEditDeleteEnum _addOrEdit;
         private ITableService _tableService;
         public AddOrEditHandbookWindow(AddEditDeleteEnum addOrEdit,  ITableService tableService, Window window,
-            DataRow row = null, int selectedIndex= 0)
+            DataRow row=null, int selectedIndex= 0)
         {
             InitializeComponent();
             
@@ -53,7 +53,7 @@ namespace DataBase1WPF.Views
                 && _addOrEdit == AddEditDeleteEnum.Add)
             {
 
-                ConfirmWindow window = new(_addOrEdit, _tableService, this, null, confirmText);
+                ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
                 handbooksVM.UpdateDataTable();
@@ -61,7 +61,7 @@ namespace DataBase1WPF.Views
             else if (_addOrEditWindow.DataContext is HandbooksVM handbooksVM1
                 && _addOrEdit == AddEditDeleteEnum.Edit)
             {
-                ConfirmWindow window = new(_addOrEdit, _tableService, this, null, confirmText);
+                ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
                 handbooksVM1.UpdateDataTable();

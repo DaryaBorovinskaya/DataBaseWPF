@@ -225,6 +225,7 @@ namespace DataBase1WPF.ViewModels.Building
 
         public void Delete()
         {
+            PremisesVisibility = Visibility.Collapsed;
             _tableService.Delete(DataTableBuildings.Rows[SelectedIndex]);
             UpdateDataTable();
         }

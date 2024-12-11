@@ -25,11 +25,11 @@ namespace DataBase1WPF.Views
     public partial class ConfirmWindow : Window
     {
         private Window _confirmWindow;
-        public ConfirmWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window, DataRow row=null, string confirmText=null )
+        public ConfirmWindow(AddEditDeleteEnum addEditDelete, ITableService tableService, Window window,  string confirmText=null )
         {
 
-            InitializeComponent();
-            DataContext = new ConfirmVM(addEditDelete, tableService, row, confirmText);
+            InitializeComponent();  
+            DataContext = new ConfirmVM(addEditDelete, tableService, confirmText);
             if (DataContext is ConfirmVM deleteVM)
             {
                 _confirmWindow = window;

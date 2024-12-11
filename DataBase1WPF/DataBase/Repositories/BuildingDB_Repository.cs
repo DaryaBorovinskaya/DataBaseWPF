@@ -25,13 +25,14 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IBuildingDB> Read()
         {
-            _query = "select rentapp.buildings.id, rentapp.buildings.district_id , rentapp.districts.title, " +
-                "rentapp.buildings.street_id , " +
-                "rentapp.streets.title , rentapp.buildings.house_number,  rentapp.buildings.number_of_floors," +
-                " rentapp.buildings.count_rental_premises , rentapp.buildings.commandant_phone_number " +
-                "from rentapp.buildings " +
-                "join rentapp.districts on rentapp.buildings.district_id = rentapp.districts.id " +
-                "join rentapp.streets on rentapp.buildings.street_id = rentapp.streets.id;";
+            _query = "SELECT rentapp.buildings.id, COALESCE(rentapp.buildings.district_id, 0) AS district_id, " +
+                " MAX(rentapp.districts.title) AS district_title, COALESCE(rentapp.buildings.street_id, 0) AS street_id, " +
+                " MAX(rentapp.streets.title) AS street_title,  rentapp.buildings.house_number,   rentapp.buildings.number_of_floors,  " +
+                "  rentapp.buildings.count_rental_premises,  rentapp.buildings.commandant_phone_number FROM   " +
+                "  rentapp.buildings LEFT OUTER JOIN  rentapp.districts ON rentapp.buildings.district_id = rentapp.districts.id " +
+                " LEFT OUTER JOIN  rentapp.streets ON rentapp.buildings.street_id = rentapp.streets.id  GROUP BY  rentapp.buildings.id, " +
+                "   rentapp.buildings.house_number,  rentapp.buildings.number_of_floors,  rentapp.buildings.count_rental_premises,  " +
+                "  rentapp.buildings.commandant_phone_number ORDER BY  rentapp.buildings.id;";
 
             IList<IBuildingDB> result = new List<IBuildingDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
