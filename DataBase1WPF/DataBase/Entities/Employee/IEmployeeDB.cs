@@ -10,9 +10,15 @@ namespace DataBase1WPF.DataBase.Entities.Employee
     public interface IEmployeeDB
     {
         public uint Id { get; set; }
+
+        [DisplayName("Район")]
+        public string DistrictTitle { get; set; }
         public uint DistrictId { get; set; }
+
+        [DisplayName("Улица")]
+        public string StreetTitle { get; set; }
         public uint StreetId { get; set; }
-        
+
         [DisplayName("Фамилия")]
         public string Surname { get; set; }
 

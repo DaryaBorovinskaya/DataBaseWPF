@@ -1,21 +1,18 @@
-﻿using DataBase1WPF.Models.Services.Tables.Handbooks;
-using DataBase1WPF.Models.Services.Tables;
+﻿using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Models.Services.Tables.Building;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using DataBase1WPF.Models.Services.Tables.Building;
 
-namespace DataBase1WPF.ViewModels.Building
+namespace DataBase1WPF.ViewModels.Employee
 {
-    public class EditBuildingVM : BasicVM
+    public class AddEmployeeVM : BasicVM
     {
         private ITableService _tableService;
-        private DataRow _row;
         private string _windowTitle;
         private string _buttonContent;
         private string _houseNumberText;
@@ -27,8 +24,8 @@ namespace DataBase1WPF.ViewModels.Building
         private int _selectedIndexDistricts;
         private int _selectedIndexStreets;
         private List<string> _streetsComboBox;
-
         public Action<string> OnApply;
+
         public string WindowTitle
         {
             get { return _windowTitle; }
@@ -112,23 +109,18 @@ namespace DataBase1WPF.ViewModels.Building
                 Set(ref _commandantPhoneNumberText, value);
             }
         }
-        public EditBuildingVM(DataRow row, ITableService tableService)
+
+
+        public AddEmployeeVM(ITableService tableService)
         {
             _tableService = tableService;
-            _row = row;
-            _windowTitle = $"Изменение данных таблицы: {_tableService.GetTableName()}";
-            _buttonContent = "Внести изменения";
+            _windowTitle = $"Добавление в таблицу: {_tableService.GetTableName()}";
+            _buttonContent = "Добавить";
 
             if (_tableService is BuildingService service)
             {
                 _districtsComboBox = service.GetDistricts();
                 _streetsComboBox = service.GetStreets();
-                _selectedIndexDistricts = service.GetDistrictSelectedIndex(row);
-                _selectedIndexStreets = service.GetStreetsSelectedIndex(row);
-                _houseNumberText = row[2].ToString();
-                _numberOfFloorsText = row[3].ToString();
-                _countRentalPremisesText = row[4].ToString();
-                _commandantPhoneNumberText = row[5].ToString();
             }
         }
 
@@ -168,7 +160,6 @@ namespace DataBase1WPF.ViewModels.Building
         }
 
 
-
         public ICommand Click
         {
             get
@@ -206,15 +197,14 @@ namespace DataBase1WPF.ViewModels.Building
                         }
 
                     }
-
                 });
             }
         }
 
-        public void Edit()
+        public void Add()
         {
             if (_tableService is BuildingService service)
-                service.Update(_row, SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
+                service.Add(SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
                     uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
                     CommandantPhoneNumberText);
         }

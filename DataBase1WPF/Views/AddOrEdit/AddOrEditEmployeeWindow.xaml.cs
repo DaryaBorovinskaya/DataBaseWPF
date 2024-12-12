@@ -1,6 +1,6 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels.Building;
-using DataBase1WPF.ViewModels.Handbooks;
+using DataBase1WPF.ViewModels.Employee;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,57 +16,60 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace DataBase1WPF.Views
+namespace DataBase1WPF.Views.AddOrEdit
 {
     /// <summary>
-    /// Логика взаимодействия для AddOrEditBuildingWindow.xaml
+    /// Логика взаимодействия для AddOrEditEmployeeWindow.xaml
     /// </summary>
-    public partial class AddOrEditBuildingWindow : Window
+    public partial class AddOrEditEmployeeWindow : Window
     {
         private Window _addOrEditWindow;
         private AddEditDeleteEnum _addOrEdit;
         private ITableService _tableService;
-        public AddOrEditBuildingWindow(AddEditDeleteEnum addOrEdit, ITableService tableService, Window window,
+        public AddOrEditEmployeeWindow(AddEditDeleteEnum addOrEdit, ITableService tableService, Window window,
             DataRow row = null)
         {
             InitializeComponent();
-            DataContext = addOrEdit == AddEditDeleteEnum.Add ? new AddBuildingVM(tableService) : new EditBuildingVM(row, tableService);
-            if (DataContext is AddBuildingVM addBuildingVM)
+            DataContext = addOrEdit == AddEditDeleteEnum.Add ? new AddEmployeeVM(tableService) : new EditEmployeeVM(row, tableService);
+            if (DataContext is AddEmployeeVM addEmployeeVM)
             {
                 _addOrEditWindow = window;
                 _tableService = tableService;
                 _addOrEdit = addOrEdit;
-                addBuildingVM.OnApply += Apply;
+                addEmployeeVM.OnApply += Apply;
             }
-            if (DataContext is EditBuildingVM editBuildingVM)
+            if (DataContext is EditEmployeeVM editEmployeeVM)
             {
                 _addOrEditWindow = window;
                 _tableService = tableService;
                 _addOrEdit = addOrEdit;
-                editBuildingVM.OnApply += Apply;
+                editEmployeeVM.OnApply += Apply;
             }
         }
 
+
         private void Apply(string confirmText)
         {
-            if (_addOrEditWindow.DataContext is BuildingVM buildingVM
+            if (_addOrEditWindow.DataContext is EmployeeVM employeeVM
                 && _addOrEdit == AddEditDeleteEnum.Add)
             {
 
                 ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
-                buildingVM.UpdateDataTable();
+                employeeVM.UpdateDataTable();
             }
-            else if (_addOrEditWindow.DataContext is BuildingVM buildingVM1
+            else if (_addOrEditWindow.DataContext is EmployeeVM employeeVM1
                 && _addOrEdit == AddEditDeleteEnum.Edit)
             {
                 ConfirmWindow window = new(_addOrEdit, _tableService, this, confirmText);
                 window.ShowDialog();
 
-                buildingVM1.UpdateDataTable();
+                employeeVM1.UpdateDataTable();
                 this.Close();
             }
         }
+
+
     }
 }

@@ -26,7 +26,7 @@ namespace DataBase1WPF.Views
         private AddEditDeleteEnum _addOrEdit;
         private ITableService _tableService;
         public AddOrEditPremiseWindow(AddEditDeleteEnum addOrEdit, ITableService tableService, Window window,
-            DataRow row = null, int selectedIndex = 0)
+            DataRow row = null)
         {
             InitializeComponent();
             DataContext = addOrEdit == AddEditDeleteEnum.Add ? new AddPremiseVM(tableService) : new EditPremiseVM(row, tableService);

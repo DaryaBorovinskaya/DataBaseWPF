@@ -1,5 +1,4 @@
-﻿using DataBase1WPF.DataBase.Entities.MenuElem;
-using DataBase1WPF.Models.Services.Tables;
+﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
 using System;
 using System.Collections.Generic;
@@ -10,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DataBase1WPF.ViewModels.Building
+namespace DataBase1WPF.ViewModels.Employee
 {
-    public class BuildingVM : BasicVM
+    public class EmployeeVM : BasicVM
     {
         private ITableService _tableService;
 
@@ -32,14 +31,13 @@ namespace DataBase1WPF.ViewModels.Building
 
 
         public Action<ITableService> OnAdd;
-        public Action<DataRow, ITableService> OnEdit;
-        public Action<DataRow,  ITableService> OnDelete;
+        public Action<DataRow,  ITableService> OnEdit;
+        public Action<DataRow, ITableService> OnDelete;
 
-        public Action<ITableService> OnAddPremise;
-        public Action<DataRow, ITableService> OnEditPremise;
-        public Action<DataRow, ITableService> OnDeletePremise;
-
-        public BuildingVM(ITableService tableService, uint menuElemId)
+        public Action<ITableService> OnAddWorkRecordCard;
+        public Action<DataRow,  ITableService> OnEditWorkRecordCard;
+        public Action<DataRow,  ITableService> OnDeleteWorkRecordCard;
+        public EmployeeVM(ITableService tableService, uint menuElemId)
         {
             _tableService = tableService;
             DataTableBuildings = _tableService.GetValuesTable();
@@ -53,7 +51,6 @@ namespace DataBase1WPF.ViewModels.Building
             _premisesVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
         }
-
 
         public Visibility PremisesVisibility
         {
@@ -142,7 +139,7 @@ namespace DataBase1WPF.ViewModels.Building
             set
             {
                 Set(ref _selectedIndex, value);
-                if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count 
+                if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count
                     && _tableService is BuildingService service)
                 {
                     DataTable? table = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
@@ -274,7 +271,7 @@ namespace DataBase1WPF.ViewModels.Building
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnAddPremise?.Invoke(_tableService);
+                    OnAddWorkRecordCard?.Invoke(_tableService);
                 });
             }
         }
@@ -286,7 +283,7 @@ namespace DataBase1WPF.ViewModels.Building
                 return new DelegateCommand((obj) =>
                 {
                     if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
-                        OnEditPremise?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
+                        OnEditWorkRecordCard?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
                 });
             }
         }
@@ -300,7 +297,7 @@ namespace DataBase1WPF.ViewModels.Building
                 return new DelegateCommand((obj) =>
                 {
                     if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
-                        OnDeletePremise?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
+                        OnDeleteWorkRecordCard?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
                 });
             }
         }
@@ -320,14 +317,14 @@ namespace DataBase1WPF.ViewModels.Building
             DataTableBuildings = _tableService.GetValuesTable();
         }
 
-        public void DeletePremises()
+        public void DeleteWorkRecordCard()
         {
-            if (_tableService is BuildingService service) 
+            if (_tableService is BuildingService service)
                 service.DeletePremises(DataTablePremises.Rows[SelectedIndexPremises]);
-            UpdateDataTablePremises();
+            UpdateDataTableWorkRecordCard();
         }
 
-        public void UpdateDataTablePremises()
+        public void UpdateDataTableWorkRecordCard()
         {
             if (_tableService is BuildingService service)
                 DataTablePremises = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
