@@ -63,7 +63,7 @@ namespace DataBase1WPF.DataBase.Repositories
                 $"  GROUP BY   rentapp.premises.id,   rentapp.premises.premise_number, rentapp.premises.area, " +
                 $"  rentapp.premises.floor_number, " +
                 $" rentapp.premises.availability_of_phone_number,  " +
-                $" rentapp.premises.temp_rental_payment\r\nORDER BY \r\n    rentapp.premises.id;\r\n\r\n\r\n"; 
+                $" rentapp.premises.temp_rental_payment ORDER BY   rentapp.premises.id;"; 
             IList<IPremiseDB> result = new List<IPremiseDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)

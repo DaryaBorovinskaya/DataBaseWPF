@@ -16,6 +16,7 @@ using DataBase1WPF.Models.Services.Tables.Handbooks;
 using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.MenuElems;
 using DataBase1WPF.Models.Services.Tables.Building;
+using DataBase1WPF.Models.Services.Tables.Employee;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -37,7 +38,7 @@ namespace DataBase1WPF.ViewModels
         public Action<ITableService, uint> OnFine;
 
         public Action<ITableService, uint> OnBuilding;
-
+        public Action<ITableService, uint> OnEmployees;
 
 
         public Action OnAboutProgram;
@@ -196,6 +197,19 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     OnAboutProgram?.Invoke();
+                });
+            }
+        }
+
+        public ICommand ClickEmployees
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnEmployees?.Invoke(
+                        new EmployeeService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickEmployees))
+                        );
                 });
             }
         }

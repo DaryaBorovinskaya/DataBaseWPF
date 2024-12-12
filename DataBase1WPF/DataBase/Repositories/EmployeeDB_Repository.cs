@@ -26,7 +26,14 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IEmployeeDB> Read()
         {
-            _query = "select * from employees";
+            _query = "SELECT  rentapp.employees.id, COALESCE(rentapp.employees.district_id, 0) AS district_id, " +
+                "  MAX(rentapp.districts.title) AS district_title,     COALESCE(rentapp.employees.street_id, 0) AS street_id," +
+                "    MAX(rentapp.streets.title) AS street_title,    rentapp.employees.surname,  rentapp.employees.name,  " +
+                " rentapp.employees.patronymic,    rentapp.employees.date_of_birth,   rentapp.employees.house_number FROM  " +
+                "  rentapp.employees LEFT OUTER JOIN    rentapp.districts ON rentapp.employees.district_id = rentapp.districts.id " +
+                " LEFT OUTER JOIN     rentapp.streets ON rentapp.employees.street_id = rentapp.streets.id  GROUP BY " +
+                "   rentapp.employees.id,    rentapp.employees.surname,    rentapp.employees.name,     rentapp.employees.patronymic," +
+                "    rentapp.employees.date_of_birth,   rentapp.employees.house_number ORDER BY    rentapp.employees.id;";
             IList<IEmployeeDB> result = new List<IEmployeeDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -34,12 +41,14 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new EmployeeDB(
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
-                    row[3].ToString(),
+                    row[2].ToString(),
+                    uint.Parse(row[3].ToString()),
                     row[4].ToString(),
                     row[5].ToString(),
-                    DateTime.Parse(row[6].ToString()),
-                    row[7].ToString()
+                    row[6].ToString(),
+                    row[7].ToString(),
+                    DateTime.Parse(row[8].ToString()),
+                    row[9].ToString()
                 ));
             }
             return result;

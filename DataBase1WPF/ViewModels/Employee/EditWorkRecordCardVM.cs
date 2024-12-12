@@ -7,6 +7,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
@@ -41,6 +43,25 @@ namespace DataBase1WPF.ViewModels.Employee
                 _windowTitle = $"Изменение данных таблицы: {service.GetOtherTableName()}";
                 
             }
+        }
+
+
+        public ICommand Click
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    
+                });
+            }
+        }
+
+
+
+        public void Edit()
+        {
+
         }
     }
 }

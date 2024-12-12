@@ -41,7 +41,8 @@ namespace DataBase1WPF.DataBase.Entities.Employee
             HouseNumber = houseNumber;
         }
 
-        public EmployeeDB(uint id, uint districtId, uint streetId, string surname, string name,
+        public EmployeeDB(uint id, uint districtId, uint streetId, 
+            string surname, string name,
             string? patronymic, DateTime dateOfBirth, string houseNumber)
         {
             Id= id;

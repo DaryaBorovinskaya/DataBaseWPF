@@ -1,7 +1,9 @@
 ﻿using DataBase1WPF.DataBase.Entities.Building;
+using DataBase1WPF.DataBase.Entities.Employee;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.Models.Services.Tables.Premise;
+using DataBase1WPF.Models.Services.Tables.WorkRecordCard;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,27 +13,27 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Employee
 {
-    public class EmployeeService : IEmployeeService
+    public class EmployeeService : IEmployeeService, ITableService
     {
-        private IPremiseService _premiseService;
-        private DataRow _selectedBuilding;
+        private IWorkRecordCardService _workRecordCardService;
+        private DataRow _selectedEmployee;
 
-        private Dictionary<DataRow, IBuildingDB> _dataDictionary;
-        private List<IBuildingDB> GetValues()
+        private Dictionary<DataRow, IEmployeeDB> _dataDictionary;
+        private List<IEmployeeDB> GetValues()
         {
-            List<IBuildingDB> values = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+            List<IEmployeeDB> values = DataManager.GetInstance().EmployeeDB_Repository.Read().ToList();
             return values;
         }
 
         public EmployeeService()
         {
-            _premiseService = new PremiseService();
+            _workRecordCardService = new WorkRecordCardService();
         }
 
 
         public DataTable GetValuesTable()
         {
-            List<IBuildingDB> values = GetValues();
+            List<IEmployeeDB> values = GetValues();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
             table.Columns.Remove(table.Columns[1]);
@@ -46,19 +48,19 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
 
         public string GetTableName()
         {
-            return "Здания";
+            return "Сотрудники";
         }
 
         public string GetOtherTableName()
         {
-            return "Помещения";
+            return "Трудовая книжка";
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            List<IBuildingDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine)
+            List<IEmployeeDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine)
             || item.StreetTitle.Contains(searchLine) || item.HouseNumber.Contains(searchLine)
-            || item.NumberOfFloors.ToString().Contains(searchLine) || item.CountRentalPremises.ToString().Contains(searchLine)
-            || item.CommandantPhoneNumber.Contains(searchLine)).ToList();
+            || item.Surname.Contains(searchLine) || item.Name.Contains(searchLine)
+            || item.Patronymic.Contains(searchLine) || item.DateOfBirth.ToString().Contains(searchLine)).ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
             table.Columns.Remove(table.Columns[1]);
@@ -94,7 +96,6 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
             return userAbilities;
         }
 
-
         public List<string> GetDistricts()
         {
             List<string> districts = new();
@@ -121,20 +122,18 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
             return streets;
         }
 
-
-
-
         public void Add(int districtSelectedIndex, int streetSelectedIndex,
-            string houseNumber, uint numberOfFloors, uint countRentalPremises,
-            string commandantPhoneNumber)
+            string surname, string name, string? patronymic, DateTime dateOfBirth,
+            string houseNumber)
         {
-            DataManager.GetInstance().BuildingDB_Repository.Create(new BuildingDB(
+            DataManager.GetInstance().EmployeeDB_Repository.Create(new EmployeeDB(
                 DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
                 DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
-                houseNumber,
-                numberOfFloors,
-                countRentalPremises,
-                commandantPhoneNumber
+                surname,
+                name,
+                patronymic,
+                dateOfBirth,
+                houseNumber
                 ));
         }
 
@@ -154,79 +153,76 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
             return streetsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].StreetId);
 
         }
-        public int GetTypeOfFinishingSelectedIndex(DataRow row)
+        public int GetPositionsSelectedIndex(DataRow row)
         {
-            return _premiseService.GetTypeOfFinishingSelectedIndex(row);
+            return _workRecordCardService.GetPositionsSelectedIndex(row);
         }
 
 
         public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
-            string houseNumber, uint numberOfFloors, uint countRentalPremises,
-            string commandantPhoneNumber)
+            string surname, string name, string? patronymic, DateTime dateOfBirth,
+            string houseNumber)
         {
-            DataManager.GetInstance().BuildingDB_Repository.Update(new BuildingDB(
+            DataManager.GetInstance().EmployeeDB_Repository.Update(new EmployeeDB(
                 _dataDictionary[row].Id,
                 DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
                 DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
-                houseNumber,
-                numberOfFloors,
-                countRentalPremises,
-                commandantPhoneNumber
+                surname,
+                name,
+                patronymic,
+                dateOfBirth,
+                houseNumber
                 ));
         }
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().BuildingDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().EmployeeDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 
         public DataTable? GetWorkRecordCardByEmployee(DataRow row)
         {
-            _selectedBuilding = row;
-            return _premiseService.GetPremisesByBuilding(_dataDictionary[row].Id);
+            _selectedEmployee = row;
+            return _workRecordCardService.GetWorkRecordCardByEmployee(_dataDictionary[row].Id);
         }
-        public string GetSelectedBuildingText()
+        public string GetSelectedEmployeeText()
         {
-            return _dataDictionary[_selectedBuilding].DistrictTitle + " "
-                + _dataDictionary[_selectedBuilding].StreetTitle + " "
-                + _dataDictionary[_selectedBuilding].HouseNumber;
+            return _dataDictionary[_selectedEmployee].Surname + " "
+                + _dataDictionary[_selectedEmployee].Name + " "
+                + _dataDictionary[_selectedEmployee].Patronymic;
         }
 
         public DataTable SearchDataInTableWorkRecordCard(string searchLine)
         {
-            return _premiseService.SearchDataInTable(_dataDictionary[_selectedBuilding].Id, searchLine);
+            return _workRecordCardService.SearchDataInTable(_dataDictionary[_selectedEmployee].Id, searchLine);
         }
 
 
-        public List<string> GetTypesOfFinishing()
+        public List<string> GetPositions()
         {
-            return _premiseService.GetTypesOfFinishing();
+            return _workRecordCardService.GetPositions();
         }
 
 
 
-        public void AddWorkRecordCard(int typeOfFinishingIndex, string premiseNumber,
-            float area, int floorNumber, bool availAbilityOfPhoneNumber,
-            float tempRentalPayment)
+        public void AddWorkRecordCard(int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
         {
-            _premiseService.Add(_dataDictionary[_selectedBuilding].Id,
-                typeOfFinishingIndex, premiseNumber, area, floorNumber, availAbilityOfPhoneNumber,
-                tempRentalPayment);
+            _workRecordCardService.Add(_dataDictionary[_selectedEmployee].Id, positionIndex,
+                orderNumber, orderDate, reasonOfRecording);
         }
 
-        public void UpdateWorkRecordCard(DataRow row, int typeOfFinishingIndex, string premiseNumber,
-            float area, int floorNumber, bool availAbilityOfPhoneNumber,
-            float tempRentalPayment)
+        public void UpdateWorkRecordCard(DataRow row, int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
         {
-            _premiseService.Update(row, _dataDictionary[_selectedBuilding].Id,
-                typeOfFinishingIndex, premiseNumber, area, floorNumber, availAbilityOfPhoneNumber,
-                tempRentalPayment);
+            _workRecordCardService.Update(row, _dataDictionary[_selectedEmployee].Id, positionIndex,
+                orderNumber, orderDate, reasonOfRecording);
         }
 
         public void DeleteWorkRecordCard(DataRow row)
         {
-            _premiseService.Delete(row);
+            _workRecordCardService.Delete(row);
         }
     }
 }

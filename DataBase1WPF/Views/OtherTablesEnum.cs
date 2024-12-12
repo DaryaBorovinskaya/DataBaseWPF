@@ -9,6 +9,7 @@ namespace DataBase1WPF.Views
     public enum OtherTablesEnum
     {
         None,
-        Premises
+        Premises,
+        WorkRecordCard
     }
 }

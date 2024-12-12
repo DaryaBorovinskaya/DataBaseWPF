@@ -1,4 +1,5 @@
 ﻿using DataBase1WPF.DataBase.Entities.JuridicalPerson;
+using DataBase1WPF.DataBase.Entities.Premise;
 using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using System;
 using System.Collections.Generic;
@@ -24,21 +25,7 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IWorkRecordCardDB> Read()
         {
-            _query = "select * from work_record_cards";
-            IList<IWorkRecordCardDB> result = new List<IWorkRecordCardDB>();
-            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
-            foreach (DataRow row in dataTable.Rows)
-            {
-                result.Add(new WorkRecordCardDB(
-                    uint.Parse(row[0].ToString()),
-                    uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
-                    row[3].ToString(),
-                    DateTime.Parse(row[4].ToString()),
-                    row[5].ToString()
-                ));
-            }
-            return result;
+            throw new NotImplementedException();
         }
 
         public void Update(IWorkRecordCardDB entity)
@@ -54,6 +41,39 @@ namespace DataBase1WPF.DataBase.Repositories
         {
             _query = $"delete from work_record_cards where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+        }
+
+        public  IList<IWorkRecordCardDB> GetWorkRecordCardByEmployeeId(uint employee_id)
+        {
+            _query = $"SELECT  rentapp.work_record_cards.id, rentapp.work_record_cards.employee_id, " +
+                $" COALESCE(rentapp.work_record_cards.position_id, 0) AS position_id, " +
+                $" MAX(rentapp.positions.name) AS position_name,  rentapp.work_record_cards.order_number, " +
+                $" rentapp.work_record_cards.order_date, " +
+                $" rentapp.work_record_cards.reason_of_recording " +
+                $" FROM   rentapp.work_record_cards " +
+                $" left outer join rentapp.employees " +
+                $" on rentapp.work_record_cards.employee_id =  rentapp.employees.id " +
+                $" LEFT OUTER JOIN rentapp.positions ON " +
+                $" rentapp.work_record_cards.position_id = rentapp.positions.id " +
+                $" where rentapp.employees.id = {employee_id} " +
+                $" GROUP BY rentapp.work_record_cards.id,  rentapp.work_record_cards.order_number, " +
+                $" rentapp.work_record_cards.order_date, " +
+                "  rentapp.work_record_cards.reason_of_recording ORDER BY rentapp.work_record_cards.id;";
+            IList<IWorkRecordCardDB> result = new List<IWorkRecordCardDB>();
+            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result.Add(new WorkRecordCardDB(
+                    uint.Parse(row[0].ToString()),
+                    uint.Parse(row[1].ToString()),
+                    uint.Parse(row[2].ToString()),
+                    row[3].ToString(),
+                    row[4].ToString(),
+                    DateTime.Parse(row[5].ToString()),
+                    row[6].ToString()
+                ));
+            }
+            return result;
         }
     }
 }

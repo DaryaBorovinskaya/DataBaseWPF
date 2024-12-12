@@ -1,5 +1,7 @@
 ﻿using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.Position;
 using DataBase1WPF.DataBase.Entities.Premise;
+using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,13 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
 {
     public class WorkRecordCardService : IWorkRecordCardService
     {
-        private Dictionary<DataRow, IPremiseDB> _dataDictionary;
+        private Dictionary<DataRow, IWorkRecordCardDB> _dataDictionary;
         public DataTable? GetWorkRecordCardByEmployee(uint id)
         {
             DataTable table = null;
-            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+            if (DataManager.GetInstance().WorkRecordCardDB_Repository is WorkRecordCardDB_Repository repository)
             {
-                List<IPremiseDB> values = repository.GetPremisesByBuildingId(id).ToList();
+                List<IWorkRecordCardDB> values = repository.GetWorkRecordCardByEmployeeId(id).ToList();
                 table = DataTableConverter.ToDataTable(values);
                 table.Columns.Remove(table.Columns[0]);
                 table.Columns.Remove(table.Columns[0]);
@@ -34,16 +36,15 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
             return table;
         }
 
-        public DataTable SearchDataInTable(uint buildingId, string searchLine)
+        public DataTable SearchDataInTable(uint employeeId, string searchLine)
         {
             DataTable table = new();
-            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+            if (DataManager.GetInstance().WorkRecordCardDB_Repository is WorkRecordCardDB_Repository repository)
             {
-                List<IPremiseDB> values = repository.GetPremisesByBuildingId(buildingId).ToList().Where(
-                    item => item.TypeOfFinishingTitle.Contains(searchLine)
-                    || item.PremiseNumber.Contains(searchLine) || item.Area.ToString().Contains(searchLine)
-                    || item.FloorNumber.ToString().Contains(searchLine)
-                    || item.TempRentalPayment.ToString().Contains(searchLine)).ToList();
+                List<IWorkRecordCardDB> values = repository.GetWorkRecordCardByEmployeeId(employeeId).ToList().Where(
+                    item => item.PositionName.Contains(searchLine)
+                    || item.OrderNumber.Contains(searchLine) || item.OrderDate.ToString().Contains(searchLine)
+                    || item.ReasonOfRecording.ToString().Contains(searchLine)).ToList();
                 table = DataTableConverter.ToDataTable(values);
                 table.Columns.Remove(table.Columns[0]);
                 table.Columns.Remove(table.Columns[0]);
@@ -58,60 +59,56 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
         }
 
 
-        public List<string> GetTypesOfFinishing()
+        public List<string> GetPositions()
         {
-            List<string> typesOfFinishing = new();
+            List<string> positions = new();
 
-            List<IHandbookDB> typesOfFinishingDB = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+            List<IPositionDB> positionsDB = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
 
-            foreach (IHandbookDB typeOfFinishingDB in typesOfFinishingDB)
-                typesOfFinishing.Add(typeOfFinishingDB.Title);
+            foreach (IPositionDB positionDB in positionsDB)
+                positions.Add(positionDB.Name);
 
 
-            return typesOfFinishing;
+            return positions;
         }
 
-        public int GetTypeOfFinishingSelectedIndex(DataRow row)
+        public int GetPositionsSelectedIndex(DataRow row)
         {
-            List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+            List<IPositionDB> positions = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
 
-            return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
+            return positions.FindIndex((elem) => elem.Id == _dataDictionary[row].PositionId);
         }
 
 
 
-        public void Add(uint buildingId, int typeOfFinishingIndex, string premiseNumber,
-            float area, int floorNumber, bool availAbilityOfPhoneNumber,
-            float tempRentalPayment)
+        public void Add(uint employeeId, int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
         {
-            DataManager.GetInstance().PremiseDB_Repository.Create(new PremiseDB(
-                buildingId,
-                DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList()[typeOfFinishingIndex].Id,
-                premiseNumber,
-                area,
-                floorNumber,
-                availAbilityOfPhoneNumber,
-                tempRentalPayment
+            DataManager.GetInstance().WorkRecordCardDB_Repository.Create(new WorkRecordCardDB(
+                employeeId,
+                DataManager.GetInstance().PositionDB_Repository.Read().ToList()[positionIndex].Id,
+                orderNumber,
+                orderDate,
+                reasonOfRecording
                 ));
         }
 
-        public void Update(DataRow row, uint buildingId, int typeOfFinishingIndex, string premiseNumber, float area, int floorNumber, bool availAbilityOfPhoneNumber, float tempRentalPayment)
+        public void Update(DataRow row, uint employeeId, int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
         {
-            DataManager.GetInstance().PremiseDB_Repository.Update(new PremiseDB(
+            DataManager.GetInstance().WorkRecordCardDB_Repository.Update(new WorkRecordCardDB(
                 _dataDictionary[row].Id,
-                buildingId,
-                DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList()[typeOfFinishingIndex].Id,
-                premiseNumber,
-                area,
-                floorNumber,
-                availAbilityOfPhoneNumber,
-                tempRentalPayment
+                employeeId,
+                DataManager.GetInstance().PositionDB_Repository.Read().ToList()[positionIndex].Id,
+                orderNumber,
+                orderDate,
+                reasonOfRecording
                 ));
         }
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().PremiseDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().WorkRecordCardDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
+using DataBase1WPF.Models.Services.Tables.Employee;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,15 +16,15 @@ namespace DataBase1WPF.ViewModels.Employee
     {
         private ITableService _tableService;
 
-        private DataTable _dataTableBuildings;
-        private DataTable _dataTablePremises;
-        private Visibility _premisesVisibility;
+        private DataTable _dataTableEmployees;
+        private DataTable _dataTableWorkRecordCard;
+        private Visibility _workRecordCardVisibility;
         private string _dataTableTitle;
         private string _dataTableOtherTitle;
         private string _searchDataInTable;
-        private string _searchDataInTablePremises;
+        private string _searchDataInTableWorkRecordCard;
         private int _selectedIndex;
-        private int _selectedIndexPremises;
+        private int _selectedIndexWorkRecordCard;
         private Visibility _writeVisibility;
         private Visibility _editVisibility;
         private Visibility _deleteVisibility;
@@ -40,24 +41,24 @@ namespace DataBase1WPF.ViewModels.Employee
         public EmployeeVM(ITableService tableService, uint menuElemId)
         {
             _tableService = tableService;
-            DataTableBuildings = _tableService.GetValuesTable();
+            DataTableEmployees = _tableService.GetValuesTable();
             DataTableTitle = _tableService.GetTableName();
-            if (_tableService is BuildingService service)
+            if (_tableService is EmployeeService service)
                 DataTableOtherTitle = service.GetOtherTableName();
             _userAbilities = _tableService.GetUserAbilities(menuElemId);
             _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
-            _premisesVisibility = Visibility.Collapsed;
+            _workRecordCardVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
         }
 
-        public Visibility PremisesVisibility
+        public Visibility WorkRecordCardVisibility
         {
-            get { return _premisesVisibility; }
+            get { return _workRecordCardVisibility; }
             set
             {
-                Set(ref _premisesVisibility, value);
+                Set(ref _workRecordCardVisibility, value);
             }
         }
 
@@ -67,40 +68,40 @@ namespace DataBase1WPF.ViewModels.Employee
             set
             {
                 Set(ref _searchDataInTable, value);
-                DataTableBuildings = _tableService.SearchDataInTable(_searchDataInTable);
+                DataTableEmployees = _tableService.SearchDataInTable(_searchDataInTable);
             }
         }
 
-        public string SearchDataInTablePremises
+        public string SearchDataInTableWorkRecordCard
         {
-            get { return _searchDataInTablePremises; }
+            get { return _searchDataInTableWorkRecordCard; }
             set
             {
-                Set(ref _searchDataInTablePremises, value);
-                if (_tableService is BuildingService service)
-                    DataTablePremises = service.SearchDataInTablePremises(_searchDataInTablePremises);
+                Set(ref _searchDataInTableWorkRecordCard, value);
+                if (_tableService is EmployeeService service)
+                    DataTableWorkRecordCard = service.SearchDataInTableWorkRecordCard(_searchDataInTableWorkRecordCard);
             }
         }
 
 
-        public DataTable DataTableBuildings
+        public DataTable DataTableEmployees
         {
-            get { return _dataTableBuildings; }
+            get { return _dataTableEmployees; }
             set
             {
-                if (_dataTableBuildings == null)
-                    _dataTableBuildings = value;
+                if (_dataTableEmployees == null)
+                    _dataTableEmployees = value;
                 else
-                    Set(ref _dataTableBuildings, value);
+                    Set(ref _dataTableEmployees , value);
             }
         }
 
-        public DataTable DataTablePremises
+        public DataTable DataTableWorkRecordCard
         {
-            get { return _dataTablePremises; }
+            get { return _dataTableWorkRecordCard; }
             set
             {
-                Set(ref _dataTablePremises, value);
+                Set(ref _dataTableWorkRecordCard, value);
             }
         }
 
@@ -131,40 +132,29 @@ namespace DataBase1WPF.ViewModels.Employee
         }
 
 
-
-
         public int SelectedIndex
         {
             get { return _selectedIndex; }
             set
             {
                 Set(ref _selectedIndex, value);
-                if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count
-                    && _tableService is BuildingService service)
+                if (SelectedIndex >= 0 && SelectedIndex < DataTableEmployees.Rows.Count
+                    && _tableService is EmployeeService service)
                 {
-                    DataTable? table = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
+                    DataTable? table = service.GetWorkRecordCardByEmployee(DataTableEmployees.Rows[SelectedIndex]);
 
-                    PremisesVisibility = Visibility.Visible;
-                    DataTablePremises = table;
-                    //if (table != null && table.Rows.Count != 0)
-                    //{
-                    //    PremisesVisibility = Visibility.Visible;
-                    //    DataTablePremises = table;
-                    //}
-                    //else
-                    //{
-                    //    PremisesVisibility = Visibility.Collapsed;
-                    //}
+                    WorkRecordCardVisibility = Visibility.Visible;
+                    DataTableWorkRecordCard = table;
                 }
             }
         }
 
-        public int SelectedIndexPremises
+        public int SelectedIndexWorkRecordCard
         {
-            get { return _selectedIndexPremises; }
+            get { return _selectedIndexWorkRecordCard; }
             set
             {
-                Set(ref _selectedIndexPremises, value);
+                Set(ref _selectedIndexWorkRecordCard, value);
             }
         }
 
@@ -176,7 +166,7 @@ namespace DataBase1WPF.ViewModels.Employee
 
         }
 
-        public void DataTablePremisesMouseDown()
+        public void DataTableWordRecordCardMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
             DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
@@ -189,7 +179,7 @@ namespace DataBase1WPF.ViewModels.Employee
 
         }
 
-        public void DataTablePremisesMouseLeave()
+        public void DataTableWordRecordCardMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
             DeleteVisibility = Visibility.Collapsed;
@@ -244,8 +234,8 @@ namespace DataBase1WPF.ViewModels.Employee
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count)
-                        OnEdit?.Invoke(DataTableBuildings.Rows[SelectedIndex], _tableService);
+                    if (SelectedIndex >= 0 && SelectedIndex < DataTableEmployees.Rows.Count)
+                        OnEdit?.Invoke(DataTableEmployees.Rows[SelectedIndex], _tableService);
                 });
             }
         }
@@ -258,14 +248,14 @@ namespace DataBase1WPF.ViewModels.Employee
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndex >= 0 && SelectedIndex < DataTableBuildings.Rows.Count)
-                        OnDelete?.Invoke(DataTableBuildings.Rows[SelectedIndex], _tableService);
+                    if (SelectedIndex >= 0 && SelectedIndex < DataTableEmployees.Rows.Count)
+                        OnDelete?.Invoke(DataTableEmployees.Rows[SelectedIndex], _tableService);
                 });
             }
         }
 
 
-        public ICommand ClickAddPremises
+        public ICommand ClickAddWorkRecordCard
         {
             get
             {
@@ -276,28 +266,28 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-        public ICommand ClickEditPremises
+        public ICommand ClickEditWorkRecordCard
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
-                        OnEditWorkRecordCard?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
+                    if (SelectedIndexWorkRecordCard >= 0 && SelectedIndexWorkRecordCard < DataTableWorkRecordCard.Rows.Count)
+                        OnEditWorkRecordCard?.Invoke(DataTableWorkRecordCard.Rows[SelectedIndexWorkRecordCard], _tableService);
                 });
             }
         }
 
 
 
-        public ICommand ClickDeletePremises
+        public ICommand ClickDeleteWorkRecordCard
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndexPremises >= 0 && SelectedIndexPremises < DataTablePremises.Rows.Count)
-                        OnDeleteWorkRecordCard?.Invoke(DataTablePremises.Rows[SelectedIndexPremises], _tableService);
+                    if (SelectedIndexWorkRecordCard >= 0 && SelectedIndexWorkRecordCard < DataTableWorkRecordCard.Rows.Count)
+                        OnDeleteWorkRecordCard?.Invoke(DataTableWorkRecordCard.Rows[SelectedIndexWorkRecordCard], _tableService);
                 });
             }
         }
@@ -307,27 +297,27 @@ namespace DataBase1WPF.ViewModels.Employee
 
         public void Delete()
         {
-            PremisesVisibility = Visibility.Collapsed;
-            _tableService.Delete(DataTableBuildings.Rows[SelectedIndex]);
+            WorkRecordCardVisibility = Visibility.Collapsed;
+            _tableService.Delete(DataTableEmployees.Rows[SelectedIndex]);
             UpdateDataTable();
         }
 
         public void UpdateDataTable()
         {
-            DataTableBuildings = _tableService.GetValuesTable();
+            DataTableEmployees = _tableService.GetValuesTable();
         }
 
         public void DeleteWorkRecordCard()
         {
-            if (_tableService is BuildingService service)
-                service.DeletePremises(DataTablePremises.Rows[SelectedIndexPremises]);
+            if (_tableService is EmployeeService service)
+                service.DeleteWorkRecordCard(DataTableWorkRecordCard.Rows[SelectedIndexWorkRecordCard]);
             UpdateDataTableWorkRecordCard();
         }
 
         public void UpdateDataTableWorkRecordCard()
         {
-            if (_tableService is BuildingService service)
-                DataTablePremises = service.GetPremisesByBuilding(DataTableBuildings.Rows[SelectedIndex]);
+            if (_tableService is EmployeeService service)
+                DataTableWorkRecordCard = service.GetWorkRecordCardByEmployee(DataTableEmployees.Rows[SelectedIndex]);
         }
     }
 }

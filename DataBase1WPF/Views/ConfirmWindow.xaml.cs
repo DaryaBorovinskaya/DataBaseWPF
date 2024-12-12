@@ -1,6 +1,7 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels;
 using DataBase1WPF.ViewModels.Building;
+using DataBase1WPF.ViewModels.Employee;
 using DataBase1WPF.ViewModels.Handbooks;
 using System;
 using System.Collections.Generic;
@@ -80,6 +81,29 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditPremiseVM editPremiseVM)
             {
                 editPremiseVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is EmployeeVM employeeVM)
+            {
+                if (_otherTables == OtherTablesEnum.WorkRecordCard)
+                    employeeVM.DeleteWorkRecordCard();
+                else
+                    employeeVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddEmployeeVM addEmployeeVM)
+            {
+                addEmployeeVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditEmployeeVM editEmployeeVM)
+            {
+                editEmployeeVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is AddWorkRecordCardVM addWorkRecordCardVM)
+            {
+                addWorkRecordCardVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditWorkRecordCardVM editWorkRecordCardVM)
+            {
+                editWorkRecordCardVM.Edit();
             }
         }
         public void Exit()
