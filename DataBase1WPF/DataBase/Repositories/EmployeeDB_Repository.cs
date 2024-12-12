@@ -20,7 +20,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"date_of_birth, house_number) " +
                      $"values ({entity.DistrictId}, {entity.StreetId}," +
                      $" '{entity.Surname}', '{entity.Name}'," +
-                     $"'{entity.Patronymic}', '{entity.DateOfBirth.ToString("yyyy-MM-dd")}', " +
+                     $"'{entity.Patronymic}', '{entity.DateOfBirth /*entity.DateOfBirth.ToString("yyyy-MM-dd")*/}', " +
                      $"'{entity.HouseNumber}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -47,7 +47,7 @@ namespace DataBase1WPF.DataBase.Repositories
                     row[5].ToString(),
                     row[6].ToString(),
                     row[7].ToString(),
-                    DateTime.Parse(row[8].ToString()),
+                    row[8].ToString().Substring(0,10),
                     row[9].ToString()
                 ));
             }
@@ -59,7 +59,7 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"update employees set " +
                      $"district_id={entity.DistrictId}, street_id={entity.StreetId}, " +
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
-                     $"patronymic='{entity.Patronymic}', date_of_birth='{entity.DateOfBirth.ToString("yyyy-MM-dd")}', " +
+                     $"patronymic='{entity.Patronymic}', date_of_birth='{entity.DateOfBirth /*entity.DateOfBirth.ToString("yyyy-MM-dd")*/}', " +
                      $"house_number='{entity.HouseNumber}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);

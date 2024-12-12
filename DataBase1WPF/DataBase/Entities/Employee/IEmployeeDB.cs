@@ -11,14 +11,6 @@ namespace DataBase1WPF.DataBase.Entities.Employee
     {
         public uint Id { get; set; }
 
-        [DisplayName("Район")]
-        public string DistrictTitle { get; set; }
-        public uint DistrictId { get; set; }
-
-        [DisplayName("Улица")]
-        public string StreetTitle { get; set; }
-        public uint StreetId { get; set; }
-
         [DisplayName("Фамилия")]
         public string Surname { get; set; }
 
@@ -29,8 +21,18 @@ namespace DataBase1WPF.DataBase.Entities.Employee
         public string? Patronymic { get; set; }
 
         [DisplayName("Дата рождения")]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; } //public DateTime DateOfBirth { get; set; }
 
+
+        [DisplayName("Район")]
+        public string DistrictTitle { get; set; }
+        public uint DistrictId { get; set; }
+
+        [DisplayName("Улица")]
+        public string StreetTitle { get; set; }
+        public uint StreetId { get; set; }
+
+        
 
         [DisplayName("Номер дома")]
         public string HouseNumber { get; set; }

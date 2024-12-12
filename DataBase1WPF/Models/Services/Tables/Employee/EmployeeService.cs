@@ -34,10 +34,13 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
         public DataTable GetValuesTable()
         {
             List<IEmployeeDB> values = GetValues();
+            
             DataTable table = DataTableConverter.ToDataTable(values);
+            
             table.Columns.Remove(table.Columns[0]);
-            table.Columns.Remove(table.Columns[1]);
-            table.Columns.Remove(table.Columns[2]);
+            table.Columns.Remove(table.Columns[5]);
+            table.Columns.Remove(table.Columns[6]);
+
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -63,8 +66,10 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
             || item.Patronymic.Contains(searchLine) || item.DateOfBirth.ToString().Contains(searchLine)).ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
-            table.Columns.Remove(table.Columns[1]);
-            table.Columns.Remove(table.Columns[2]);
+            table.Columns.Remove(table.Columns[5]);
+            table.Columns.Remove(table.Columns[6]);
+
+            
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -132,7 +137,7 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
                 surname,
                 name,
                 patronymic,
-                dateOfBirth,
+                dateOfBirth.ToString("yyyy-MM-dd"),
                 houseNumber
                 ));
         }
@@ -170,7 +175,7 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
                 surname,
                 name,
                 patronymic,
-                dateOfBirth,
+                dateOfBirth.ToString("yyyy-MM-dd"),
                 houseNumber
                 ));
         }

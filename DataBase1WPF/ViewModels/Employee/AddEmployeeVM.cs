@@ -19,6 +19,7 @@ namespace DataBase1WPF.ViewModels.Employee
         private string _numberOfFloorsText;
         private string _countRentalPremisesText;
         private string _commandantPhoneNumberText;
+        private DateTime _dateOfBirth;
 
         private List<string> _districtsComboBox;
         private int _selectedIndexDistricts;
@@ -36,6 +37,14 @@ namespace DataBase1WPF.ViewModels.Employee
             get { return _buttonContent; }
         }
 
+        public DateTime DateOfBirth
+        {
+            get { return _dateOfBirth; }
+            set
+            {
+                Set(ref _dateOfBirth, value);   
+            }
+        }
 
         public List<string> DistrictsComboBox
         {

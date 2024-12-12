@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="AddOrEditEmployeeWindow" Height="450" Width="800">
     <Grid>
-        
+        <DatePicker SelectedDate="{Binding DateOfBirth }" DisplayDate="{Binding DateOfBirth}"></DatePicker>
     </Grid>
 </Window>
