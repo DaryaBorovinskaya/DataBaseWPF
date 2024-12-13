@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using DataBase1WPF.Models.Services.Tables.Employee;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
@@ -16,9 +17,9 @@ namespace DataBase1WPF.ViewModels.Employee
         private string _windowTitle;
         private string _buttonContent;
         private string _houseNumberText;
-        private string _numberOfFloorsText;
-        private string _countRentalPremisesText;
-        private string _commandantPhoneNumberText;
+        private string _surnameText;
+        private string _nameText;
+        private string _patronymicText;
         private DateTime _dateOfBirth;
 
         private List<string> _districtsComboBox;
@@ -37,6 +38,10 @@ namespace DataBase1WPF.ViewModels.Employee
             get { return _buttonContent; }
         }
 
+        //public DateTime DisplayDateOfBirth
+        //{
+        //    get { return DateTime.Now; }
+        //}
         public DateTime DateOfBirth
         {
             get { return _dateOfBirth; }
@@ -92,30 +97,30 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-        public string NumberOfFloorsText
+        public string SurnameText
         {
-            get { return _numberOfFloorsText; }
+            get { return _surnameText; }
             set
             {
-                Set(ref _numberOfFloorsText, value);
+                Set(ref _surnameText, value);
             }
         }
 
-        public string CountRentalPremisesText
+        public string NameText
         {
-            get { return _countRentalPremisesText; }
+            get { return _nameText; }
             set
             {
-                Set(ref _countRentalPremisesText, value);
+                Set(ref _nameText, value);
             }
         }
 
-        public string CommandantPhoneNumberText
+        public string PatronymicText
         {
-            get { return _commandantPhoneNumberText; }
+            get { return _patronymicText; }
             set
             {
-                Set(ref _commandantPhoneNumberText, value);
+                Set(ref _patronymicText, value);
             }
         }
 
@@ -126,49 +131,15 @@ namespace DataBase1WPF.ViewModels.Employee
             _windowTitle = $"Добавление в таблицу: {_tableService.GetTableName()}";
             _buttonContent = "Добавить";
 
-            if (_tableService is BuildingService service)
+            _dateOfBirth = DateTime.Now;
+            if (_tableService is EmployeeService service)
             {
                 _districtsComboBox = service.GetDistricts();
                 _streetsComboBox = service.GetStreets();
             }
         }
 
-        private uint CheckValuesUint(string line)
-        {
-            try
-            {
-                uint value = uint.Parse(line);
-                if (value > 0)
-                    return value;
-                else
-                {
-                    MessageBox.Show("ОШИБКА: введенное значение меньше или равно 0");
-
-                    return 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ОШИБКА: введенное значение не является целым положительным числом");
-                return 0;
-            }
-        }
-
-        private bool CheckValueNumberOfFloors(uint value)
-        {
-            if (value <= 255)
-                return true;
-            return false;
-        }
-
-        private bool CheckValueCountRentalPremises(uint value)
-        {
-            if (value <= 65535)
-                return true;
-            return false;
-        }
-
-
+        
         public ICommand Click
         {
             get
@@ -181,30 +152,20 @@ namespace DataBase1WPF.ViewModels.Employee
                         MessageBox.Show("ОШИБКА: не выбрано значение улицы");
                     else if (string.IsNullOrEmpty(HouseNumberText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(NumberOfFloorsText))
+                    else if (string.IsNullOrEmpty(SurnameText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(CountRentalPremisesText))
+                    else if (string.IsNullOrEmpty(NameText))
                         MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(PatronymicText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (DateOfBirth.Date == DateTime.Now.Date)
+                        MessageBox.Show("ОШИБКА: поле даты заполнено неверно");
 
 
                     else
                     {
-                        uint valueNumberOfFloors = CheckValuesUint(NumberOfFloorsText);
-                        uint valueCountRentalPremises = CheckValuesUint(CountRentalPremisesText);
-
-                        if (valueNumberOfFloors != 0 && valueCountRentalPremises != 0)
-                        {
-                            if (!CheckValueNumberOfFloors(valueNumberOfFloors))
-                                MessageBox.Show("ОШИБКА: число больше 255");
-                            else if (!CheckValueCountRentalPremises(valueCountRentalPremises))
-                                MessageBox.Show("ОШИБКА: число больше 65535");
-                            else
-                                OnApply?.Invoke(
-                                    DistrictsComboBox[SelectedIndexDistricts] + " "
-                                    + StreetsComboBox[SelectedIndexStreets] + " "
-                                    + HouseNumberText);
-                        }
-
+                        OnApply?.Invoke(SurnameText + " " + NameText + " "
+                            + PatronymicText);
                     }
                 });
             }
@@ -212,10 +173,9 @@ namespace DataBase1WPF.ViewModels.Employee
 
         public void Add()
         {
-            if (_tableService is BuildingService service)
-                service.Add(SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
-                    uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
-                    CommandantPhoneNumberText);
+            if (_tableService is EmployeeService service)
+                service.Add(SelectedIndexDistricts, SelectedIndexStreets, SurnameText,
+                    NameText, PatronymicText, DateOfBirth, HouseNumberText);
         }
     }
 }

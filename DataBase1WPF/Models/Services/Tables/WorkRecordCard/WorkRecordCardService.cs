@@ -88,7 +88,7 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
                 employeeId,
                 DataManager.GetInstance().PositionDB_Repository.Read().ToList()[positionIndex].Id,
                 orderNumber,
-                orderDate,
+                orderDate.ToString("yyyy-MM-dd"),
                 reasonOfRecording
                 ));
         }
@@ -101,7 +101,7 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
                 employeeId,
                 DataManager.GetInstance().PositionDB_Repository.Read().ToList()[positionIndex].Id,
                 orderNumber,
-                orderDate,
+                orderDate.ToString("yyyy-MM-dd"),
                 reasonOfRecording
                 ));
         }

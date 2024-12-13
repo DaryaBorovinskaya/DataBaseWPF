@@ -20,7 +20,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"(employee_id, position_id, order_number," +
                      $"order_date, reason_of_recording) " +
                      $"values ({entity.EmployeeID}, {entity.PositionId}," +
-                     $"'{entity.OrderNumber}', '{entity.OrderDate.ToString("yyyy-MM-dd")}', '{entity.ReasonOfRecording}')";
+                     $"'{entity.OrderNumber}', '{entity.OrderDate}', '{entity.ReasonOfRecording}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
         public IList<IWorkRecordCardDB> Read()
@@ -33,7 +33,7 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"update work_record_cards set " +
                      $"employee_id={entity.EmployeeID}, position_id={entity.PositionId}, " +
                      $"order_number='{entity.OrderNumber}', " +
-                     $"order_date='{entity.OrderDate.ToString("yyyy-MM-dd")}', reason_of_recording='{entity.ReasonOfRecording}' " +
+                     $"order_date='{entity.OrderDate}', reason_of_recording='{entity.ReasonOfRecording}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -69,7 +69,7 @@ namespace DataBase1WPF.DataBase.Repositories
                     uint.Parse(row[2].ToString()),
                     row[3].ToString(),
                     row[4].ToString(),
-                    DateTime.Parse(row[5].ToString()),
+                    row[5].ToString().Substring(0, 10),
                     row[6].ToString()
                 ));
             }

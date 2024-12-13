@@ -13,14 +13,16 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
         public uint EmployeeID { get; set; }
         public uint PositionId { get; set; }
 
-        [DisplayName("Должность")]
-        public string PositionName { get; set; }
+        
 
         [DisplayName("Номер приказа")]
         public string OrderNumber { get; set; }
 
         [DisplayName("Дата приказа")]
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; } //public DateTime OrderDate { get; set; }
+
+        [DisplayName("Должность")]
+        public string PositionName { get; set; }
 
         [DisplayName("Причина записи")]
         public string ReasonOfRecording { get; set; }

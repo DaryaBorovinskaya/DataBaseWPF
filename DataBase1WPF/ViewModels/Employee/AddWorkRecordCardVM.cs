@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using DataBase1WPF.Models.Services.Tables.Employee;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
@@ -15,15 +16,13 @@ namespace DataBase1WPF.ViewModels.Employee
         private ITableService _tableService;
         private string _windowTitle;
         private string _buttonContent;
-        private string _buildingText;
-        private string _premiseNumberText;
-        private string _areaText;
-        private string _tempRentalPaymentText;
-        private string _floorNumberText;
-        private bool _availabilityOfPhoneNumber;
+        private string _employeeText;
+        private string _orderNumberText;
+        private DateTime _orderDate;
+        private string _reasonOfRecordingText;
 
-        private List<string> _typeOfFinishingComboBox;
-        private int _selectedIndexTypeOfFinishing;
+        private List<string> _positionsComboBox;
+        private int _selectedIndexPositions;
         public Action<string> OnApply;
 
         public string WindowTitle
@@ -36,135 +35,77 @@ namespace DataBase1WPF.ViewModels.Employee
             get { return _buttonContent; }
         }
 
-        public string BuildingText
+        public string EmployeeText
         {
-            get { return _buildingText; }
+            get { return _employeeText; }
             set
             {
-                Set(ref _buildingText, value);
+                Set(ref _employeeText, value);
             }
         }
 
 
-        public List<string> TypeOfFinishingIdComboBox
+        public List<string> PositionsComboBox
         {
-            get { return _typeOfFinishingComboBox; }
+            get { return _positionsComboBox; }
             set
             {
-                Set(ref _typeOfFinishingComboBox, value);
+                Set(ref _positionsComboBox, value);
             }
         }
 
-        public int SelectedIndexTypeOfFinishing
+        public int SelectedIndexPositions
         {
-            get { return _selectedIndexTypeOfFinishing; }
+            get { return _selectedIndexPositions; }
             set
             {
-                Set(ref _selectedIndexTypeOfFinishing, value);
-            }
-        }
-
-
-        public string PremiseNumberText
-        {
-            get { return _premiseNumberText; }
-            set
-            {
-                Set(ref _premiseNumberText, value);
-            }
-        }
-
-        public string AreaText
-        {
-            get { return _areaText; }
-            set
-            {
-                Set(ref _areaText, value);
-            }
-        }
-
-        public string FloorNumberText
-        {
-            get { return _floorNumberText; }
-            set
-            {
-                Set(ref _floorNumberText, value);
+                Set(ref _selectedIndexPositions, value);
             }
         }
 
 
-        public bool AvailabilityOfPhoneNumber
+        public string OrderNumberText
         {
-            get { return _availabilityOfPhoneNumber; }
+            get { return _orderNumberText; }
             set
             {
-                Set(ref _availabilityOfPhoneNumber, value);
+                Set(ref _orderNumberText, value);
             }
         }
 
-        public string TempRentalPaymentText
+        public DateTime OrderDate
         {
-            get { return _tempRentalPaymentText; }
+            get { return _orderDate; }
             set
             {
-                Set(ref _tempRentalPaymentText, value);
+                Set(ref _orderDate, value);
             }
         }
+
+        public string ReasonOfRecordingText
+        {
+            get { return _reasonOfRecordingText; }
+            set
+            {
+                Set(ref _reasonOfRecordingText, value);
+            }
+        }
+
+
+        
         public AddWorkRecordCardVM(ITableService tableService)
         {
             _tableService = tableService;
-
             _buttonContent = "Добавить";
+            _orderDate = DateTime.Now;
 
-            if (_tableService is BuildingService service)
+            if (_tableService is EmployeeService service)
             {
                 _windowTitle = $"Добавление в таблицу: {service.GetOtherTableName()}";
-                _typeOfFinishingComboBox = service.GetTypesOfFinishing();
-                _buildingText = service.GetSelectedBuildingText();
+                _positionsComboBox = service.GetPositions();
+                _employeeText = service.GetSelectedEmployeeText();
             }
         }
-
-        private float CheckValuesFloat(string line)
-        {
-            try
-            {
-                float value = float.Parse(line);
-                if (value > 0)
-                    return value;
-                else
-                {
-                    MessageBox.Show("ОШИБКА: введенное значение меньше или равно 0");
-
-                    return 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ОШИБКА: введенное значение не является целым или дробным числом");
-                return 0;
-            }
-        }
-        private int CheckValuesInt(string line)
-        {
-            try
-            {
-                int value = int.Parse(line);
-                return value;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ОШИБКА: введенное значение не является целым числом");
-                return int.MinValue;
-            }
-        }
-
-        private bool CheckValueFloorNumber(int value)
-        {
-            if (value <= 255)
-                return true;
-            return false;
-        }
-
 
         public ICommand Click
         {
@@ -172,36 +113,22 @@ namespace DataBase1WPF.ViewModels.Employee
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndexTypeOfFinishing == -1)
-                        MessageBox.Show("ОШИБКА: не выбрано значение вида отделки");
-                    else if (string.IsNullOrEmpty(PremiseNumberText))
+                    if (_selectedIndexPositions == -1)
+                        MessageBox.Show("ОШИБКА: не выбрано значение должности");
+                    else if (string.IsNullOrEmpty(OrderNumberText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(AreaText))
+                    else if (string.IsNullOrEmpty(ReasonOfRecordingText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(FloorNumberText))
-                        MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(TempRentalPaymentText))
-                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (OrderDate.Date == DateTime.Now.Date)
+                        MessageBox.Show("ОШИБКА: поле даты заполнено неверно");
 
 
                     else
                     {
-                        int valueFloorNumber = CheckValuesInt(FloorNumberText);
-                        float valueArea = CheckValuesFloat(AreaText);
-                        float valueTempRentalPayment = CheckValuesFloat(TempRentalPaymentText);
-
-                        if (valueFloorNumber != int.MinValue && valueArea != 0
-                            && valueTempRentalPayment != 0)
-                        {
-                            if (!CheckValueFloorNumber(valueFloorNumber))
-                                MessageBox.Show("ОШИБКА: число больше 255");
-                            else
-                                OnApply?.Invoke(
-                                    TypeOfFinishingIdComboBox[SelectedIndexTypeOfFinishing] + " номер "
-                                    + PremiseNumberText + " площадь "
-                                    + AreaText);
-                        }
-
+                        OnApply?.Invoke(
+                            PositionsComboBox[SelectedIndexPositions] + " номер приказа "
+                            + OrderNumberText + " дата "
+                            + OrderDate.ToString("dd.MM.yyyy"));
                     }
                 });
             }
@@ -209,10 +136,9 @@ namespace DataBase1WPF.ViewModels.Employee
 
         public void Add()
         {
-            if (_tableService is BuildingService service)
-                service.AddPremises(SelectedIndexTypeOfFinishing, PremiseNumberText,
-                    float.Parse(AreaText), int.Parse(FloorNumberText), AvailabilityOfPhoneNumber,
-                    float.Parse(TempRentalPaymentText));
+            if (_tableService is EmployeeService service)
+                service.AddWorkRecordCard(SelectedIndexPositions, OrderNumberText,
+                    OrderDate, ReasonOfRecordingText);
         }
     }
 }
