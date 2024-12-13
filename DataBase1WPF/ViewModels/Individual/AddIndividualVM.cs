@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using DataBase1WPF.Models.Services.Tables.Individual;
 
 namespace DataBase1WPF.ViewModels.Individual
 {
@@ -15,16 +16,15 @@ namespace DataBase1WPF.ViewModels.Individual
         private ITableService _tableService;
         private string _windowTitle;
         private string _buttonContent;
-        private string _houseNumberText;
+        private string _phoneNumberText;
         private string _surnameText;
         private string _nameText;
         private string _patronymicText;
-        private DateTime _dateOfBirth;
+        private DateTime _dateOfIssue;
+        private string _passportSeriesText;
+        private string _passportNumberText;
+        private string _issuedByText;
 
-        private List<string> _districtsComboBox;
-        private int _selectedIndexDistricts;
-        private int _selectedIndexStreets;
-        private List<string> _streetsComboBox;
 
         public Action<string> OnApply;
 
@@ -39,58 +39,21 @@ namespace DataBase1WPF.ViewModels.Individual
         }
 
 
-        public DateTime DateOfBirth
+        public DateTime DateOfIssue
         {
-            get { return _dateOfBirth; }
+            get { return _dateOfIssue; }
             set
             {
-                Set(ref _dateOfBirth, value);
+                Set(ref _dateOfIssue, value);
             }
         }
 
-        public List<string> DistrictsComboBox
+        public string PhoneNumberText
         {
-            get { return _districtsComboBox; }
+            get { return _phoneNumberText; }
             set
             {
-                Set(ref _districtsComboBox, value);
-            }
-        }
-
-        public int SelectedIndexDistricts
-        {
-            get { return _selectedIndexDistricts; }
-            set
-            {
-                Set(ref _selectedIndexDistricts, value);
-            }
-        }
-
-
-        public List<string> StreetsComboBox
-        {
-            get { return _streetsComboBox; }
-            set
-            {
-                Set(ref _streetsComboBox, value);
-            }
-        }
-
-        public int SelectedIndexStreets
-        {
-            get { return _selectedIndexStreets; }
-            set
-            {
-                Set(ref _selectedIndexStreets, value);
-            }
-        }
-
-        public string HouseNumberText
-        {
-            get { return _houseNumberText; }
-            set
-            {
-                Set(ref _houseNumberText, value);
+                Set(ref _phoneNumberText, value);
             }
         }
 
@@ -120,11 +83,41 @@ namespace DataBase1WPF.ViewModels.Individual
                 Set(ref _patronymicText, value);
             }
         }
+
+        public string PassportSeriesText
+        {
+            get { return _passportSeriesText; }
+            set
+            {
+                Set(ref _passportSeriesText, value);
+            }
+        }
+
+        public string PassportNumberText
+        {
+            get { return _passportNumberText; }
+            set
+            {
+                Set(ref _passportNumberText, value);
+            }
+        }
+
+
+        public string IssuedByText
+        {
+            get { return _issuedByText; }
+            set
+            {
+                Set(ref _issuedByText, value);
+            }
+        }
+
         public AddIndividualVM(ITableService tableService) 
         {
             _tableService = tableService;
             _windowTitle = $"Добавление в таблицу: {_tableService.GetTableName()}";
             _buttonContent = "Добавить";
+            _dateOfIssue = DateTime.Now;
         }
 
         public ICommand Click
@@ -133,21 +126,23 @@ namespace DataBase1WPF.ViewModels.Individual
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndexDistricts == -1)
-                        MessageBox.Show("ОШИБКА: не выбрано значение района");
-                    else if (SelectedIndexStreets == -1)
-                        MessageBox.Show("ОШИБКА: не выбрано значение улицы");
-                    else if (string.IsNullOrEmpty(HouseNumberText))
-                        MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (string.IsNullOrEmpty(SurnameText))
+                    
+                    if (string.IsNullOrEmpty(SurnameText))
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(NameText))
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(PatronymicText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (DateOfBirth.Date == DateTime.Now.Date)
+                    else if (string.IsNullOrEmpty(PhoneNumberText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(PassportSeriesText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(PassportNumberText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(IssuedByText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (DateOfIssue.Date == DateTime.Now.Date)
                         MessageBox.Show("ОШИБКА: поле даты заполнено неверно");
-
 
                     else
                     {
@@ -160,9 +155,9 @@ namespace DataBase1WPF.ViewModels.Individual
 
         public void Add()
         {
-            if (_tableService is EmployeeService service)
-                service.Add(SelectedIndexDistricts, SelectedIndexStreets, SurnameText,
-                    NameText, PatronymicText, DateOfBirth, HouseNumberText);
+            if (_tableService is IndividualService service)
+                service.Add(SurnameText, NameText, PatronymicText, PhoneNumberText,
+                    PassportSeriesText, PassportNumberText, DateOfIssue, IssuedByText);
         }
     }
 }

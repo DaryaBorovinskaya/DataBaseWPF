@@ -107,7 +107,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" 
                                 VerticalAlignment="Top" Margin="0 20">
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}" 
-                                Margin="20 0"
+                                Margin="20 0 10 0"
                                  Width="90" 
                                 Height="35"
                                 Background="White"
@@ -116,21 +116,21 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                                 Visibility="{Binding WriteVisibility}"/>
 
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
-                             Margin="20 0"
+                             Margin="10 0"
                             Background="White" Width="85" 
                             Height="35"
                             FontWeight="Bold" Content="Изменить"
                                 Visibility="{Binding EditVisibility}"
                                 Command="{Binding ClickEdit}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
-                                Margin="20 0"            
+                                Margin="10 0"            
                                 Background="White" Width="70" 
                                 Height="35"
                                 FontWeight="Bold" Content="Удалить"
                                 Command="{Binding ClickDelete}"
                                 Visibility="{Binding DeleteVisibility}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
-                                Margin="20 0"            
+                                Margin="75 0"            
                                 Background="#fffacd" Width="90" 
                                 Height="35"
                                 FontWeight="Bold" Content="Договоры"

@@ -79,7 +79,7 @@ namespace DataBase1WPF.Models.Services.Tables.Individual
 
         public void Add(string surname, string name, string? patronymic,
             string phoneNumber, string passportSeries,
-            string passportNumber, string  dateOfIssue, string issuedBy)
+            string passportNumber, DateTime  dateOfIssue, string issuedBy)
         {
             DataManager.GetInstance().IndividualDB_Repository.Create(new IndividualDB(
                 surname,
@@ -88,14 +88,14 @@ namespace DataBase1WPF.Models.Services.Tables.Individual
                 phoneNumber,
                 passportSeries,
                 passportNumber,
-                dateOfIssue,
+                dateOfIssue.ToString("yyyy-MM-dd"),
                 issuedBy
                 ));
         }
 
         public void Update(DataRow row, string surname, string name, string? patronymic,
             string phoneNumber, string passportSeries,
-            string passportNumber, string dateOfIssue, string issuedBy)
+            string passportNumber, DateTime dateOfIssue, string issuedBy)
         {
             DataManager.GetInstance().IndividualDB_Repository.Update(new IndividualDB(
                 _dataDictionary[row].Id,
@@ -105,7 +105,7 @@ namespace DataBase1WPF.Models.Services.Tables.Individual
                 phoneNumber,
                 passportSeries,
                 passportNumber,
-                dateOfIssue,
+                dateOfIssue.ToString("yyyy-MM-dd"),
                 issuedBy
                 ));
         }
