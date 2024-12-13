@@ -1,4 +1,7 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Models.Services.Tables.Contract;
+using DataBase1WPF.Models.Services.Tables.Employee;
+using DataBase1WPF.Models.Services.Tables.Individual;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,12 +23,13 @@ namespace DataBase1WPF.ViewModels.Individual
         private Visibility _writeVisibility;
         private Visibility _editVisibility;
         private Visibility _deleteVisibility;
+        private Visibility _contractVisibility;
         private UserAbilitiesType _userAbilities;
 
         public Action<ITableService> OnAdd;
         public Action<DataRow, ITableService> OnEdit;
         public Action<DataRow, ITableService> OnDelete;
-        public Action<DataRow, ITableService> OnContracts;
+        public Action<DataRow, ITableService, ITableService, uint> OnContracts;
 
 
         public string SearchDataInTable
@@ -68,6 +72,9 @@ namespace DataBase1WPF.ViewModels.Individual
             set
             {
                 Set(ref _selectedIndex, value);
+                if (SelectedIndex >= 0 && SelectedIndex < DataTableIndividuals.Rows.Count)
+                    ContractVisibility = Visibility.Visible;
+                
             }
         }
 
@@ -101,6 +108,15 @@ namespace DataBase1WPF.ViewModels.Individual
             }
         }
 
+        public Visibility ContractVisibility
+        {
+            get { return _contractVisibility; }
+            set
+            {
+                Set(ref _contractVisibility, value);
+            }
+        }
+
 
 
         public IndividualVM(ITableService tableService, uint menuElemId)
@@ -112,6 +128,7 @@ namespace DataBase1WPF.ViewModels.Individual
             _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
+            _contractVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
         }
 
@@ -173,8 +190,13 @@ namespace DataBase1WPF.ViewModels.Individual
             {
                 return new DelegateCommand((obj) =>
                 {
-                    if (SelectedIndex >= 0 && SelectedIndex < DataTableIndividuals.Rows.Count)
-                        OnContracts?.Invoke(DataTableIndividuals.Rows[SelectedIndex], _tableService);
+                    if (SelectedIndex >= 0 && SelectedIndex < DataTableIndividuals.Rows.Count
+                    && _tableService is IndividualService service)
+                        OnContracts?.Invoke(DataTableIndividuals.Rows[SelectedIndex], 
+                            _tableService,
+                            new ContractService(), 
+                            service.GetIndividualId(DataTableIndividuals.Rows[SelectedIndex])
+                            );
                 });
             }
         }

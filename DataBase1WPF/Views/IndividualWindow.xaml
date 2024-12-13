@@ -135,7 +135,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                                 Height="35"
                                 FontWeight="Bold" Content="Договоры"
                                 Command="{Binding ClickContracts}"
-                                Visibility="{Binding DeleteVisibility}"/>
+                                Visibility="{Binding ContractVisibility}"/>
                         </StackPanel>
 
                     </DockPanel>

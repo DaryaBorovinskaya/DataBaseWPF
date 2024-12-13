@@ -23,11 +23,11 @@ namespace DataBase1WPF.Views
     public partial class ContractsWindow : Window
     {
         private ITableService _tableService;
-        public ContractsWindow(DataRow row, ITableService tableService)
+        public ContractsWindow(DataRow row, ITableService clientService, ITableService tableService, uint client_id)
         {
             InitializeComponent();
             _tableService = tableService;
-            DataContext = new ContractVM(row, tableService);
+            DataContext = new ContractVM(row, clientService, tableService, client_id);
         }
     }
 }

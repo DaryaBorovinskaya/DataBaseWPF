@@ -59,9 +59,10 @@ namespace DataBase1WPF.Views
         }
 
 
-        public void Contracts(DataRow row, ITableService tableService)
+        public void Contracts(DataRow row, ITableService clientService, ITableService tableService,  
+            uint individual_id)
         {
-            ContractsWindow window = new(row, tableService);
+            ContractsWindow window = new(row, clientService, tableService, individual_id);
             window.Show();
         }
 

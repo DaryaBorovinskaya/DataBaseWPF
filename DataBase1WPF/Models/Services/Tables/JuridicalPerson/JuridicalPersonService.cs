@@ -1,5 +1,4 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
-using DataBase1WPF.DataBase.Entities.Individual;
+﻿using DataBase1WPF.DataBase.Entities.Individual;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase1WPF.Models.Services.Tables.Individual
+namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 {
-    public class IndividualService : IIndividualService, ITableService
+    public class JuridicalPersonService : ITableService
     {
         private Dictionary<DataRow, IIndividualDB> _dataDictionary;
         private DataRow _selectedIndividual;
@@ -80,7 +79,7 @@ namespace DataBase1WPF.Models.Services.Tables.Individual
 
         public void Add(string surname, string name, string? patronymic,
             string phoneNumber, string passportSeries,
-            string passportNumber, DateTime  dateOfIssue, string issuedBy)
+            string passportNumber, DateTime dateOfIssue, string issuedBy)
         {
             DataManager.GetInstance().IndividualDB_Repository.Create(new IndividualDB(
                 surname,
@@ -117,10 +116,16 @@ namespace DataBase1WPF.Models.Services.Tables.Individual
         }
 
 
-        public uint GetIndividualId(DataRow row)
-        {
-            return _dataDictionary[row].Id;
-        }
-        
+        //public DataTable? GetContractByIndividuals(DataRow row)
+        //{
+        //    _selectedEmployee = row;
+        //    return _workRecordCardService.GetWorkRecordCardByEmployee(_dataDictionary[row].Id);
+        //}
+        //public string GetSelectedEmployeeText()
+        //{
+        //    return _dataDictionary[_selectedEmployee].Surname + " "
+        //        + _dataDictionary[_selectedEmployee].Name + " "
+        //        + _dataDictionary[_selectedEmployee].Patronymic;
+        //}
     }
 }
