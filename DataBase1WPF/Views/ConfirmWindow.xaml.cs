@@ -3,6 +3,7 @@ using DataBase1WPF.ViewModels;
 using DataBase1WPF.ViewModels.Building;
 using DataBase1WPF.ViewModels.Employee;
 using DataBase1WPF.ViewModels.Handbooks;
+using DataBase1WPF.ViewModels.Individual;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -104,6 +105,18 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditWorkRecordCardVM editWorkRecordCardVM)
             {
                 editWorkRecordCardVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is IndividualVM individualVM)
+            {
+                individualVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddIndividualVM addIndividualVM)
+            {
+                addIndividualVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditIndividualVM editIndividualVM)
+            {
+                editIndividualVM.Edit();
             }
         }
         public void Exit()

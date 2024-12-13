@@ -34,6 +34,7 @@ namespace DataBase1WPF.Views
                 mainVM.OnTypesOfFinishing += Handbooks;
                 mainVM.OnFine += Handbooks;
 
+                mainVM.OnIndividuals += Individual;
                 mainVM.OnBuilding += Building;
                 mainVM.OnEmployees += Employee;
 
@@ -66,7 +67,13 @@ namespace DataBase1WPF.Views
             window.ShowDialog();
 
         }
-        
+
+        private void Individual(ITableService tableService, uint menuElemId)
+        {
+            IndividualWindow window = new(tableService, menuElemId);
+            window.ShowDialog();
+        }
+
         private void Building(ITableService tableService, uint menuElemId)
         {
             BuildingWindow window = new(tableService, menuElemId);

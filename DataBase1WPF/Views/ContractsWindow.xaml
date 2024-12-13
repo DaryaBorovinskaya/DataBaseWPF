@@ -1,0 +1,252 @@
+﻿<Window x:Class="DataBase1WPF.Views.ContractsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DataBase1WPF.Views"
+        mc:Ignorable="d"
+        Title="{Binding DataTableTitle}" Height="450" Width="700"
+ResizeMode="CanMinimize"
+WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
+       TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+BorderBrush="{TemplateBinding BorderBrush}"  
+BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled"  
+   Value="False">
+                    <Setter Property="Background"  
+    Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground"  
+    Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}" >
+                        <Border x:Name="border" CornerRadius="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <TabControl>
+            <!--
+            <TabItem Header="{Binding DataTableTitle}" FontSize="16">
+                <DockPanel>
+                    <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
+                  HorizontalScrollBarVisibility="Auto"
+                      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                  SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
+                  ItemsSource="{Binding DataTableBuildings}" 
+                  MouseDown="DataGrid_MouseDown"
+                      
+                      IsReadOnly="True"
+        />
+
+
+                    <DockPanel Background="#b9d1ea">
+                        <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
+                            <TextBlock FontSize="16" HorizontalAlignment="Left" 
+                 Margin="35 3 0 0" DockPanel.Dock="Top">
+                    Поиск
+                            </TextBlock>
+                            <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
+                     Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
+                         MouseDown="TextBox_MouseDown"
+                     Text="{Binding SearchDataInTable, UpdateSourceTrigger=PropertyChanged}">
+
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" 
+                            VerticalAlignment="Top" Margin="0 20">
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}" 
+                            Margin="20 0"
+                             Width="90" 
+                            Height="35"
+                            Background="White"
+                            FontWeight="Bold" Content="Добавить"
+                            Command="{Binding ClickAdd}"
+                            Visibility="{Binding WriteVisibility}"/>
+
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+                         Margin="20 0"
+                        Background="White" Width="85" 
+                        Height="35"
+                        FontWeight="Bold" Content="Изменить"
+                            Visibility="{Binding EditVisibility}"
+                            Command="{Binding ClickEdit}"/>
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+                            Margin="20 0"            
+                            Background="White" Width="70" 
+                            Height="35"
+                            FontWeight="Bold" Content="Удалить"
+                            Command="{Binding ClickDelete}"
+                            Visibility="{Binding DeleteVisibility}"/>
+
+                        </StackPanel>
+
+                    </DockPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16"
+                     Visibility="{Binding PremisesVisibility}">
+                <DockPanel>
+                    <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
+          HorizontalScrollBarVisibility="Auto"
+              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPremises}"
+          ItemsSource="{Binding DataTablePremises}" 
+          MouseDown="DataGridPremises_MouseDown"
+              IsReadOnly="True"   />
+
+                    <DockPanel Background="#b9d1ea">
+                        <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
+                            <TextBlock FontSize="16" HorizontalAlignment="Left" 
+         Margin="35 3 0 0" DockPanel.Dock="Top">
+            Поиск
+                            </TextBlock>
+                            <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
+             Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
+                 MouseDown="TextBoxPremises_MouseDown"
+             Text="{Binding SearchDataInTablePremises, UpdateSourceTrigger=PropertyChanged}">
+
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" 
+                    VerticalAlignment="Top" Margin="0 20">
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}" 
+                    Margin="20 0"
+                     Width="90" 
+                    Height="35"
+                    Background="White"
+                    FontWeight="Bold" Content="Добавить"
+                    Command="{Binding ClickAddPremises}"
+                    Visibility="{Binding WriteVisibility}"/>
+
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+                 Margin="20 0"
+                Background="White" Width="85" 
+                Height="35"
+                FontWeight="Bold" Content="Изменить"
+                    Visibility="{Binding EditVisibility}"
+                    Command="{Binding ClickEditPremises}"/>
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+                    Margin="20 0"            
+                    Background="White" Width="70" 
+                    Height="35"
+                    FontWeight="Bold" Content="Удалить"
+                    Command="{Binding ClickDeletePremises}"
+                    Visibility="{Binding DeleteVisibility}"/>
+
+                        </StackPanel>
+
+                    </DockPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16"
+            Visibility="{Binding PremisesVisibility}">
+                <DockPanel>
+                    <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
+ HorizontalScrollBarVisibility="Auto"
+     CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+ SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPremises}"
+ ItemsSource="{Binding DataTablePremises}" 
+ MouseDown="DataGridPremises_MouseDown"
+     IsReadOnly="True"   />
+
+                    <DockPanel Background="#b9d1ea">
+                        <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
+                            <TextBlock FontSize="16" HorizontalAlignment="Left" 
+Margin="35 3 0 0" DockPanel.Dock="Top">
+   Поиск
+                            </TextBlock>
+                            <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
+    Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
+        MouseDown="TextBoxPremises_MouseDown"
+    Text="{Binding SearchDataInTablePremises, UpdateSourceTrigger=PropertyChanged}">
+
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" 
+           VerticalAlignment="Top" Margin="0 20">
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}" 
+           Margin="20 0"
+            Width="90" 
+           Height="35"
+           Background="White"
+           FontWeight="Bold" Content="Добавить"
+           Command="{Binding ClickAddPremises}"
+           Visibility="{Binding WriteVisibility}"/>
+
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+        Margin="20 0"
+       Background="White" Width="85" 
+       Height="35"
+       FontWeight="Bold" Content="Изменить"
+           Visibility="{Binding EditVisibility}"
+           Command="{Binding ClickEditPremises}"/>
+                            <Button Template="{StaticResource NoMouseOverButtonTemplate}"
+           Margin="20 0"            
+           Background="White" Width="70" 
+           Height="35"
+           FontWeight="Bold" Content="Удалить"
+           Command="{Binding ClickDeletePremises}"
+           Visibility="{Binding DeleteVisibility}"/>
+
+                        </StackPanel>
+
+                    </DockPanel>
+                </DockPanel>
+            </TabItem>
+            -->
+        </TabControl>
+    </Grid>
+</Window>

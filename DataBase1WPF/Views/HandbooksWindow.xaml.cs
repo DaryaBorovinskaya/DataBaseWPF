@@ -58,11 +58,7 @@ namespace DataBase1WPF.Views
                 handbooksVM.DataTableMouseDown();
         }
 
-        private void DataGrid_MouseLeave(object sender, MouseEventArgs e)
-        {
-            
-        }
-
+        
         private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is HandbooksVM handbooksVM)

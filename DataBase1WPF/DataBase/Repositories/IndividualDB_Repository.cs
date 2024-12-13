@@ -15,7 +15,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"values ('{entity.Surname}', '{entity.Name}'," +
                      $"'{entity.Patronymic}', '{entity.PhoneNumber}'," +
                      $"'{entity.PassportSeries}', '{entity.PassportNumber}'," +
-                     $"'{entity.DateOfIssue.ToString("yyyy-MM-dd")}', '{entity.IssuedBy}')";
+                     $"'{entity.DateOfIssue}', '{entity.IssuedBy}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
         public IList<IIndividualDB> Read()
@@ -33,7 +33,7 @@ namespace DataBase1WPF.DataBase.Repositories
                     row[4].ToString(),
                     row[5].ToString(),
                     row[6].ToString(),
-                    DateTime.Parse(row[7].ToString()),
+                    row[7].ToString().Substring(0,10),
                     row[8].ToString()    
                 ));
             }
@@ -46,7 +46,7 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
                      $"patronymic='{entity.Patronymic}', phone_number='{entity.PhoneNumber}', " +
                      $"passport_series='{entity.PassportSeries}', passport_number='{entity.PassportNumber}', " +
-                     $"date_of_issue='{entity.DateOfIssue.ToString("yyyy-MM-dd")}', issued_by='{entity.IssuedBy}' " +
+                     $"date_of_issue='{entity.DateOfIssue}', issued_by='{entity.IssuedBy}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
