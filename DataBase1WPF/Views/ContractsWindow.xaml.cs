@@ -1,5 +1,8 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels.Contract;
+using DataBase1WPF.ViewModels.Employee;
+using DataBase1WPF.Views.AddOrEdit;
+using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -28,6 +31,45 @@ namespace DataBase1WPF.Views
             InitializeComponent();
             _tableService = tableService;
             DataContext = new ContractVM(row, clientService, tableService, client_id);
+            if (DataContext is ContractVM contractVM)
+            {
+                contractVM.OnAdd += Add;
+                contractVM.OnEdit += Edit;
+                contractVM.OnDelete += Delete;
+            }
+        }
+
+        public void Add(ITableService tableService)
+        {
+            AddOrEditEmployeeWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            window.ShowDialog();
+        }
+
+        public void Edit(DataRow row, ITableService tableService)
+        {
+            AddOrEditEmployeeWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
+            window.ShowDialog();
+        }
+
+        public void Delete(DataRow row, ITableService tableService)
+        {
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, row[2].ToString() + " " + row[3].ToString() + " " + row[4].ToString());
+            window.ShowDialog();
+        }
+
+
+        private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is ContractVM contractVM)
+                contractVM.DataTableMouseDown();
+        }
+
+        
+
+        private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is ContractVM contractVM)
+                contractVM.DataTableMouseLeave();
         }
     }
 }

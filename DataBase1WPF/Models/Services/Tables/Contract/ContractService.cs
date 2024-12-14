@@ -2,6 +2,7 @@
 using DataBase1WPF.DataBase.Entities.Employee;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
+using DataBase1WPF.DataBase.Repositories;
 using DataBase1WPF.Models.Services.Tables.WorkRecordCard;
 using System;
 using System.Collections.Generic;
@@ -28,19 +29,47 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public DataTable GetValuesTableByIndividualId(uint individualId) 
         {
-            List<IContractDB> values = DataManager.GetInstance().ContractDB_Repository.Read().ToList();
+            DataTable table = new();
+            if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
+            {
+                List<IContractDB> values = repository.GetContractsByIndividualId(individualId).ToList();
 
-            DataTable table = DataTableConverter.ToDataTable(values);
+                table = DataTableConverter.ToDataTable(values);
 
-            table.Columns.Remove(table.Columns[0]);
-            table.Columns.Remove(table.Columns[5]);
-            table.Columns.Remove(table.Columns[6]);
+                for (int i = 0; i < 8; i++)
+                {
+                    table.Columns.Remove(table.Columns[0]);
+                }
+                table.Columns.Remove(table.Columns[3]);
 
 
-            _dataDictionary = new();
-            for (int i = 0; i < values.Count; i++)
-                _dataDictionary.Add(table.Rows[i], values[i]);
+                _dataDictionary = new();
+                for (int i = 0; i < values.Count; i++)
+                    _dataDictionary.Add(table.Rows[i], values[i]);
+            }
+            return table;
+        }
 
+
+        public DataTable GetValuesTableByJuridicalPersonId(uint juridicalPersonId)
+        {
+            DataTable table = new();
+            if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
+            {
+                List<IContractDB> values = repository.GetContractsByJuridicalPersonId(juridicalPersonId).ToList();
+
+                table = DataTableConverter.ToDataTable(values);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    table.Columns.Remove(table.Columns[0]);
+                }
+                table.Columns.Remove(table.Columns[3]);
+
+                _dataDictionary = new();
+                for (int i = 0; i < values.Count; i++)
+                    _dataDictionary.Add(table.Rows[i], values[i]);
+            }
             return table;
         }
 
@@ -49,7 +78,7 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public string GetTableName()
         {
-            return "Сотрудники";
+            return "Договоры";
         }
 
         public string GetOtherTableName()

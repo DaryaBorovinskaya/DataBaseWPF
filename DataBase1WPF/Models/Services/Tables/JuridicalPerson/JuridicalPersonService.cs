@@ -13,6 +13,9 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
     {
         private Dictionary<DataRow, IIndividualDB> _dataDictionary;
         private DataRow _selectedIndividual;
+        private UserAbilitiesType _userAbilities;
+
+        public UserAbilitiesType UserAbilities => _userAbilities;
         private List<IIndividualDB> GetValues()
         {
             List<IIndividualDB> values = DataManager.GetInstance().IndividualDB_Repository.Read().ToList();
@@ -57,7 +60,7 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
-            UserAbilitiesType userAbilities = new();
+            _userAbilities = new();
             List<IUserAbilitiesDB> userAbilitiesDB = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
 
 
@@ -66,14 +69,14 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
                 if (userAbilityDB.UserId == DataManager.GetInstance().CurrentUser.Id
                     && userAbilityDB.MenuElemId == menuElemId)
                 {
-                    userAbilities.CanRead = userAbilityDB.R;
-                    userAbilities.CanWrite = userAbilityDB.W;
-                    userAbilities.CanEdit = userAbilityDB.E;
-                    userAbilities.CanDelete = userAbilityDB.D;
+                    _userAbilities.CanRead = userAbilityDB.R;
+                    _userAbilities.CanWrite = userAbilityDB.W;
+                    _userAbilities.CanEdit = userAbilityDB.E;
+                    _userAbilities.CanDelete = userAbilityDB.D;
                 }
             }
 
-            return userAbilities;
+            return _userAbilities;
         }
 
 
