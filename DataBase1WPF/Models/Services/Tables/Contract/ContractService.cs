@@ -17,18 +17,46 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
     {
         private IWorkRecordCardService _workRecordCardService;
         private DataRow _selectedEmployee;
+        private uint? _individualId;
+        private uint? _juridicalPersonId;
 
         private Dictionary<DataRow, IContractDB> _dataDictionary;
         
 
         public DataTable GetValuesTable()
         {
-            throw new NotImplementedException();
+            DataTable table = new();
+            
+            if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
+            {
+                List<IContractDB> values = new();
+
+                 if  ( _individualId != null )
+                      values = repository.GetContractsByIndividualId((uint)_individualId).ToList();
+                 else if ( _juridicalPersonId != null )
+                    values = repository.GetContractsByJuridicalPersonId((uint)_juridicalPersonId).ToList();
+
+
+                table = DataTableConverter.ToDataTable(values);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    table.Columns.Remove(table.Columns[0]);
+                }
+                table.Columns.Remove(table.Columns[3]);
+
+
+                _dataDictionary = new();
+                for (int i = 0; i < values.Count; i++)
+                    _dataDictionary.Add(table.Rows[i], values[i]);
+            }
+            return table;
         }
 
 
         public DataTable GetValuesTableByIndividualId(uint individualId) 
         {
+            _individualId = individualId;
             DataTable table = new();
             if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
             {
@@ -53,6 +81,7 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public DataTable GetValuesTableByJuridicalPersonId(uint juridicalPersonId)
         {
+            _juridicalPersonId = juridicalPersonId;
             DataTable table = new();
             if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
             {
@@ -177,7 +206,7 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().EmployeeDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().ContractDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 

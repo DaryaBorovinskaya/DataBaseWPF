@@ -191,16 +191,6 @@ namespace DataBase1WPF.ViewModels.Contract
 
 
 
-
-
-
-
-
-
-        
-
-
-
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;

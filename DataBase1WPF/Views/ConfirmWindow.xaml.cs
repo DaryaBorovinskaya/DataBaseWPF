@@ -1,6 +1,7 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels;
 using DataBase1WPF.ViewModels.Building;
+using DataBase1WPF.ViewModels.Contract;
 using DataBase1WPF.ViewModels.Employee;
 using DataBase1WPF.ViewModels.Handbooks;
 using DataBase1WPF.ViewModels.Individual;
@@ -117,6 +118,10 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditIndividualVM editIndividualVM)
             {
                 editIndividualVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is ContractVM contractVM)
+            {
+                contractVM.Delete();
             }
         }
         public void Exit()
