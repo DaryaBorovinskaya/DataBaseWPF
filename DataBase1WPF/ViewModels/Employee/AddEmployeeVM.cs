@@ -176,6 +176,14 @@ namespace DataBase1WPF.ViewModels.Employee
             if (_tableService is EmployeeService service)
                 service.Add(SelectedIndexDistricts, SelectedIndexStreets, SurnameText,
                     NameText, PatronymicText, DateOfBirth, HouseNumberText);
+            
+            SelectedIndexDistricts = -1;
+            SelectedIndexStreets = -1;
+            SurnameText = string.Empty;
+            NameText = string.Empty; 
+            PatronymicText = string.Empty;
+            DateOfBirth = DateTime.Now;
+            HouseNumberText = string.Empty;
         }
     }
 }

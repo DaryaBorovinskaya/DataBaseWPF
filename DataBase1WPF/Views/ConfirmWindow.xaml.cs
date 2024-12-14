@@ -5,6 +5,7 @@ using DataBase1WPF.ViewModels.Contract;
 using DataBase1WPF.ViewModels.Employee;
 using DataBase1WPF.ViewModels.Handbooks;
 using DataBase1WPF.ViewModels.Individual;
+using DataBase1WPF.ViewModels.JuridicalPerson;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -118,6 +119,18 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditIndividualVM editIndividualVM)
             {
                 editIndividualVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is JuridicalPersonVM juridicalPersonVM)
+            {
+                juridicalPersonVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddJuridicalPersonVM addJuridicalPersonVM)
+            {
+                addJuridicalPersonVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditJuridicalPersonVM editJuridicalPersonVM)
+            {
+                editJuridicalPersonVM.Edit();
             }
             else if (_confirmWindow.DataContext is ContractVM contractVM)
             {

@@ -30,7 +30,43 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IJuridicalPersonDB> Read()
         {
-            _query = "select * from juridical_persons";
+            _query = "SELECT   rentapp.juridical_persons.id,  " +
+                "  COALESCE(rentapp.juridical_persons.organization_district_id, 0) " +
+                " AS organization_district_id, " +
+                "   MAX(rentapp.districts.title) AS district_title,  " +
+                "  COALESCE(rentapp.juridical_persons.organization_street_id, 0) " +
+                " AS organization_street_id, " +
+                "    MAX(rentapp.streets.title) AS street_title, " +
+                "    COALESCE(rentapp.juridical_persons.bank_id, 0) AS bank_id,  " +
+                "  MAX(rentapp.banks.title) AS bank_title, " +
+                "  rentapp.juridical_persons.name_of_organization, " +
+                "   rentapp.juridical_persons.director_surname,  " +
+                "  rentapp.juridical_persons.director_name, " +
+                "  rentapp.juridical_persons.director_patronymic, " +
+                "    rentapp.juridical_persons.organization_house_number, " +
+                "   rentapp.juridical_persons.phone_number,  " +
+                " rentapp.juridical_persons.payment_account, " +
+                "   rentapp.juridical_persons.individual_taxpayer_number " +
+                " FROM " +
+                "   rentapp.juridical_persons LEFT OUTER JOIN  " +
+                "   rentapp.districts ON " +
+                " rentapp.juridical_persons.organization_district_id = rentapp.districts.id " +
+                " LEFT OUTER JOIN " +
+                "   rentapp.streets ON " +
+                " rentapp.juridical_persons.organization_street_id = rentapp.streets.id " +
+                " LEFT OUTER JOIN  " +
+                "  rentapp.banks ON rentapp.juridical_persons.bank_id = rentapp.banks.id " +
+                " GROUP BY " +
+                "   rentapp.juridical_persons.id, " +
+                " rentapp.juridical_persons.name_of_organization, " +
+                "  rentapp.juridical_persons.director_surname,  " +
+                " rentapp.juridical_persons.director_name, " +
+                "  rentapp.juridical_persons.director_patronymic, " +
+                "  rentapp.juridical_persons.organization_house_number, " +
+                "   rentapp.juridical_persons.phone_number, " +
+                "  rentapp.juridical_persons.payment_account, " +
+                "  rentapp.juridical_persons.individual_taxpayer_number " +
+                " ORDER BY    rentapp.juridical_persons.id;";
             IList<IJuridicalPersonDB> result = new List<IJuridicalPersonDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -38,16 +74,19 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new JuridicalPersonDB(
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
+                    row[2].ToString(),
                     uint.Parse(row[3].ToString()),
                     row[4].ToString(),
-                    row[5].ToString(),
+                    uint.Parse(row[5].ToString()),
                     row[6].ToString(),
                     row[7].ToString(),
                     row[8].ToString(),
                     row[9].ToString(),
                     row[10].ToString(),
-                    row[11].ToString()
+                    row[11].ToString(),
+                    row[12].ToString(),
+                    row[13].ToString(),
+                    row[14].ToString()
                 ));
             }
             return result;

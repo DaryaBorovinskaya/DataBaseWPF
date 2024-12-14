@@ -139,6 +139,11 @@ namespace DataBase1WPF.ViewModels.Employee
             if (_tableService is EmployeeService service)
                 service.AddWorkRecordCard(SelectedIndexPositions, OrderNumberText,
                     OrderDate, ReasonOfRecordingText);
+
+            SelectedIndexPositions = -1;
+            OrderNumberText = string.Empty;
+            OrderDate = DateTime.Now;
+            ReasonOfRecordingText = string.Empty;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using DataBase1WPF.Views.Constructors;
 using System.Windows.Data;
 using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.DataBase.Entities.JuridicalPerson;
 
 namespace DataBase1WPF.Views
 {
@@ -35,6 +36,7 @@ namespace DataBase1WPF.Views
                 mainVM.OnFine += Handbooks;
 
                 mainVM.OnIndividuals += Individual;
+                mainVM.OnJuridicalPersons += JuridicalPerson;
                 mainVM.OnBuilding += Building;
                 mainVM.OnEmployees += Employee;
 
@@ -73,6 +75,13 @@ namespace DataBase1WPF.Views
             IndividualWindow window = new(tableService, menuElemId);
             window.ShowDialog();
         }
+
+        private void JuridicalPerson(ITableService tableService, uint menuElemId)
+        {
+            JuridicalPersonWindow window = new(tableService, menuElemId);
+            window.ShowDialog();
+        }
+
 
         private void Building(ITableService tableService, uint menuElemId)
         {

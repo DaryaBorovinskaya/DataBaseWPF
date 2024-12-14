@@ -58,7 +58,7 @@ Width="180" Height="30" MaxLength="50" Text="{Binding PatronymicText}" Margin="0
             <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 5 0 5">Район</TextBlock>
             <ComboBox DockPanel.Dock="Top" Height="30" Background="White" Width="300"
               ItemsSource="{Binding DistrictsComboBox}" SelectedIndex="{Binding SelectedIndexDistricts}"
-              Margin="0 0 0 5" IsReadOnly="True" FontSize="16"></ComboBox>
+              Margin="0 0 0 5" IsReadOnly="True" FontSize="16" ></ComboBox>
             <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 0 0 5">Улица</TextBlock>
             <ComboBox DockPanel.Dock="Top" Height="30" Background="White" Width="300"
   ItemsSource="{Binding StreetsComboBox}" SelectedIndex="{Binding SelectedIndexStreets}"

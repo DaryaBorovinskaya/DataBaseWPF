@@ -185,6 +185,8 @@ namespace DataBase1WPF.ViewModels.Building
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(CountRentalPremisesText))
                         MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(CommandantPhoneNumberText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
 
 
                     else

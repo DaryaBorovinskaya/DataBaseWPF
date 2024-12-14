@@ -1,4 +1,6 @@
-﻿using DataBase1WPF.DataBase.Entities.Individual;
+﻿using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.Individual;
+using DataBase1WPF.DataBase.Entities.JuridicalPerson;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
@@ -11,22 +13,26 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 {
     public class JuridicalPersonService : ITableService
     {
-        private Dictionary<DataRow, IIndividualDB> _dataDictionary;
+        private Dictionary<DataRow, IJuridicalPersonDB> _dataDictionary;
         private DataRow _selectedIndividual;
         private UserAbilitiesType _userAbilities;
 
         public UserAbilitiesType UserAbilities => _userAbilities;
-        private List<IIndividualDB> GetValues()
+        private List<IJuridicalPersonDB> GetValues()
         {
-            List<IIndividualDB> values = DataManager.GetInstance().IndividualDB_Repository.Read().ToList();
+            List<IJuridicalPersonDB> values = DataManager.GetInstance().JuridicalPersonDB_Repository.Read().ToList();
             return values;
         }
 
         public DataTable GetValuesTable()
         {
-            List<IIndividualDB> values = GetValues();
+            List<IJuridicalPersonDB> values = GetValues();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[4]);
+            table.Columns.Remove(table.Columns[5]);
+            table.Columns.Remove(table.Columns[9]);
+
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -37,17 +43,28 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 
         public string GetTableName()
         {
-            return "Физические лица";
+            return "Юридические лица";
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            List<IIndividualDB> values = GetValues().Where(item => item.Surname.Contains(searchLine)
-            || item.Name.Contains(searchLine) || item.Patronymic.Contains(searchLine)
-            || item.PhoneNumber.Contains(searchLine) || item.PassportSeries.Contains(searchLine)
-            || item.PassportNumber.Contains(searchLine) || item.DateOfIssue.Contains(searchLine)
-            || item.IssuedBy.Contains(searchLine)).ToList();
+            List<IJuridicalPersonDB> values = GetValues().Where(item => 
+               item.OrganizationDistrictTitle.Contains(searchLine)
+            || item.OrganizationStreetTitle.Contains(searchLine)
+            || item.BankTitle.Contains(searchLine)
+            || item.NameOfOrganization.Contains(searchLine)
+            || item.DirectorSurname.Contains(searchLine)
+            || item.DirectorName.Contains(searchLine)
+            || item.DirectorPatronymic.Contains(searchLine)
+            || item.OrganizationHouseNumber.Contains(searchLine)
+            || item.PhoneNumber.Contains(searchLine)
+            || item.PaymentAccount.Contains(searchLine)
+            || item.IndividualTaxpayerNumber.Contains(searchLine)
+               ).ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[4]);
+            table.Columns.Remove(table.Columns[5]);
+            table.Columns.Remove(table.Columns[9]);
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -80,55 +97,127 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
         }
 
 
-        public void Add(string surname, string name, string? patronymic,
-            string phoneNumber, string passportSeries,
-            string passportNumber, DateTime dateOfIssue, string issuedBy)
+        public List<string> GetDistricts()
         {
-            DataManager.GetInstance().IndividualDB_Repository.Create(new IndividualDB(
-                surname,
-                name,
-                patronymic,
-                phoneNumber,
-                passportSeries,
-                passportNumber,
-                dateOfIssue.ToString("yyyy-MM-dd"),
-                issuedBy
+            List<string> districts = new();
+
+            List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB districtDB in districtsDB)
+                districts.Add(districtDB.Title);
+
+
+            return districts;
+        }
+
+        public List<string> GetStreets()
+        {
+            List<string> streets = new();
+
+            List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB streetDB in streetsDB)
+                streets.Add(streetDB.Title);
+
+
+            return streets;
+        }
+
+
+        public List<string> GetBanks()
+        {
+            List<string> banks = new();
+
+            List<IHandbookDB> banksDB = DataManager.GetInstance().BankDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB bankDB in banksDB)
+                banks.Add(bankDB.Title);
+
+
+            return banks;
+        }
+
+
+
+
+        public int GetDistrictSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+
+            return districtsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].OrganizationDistrictId);
+
+        }
+
+        public int GetStreetsSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
+
+            return streetsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].OrganizationStreetId);
+
+        }
+
+        public int GetBanksSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> banksDB = DataManager.GetInstance().BankDB_Repository.Read().ToList();
+
+            return banksDB.FindIndex((elem) => elem.Id == _dataDictionary[row].BankId);
+
+        }
+
+
+
+        public void Add(int districtSelectedIndex,
+            int streetSelectedIndex, int bankSelectedIndex, string nameOfOrganization,
+            string directorSurname, string directorName, string directorPatronymic,
+            string organizationHouseNumber, string phoneNumber, string paymentAccount,
+            string individualTaxpayerNumber)
+        {
+            DataManager.GetInstance().JuridicalPersonDB_Repository.Create(new JuridicalPersonDB(
+                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
+                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
+                DataManager.GetInstance().BankDB_Repository.Read().ToList()[bankSelectedIndex].Id,
+                nameOfOrganization,
+                directorSurname,  
+                directorName,  
+                directorPatronymic,
+                organizationHouseNumber,  
+                phoneNumber,  
+                paymentAccount,
+                individualTaxpayerNumber
                 ));
         }
 
-        public void Update(DataRow row, string surname, string name, string? patronymic,
-            string phoneNumber, string passportSeries,
-            string passportNumber, DateTime dateOfIssue, string issuedBy)
+        public void Update(DataRow row, int districtSelectedIndex,
+            int streetSelectedIndex, int bankSelectedIndex, string nameOfOrganization,
+            string directorSurname, string directorName, string directorPatronymic,
+            string organizationHouseNumber, string phoneNumber, string paymentAccount,
+            string individualTaxpayerNumber)
         {
-            DataManager.GetInstance().IndividualDB_Repository.Update(new IndividualDB(
+            DataManager.GetInstance().JuridicalPersonDB_Repository.Update(new JuridicalPersonDB(
                 _dataDictionary[row].Id,
-                surname,
-                name,
-                patronymic,
+                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
+                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
+                DataManager.GetInstance().BankDB_Repository.Read().ToList()[bankSelectedIndex].Id,
+                nameOfOrganization,
+                directorSurname,
+                directorName,
+                directorPatronymic,
+                organizationHouseNumber,
                 phoneNumber,
-                passportSeries,
-                passportNumber,
-                dateOfIssue.ToString("yyyy-MM-dd"),
-                issuedBy
+                paymentAccount,
+                individualTaxpayerNumber
                 ));
         }
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().IndividualDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().JuridicalPersonDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 
-        //public DataTable? GetContractByIndividuals(DataRow row)
-        //{
-        //    _selectedEmployee = row;
-        //    return _workRecordCardService.GetWorkRecordCardByEmployee(_dataDictionary[row].Id);
-        //}
-        //public string GetSelectedEmployeeText()
-        //{
-        //    return _dataDictionary[_selectedEmployee].Surname + " "
-        //        + _dataDictionary[_selectedEmployee].Name + " "
-        //        + _dataDictionary[_selectedEmployee].Patronymic;
-        //}
+        public uint GetJuridicalPersonId(DataRow row)
+        {
+            return _dataDictionary[row].Id;
+        }
     }
 }

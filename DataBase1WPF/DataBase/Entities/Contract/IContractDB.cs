@@ -27,7 +27,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         public uint EmployeeId { get; set; }
 
 
-        [DisplayName("Регистр. номер")]
+        [DisplayName("Регистрационный номер")]
         public string RegistrationNumber { get; set; }
 
         [DisplayName("Начало действия")]
@@ -39,7 +39,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public uint PaymentFrequencyId { get; set; }
 
-        [DisplayName("Периодичн. оплаты")]
+        [DisplayName("Периодичность оплаты")]
         public string PaymentFrequencyTitle { get; set; }
 
 
@@ -52,7 +52,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         [DisplayName("Отчество сотрудника")]
         public string EmployeePatronymic { get; set; }
 
-        [DisplayName("Доп. условия")]
+        [DisplayName("Дополнительные условия")]
         public string AdditionalConditions {  get; set; }
 
         [DisplayName("Штраф")]

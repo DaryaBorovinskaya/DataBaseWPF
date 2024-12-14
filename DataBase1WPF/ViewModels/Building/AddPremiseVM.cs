@@ -214,6 +214,13 @@ namespace DataBase1WPF.ViewModels.Building
                 service.AddPremises(SelectedIndexTypeOfFinishing, PremiseNumberText,
                     float.Parse(AreaText), int.Parse(FloorNumberText), AvailabilityOfPhoneNumber,
                     float.Parse(TempRentalPaymentText));
+            
+            SelectedIndexTypeOfFinishing = -1;
+            PremiseNumberText = string.Empty;
+            AreaText = string.Empty;
+            FloorNumberText = string.Empty;
+            AvailabilityOfPhoneNumber = false;
+            TempRentalPaymentText = string.Empty;
         }
     }
 }

@@ -158,6 +158,14 @@ namespace DataBase1WPF.ViewModels.Individual
             if (_tableService is IndividualService service)
                 service.Add(SurnameText, NameText, PatronymicText, PhoneNumberText,
                     PassportSeriesText, PassportNumberText, DateOfIssue, IssuedByText);
+            SurnameText = string.Empty;
+            NameText = string.Empty;
+            PatronymicText = string.Empty;
+            PhoneNumberText = string.Empty;
+            PassportSeriesText = string.Empty;
+            PassportNumberText = string.Empty;
+            DateOfIssue = DateTime.Now;
+            IssuedByText = string.Empty;
         }
     }
 }

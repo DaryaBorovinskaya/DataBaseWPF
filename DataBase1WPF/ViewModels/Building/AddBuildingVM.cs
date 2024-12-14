@@ -177,6 +177,8 @@ namespace DataBase1WPF.ViewModels.Building
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(CountRentalPremisesText))
                         MessageBox.Show("ОШИБКА: пустое поле");
+                    else if (string.IsNullOrEmpty(CommandantPhoneNumberText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
 
 
                     else
@@ -208,6 +210,12 @@ namespace DataBase1WPF.ViewModels.Building
                 service.Add(SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
                     uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
                     CommandantPhoneNumberText);
+            SelectedIndexDistricts = -1;
+            SelectedIndexStreets = -1;
+            HouseNumberText = string.Empty;
+            NumberOfFloorsText = string.Empty;
+            CountRentalPremisesText = string.Empty;
+            CommandantPhoneNumberText = string.Empty;
         }
     }
 }

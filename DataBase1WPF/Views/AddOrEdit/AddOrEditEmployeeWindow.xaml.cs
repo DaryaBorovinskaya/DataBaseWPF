@@ -70,6 +70,6 @@ namespace DataBase1WPF.Views.AddOrEdit
             }
         }
 
-
+        
     }
 }

@@ -10,22 +10,28 @@ namespace DataBase1WPF.DataBase.Entities.JuridicalPerson
     public interface IJuridicalPersonDB
     {
         public uint Id { get; set; }
-        public uint OrganizationDistrictId { get; set; }
-        public uint OrganizationStreetId { get; set; }
-        public uint BankId { get; set; }
         
 
         [DisplayName("Название")]
         public string NameOfOrganization { get; set; }
 
-        [DisplayName("Фамилия руков.")]
+        [DisplayName("Фамилия руководителя")]
         public string DirectorSurname { get; set; }
 
-        [DisplayName("Имя руков.")]
+        [DisplayName("Имя руководителя")]
         public string DirectorName { get; set; }
 
-        [DisplayName("Отчество руков.")]
+        [DisplayName("Отчество руководителя")]
         public string DirectorPatronymic { get; set; }
+
+        public uint OrganizationDistrictId { get; set; }
+
+        [DisplayName("Район")]
+        public string OrganizationDistrictTitle { get; set; }
+        public uint OrganizationStreetId { get; set; }
+
+        [DisplayName("Улица")]
+        public string OrganizationStreetTitle { get; set; }
 
         [DisplayName("Номер здания")]
         public string OrganizationHouseNumber { get; set; }
@@ -35,6 +41,11 @@ namespace DataBase1WPF.DataBase.Entities.JuridicalPerson
 
         [DisplayName("Расчетный счет")]
         public string PaymentAccount { get; set; }
+
+        public uint BankId { get; set; }
+
+        [DisplayName("Банк")]
+        public string BankTitle { get; set; }
 
         [DisplayName("ИНН")]
         public string IndividualTaxpayerNumber { get; set; }

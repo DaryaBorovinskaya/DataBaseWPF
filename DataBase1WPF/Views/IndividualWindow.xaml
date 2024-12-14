@@ -141,8 +141,6 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-
-
         </TabControl>
     </Grid>
 </Window>

@@ -151,45 +151,45 @@ namespace DataBase1WPF.ViewModels.Handbooks
             {
                 
                 positionsService.Add(Title, float.Parse(Salary));
-                
-                
+                Title = string.Empty;
+                Salary = string.Empty;
             }
             else if (_tableService is FineService fineService)
             {
                 
                 fineService.Add(float.Parse(Title));
-                
-                
+                Title = string.Empty;
+
             }
             else if (_tableService is BanksService bankService)
             {
                 bankService.Add(Title);
-               
+                Title = string.Empty;
             }
             else if (_tableService is DistrictsService districtService)
             {
                 districtService.Add(Title);
-                
+                Title = string.Empty;
             }
             else if (_tableService is PaymentFrequencyService paymentFrequencyService)
             {
                 paymentFrequencyService.Add(Title);
-                
+                Title = string.Empty;
             }
             else if (_tableService is RentalPurposesService rentalPurposesService)
             {
                 rentalPurposesService.Add(Title);
-                
+                Title = string.Empty;
             }
             else if (_tableService is StreetsService streetsService)
             {
                 streetsService.Add(Title);
-                
+                Title = string.Empty;
             }
             else if (_tableService is TypesOfFinishingService typesOfFinishingService)
             {
                 typesOfFinishingService.Add(Title);
-                
+                Title = string.Empty;
             }
         }
 

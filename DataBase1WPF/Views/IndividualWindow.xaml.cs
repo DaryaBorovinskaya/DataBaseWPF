@@ -63,7 +63,7 @@ namespace DataBase1WPF.Views
             uint individual_id)
         {
             ContractsWindow window = new(row, clientService, tableService, individual_id);
-            window.Show();
+            window.ShowDialog();
         }
 
 
