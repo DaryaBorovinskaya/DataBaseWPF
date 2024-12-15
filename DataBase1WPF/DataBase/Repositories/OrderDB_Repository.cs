@@ -26,8 +26,23 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IOrderDB> Read()
         {
-            throw new NotImplementedException();
-            
+            _query = " select * from orders;";
+            IList<IOrderDB> result = new List<IOrderDB>();
+            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result.Add(new OrderDB(
+                    uint.Parse(row[0].ToString()),
+                    uint.Parse(row[1].ToString()),
+                    uint.Parse(row[2].ToString()),
+                    uint.Parse(row[3].ToString()),
+                    row[4].ToString().Substring(0, 10),
+                    row[5].ToString().Substring(0, 10),
+                    float.Parse(row[6].ToString())
+                ));
+            }
+            return result;
+
         }
 
         public void Update(IOrderDB entity)

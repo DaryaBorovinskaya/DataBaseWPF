@@ -128,7 +128,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
         }
 
 
-        public OrderDB(uint id, uint contractId, uint premiseID, uint rentalPurposeId,
+        public OrderDB(uint id,  uint premiseID, uint rentalPurposeId, uint contractId,
              string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent,
             float rentalPayment)
         {

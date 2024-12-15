@@ -80,8 +80,12 @@ namespace DataBase1WPF.Views
 
         public void DeleteOrder(DataRow row, ITableService tableService)
         {
-            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " регистр. номер " + row[0].ToString() +
-                " начало действия " + row[1].ToString() + " конец действия " + row[2].ToString(),
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, row[0].ToString()
+                + " , " + row[1] + " , " + row[2].ToString() 
+                + " , этаж " + row[3].ToString() 
+                + " , номер " + row[4].ToString()
+                + " , площадь " + row[5].ToString() + " кв. м. "
+                + ", цель аренды " + row[6].ToString(),
                 OtherTablesEnum.Orders);
             window.ShowDialog();
         }

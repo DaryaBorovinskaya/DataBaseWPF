@@ -300,10 +300,7 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
 
         
-        //public int GetPositionsSelectedIndex(DataRow row)
-        //{
-        //    return _workRecordCardService.GetPositionsSelectedIndex(row);
-        //}
+        
 
 
         public void Update(DataRow row, int employeeSelectedIndex, 
@@ -356,11 +353,34 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
-        //public List<string> GetPositions()
-        //{
-        //    return _workRecordCardService.GetPositions();
-        //}
+        
 
+
+
+        public List<string> GetOrderPremises()
+        {
+            return _orderService.GetPremises();
+        }
+
+        public List<string> GetOrderPremisesForEdit()
+        {
+            return _orderService.GetPremisesForEdit();
+        }
+
+        public List<string> GetOrdersRentalPurposes()
+        {
+            return _orderService.GetRentalPurposes();
+        }
+
+        public int GetOrdersRentalPurposesSelectedIndex(DataRow row)
+        {
+            return _orderService.GetRentalPurposesSelectedIndex(row);
+        }
+
+        public int GetOrdersPremisesSelectedIndex(DataRow row)
+        {
+            return _orderService.GetPremisesSelectedIndex(row);
+        }
 
 
         public void AddOrder(int premiseSelectedIndex,

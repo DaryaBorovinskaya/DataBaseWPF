@@ -1,6 +1,10 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
+﻿using DataBase1WPF.DataBase.Entities.Building;
+using DataBase1WPF.DataBase.Entities.Employee;
+using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.Order;
+using DataBase1WPF.DataBase.Entities.Position;
 using DataBase1WPF.DataBase.Entities.Premise;
+using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using DataBase1WPF.DataBase.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,8 +18,10 @@ namespace DataBase1WPF.Models.Services.Tables.Order
     public class OrderService 
     {
         private Dictionary<DataRow, IOrderDB> _dataDictionary;
+        private uint _contractId;
         public DataTable? GetOrdersByContractId(uint id)
         {
+            _contractId = id;
             DataTable table = null;
             if (DataManager.GetInstance().OrderDB_Repository is OrderDB_Repository repository)
             {
@@ -39,6 +45,14 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return table;
         }
 
+        private List<IOrderDB> GetOrdersDBbyContractId(uint id)
+        {
+            if (DataManager.GetInstance().OrderDB_Repository is OrderDB_Repository repository)
+            {
+                return repository.GetOrdersByContractId(id).ToList();
+            }
+            else return null;
+        }
         public DataTable SearchDataInTable(uint buildingId, string searchLine)
         {
             DataTable table = new();
@@ -74,26 +88,154 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         }
 
 
-        public List<string> GetTypesOfFinishing()
+        
+
+
+        public List<string> GetPremises()
         {
-            List<string> typesOfFinishing = new();
+            List<string> premises = new();
 
-            List<IHandbookDB> typesOfFinishingDB = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+              
+            List<IOrderDB> ordersDB = DataManager.GetInstance().OrderDB_Repository.Read().ToList(); ;
 
-            foreach (IHandbookDB typeOfFinishingDB in typesOfFinishingDB)
-                typesOfFinishing.Add(typeOfFinishingDB.Title);
+            foreach(IBuildingDB buildingDB in buildingsDB )
+            {
+                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+                { 
+                    List<IPremiseDB> premisesDB = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
+                    
+                    foreach (IPremiseDB premiseDB in premisesDB)
+                    {
+                        if (ordersDB.Find((item) => item.PremiseID == premiseDB.Id) == null)
+                        {
+                            if (premiseDB.BuildingID == buildingDB.Id)
+                                premises.Add(buildingDB.DistrictTitle + " , "
+                                + buildingDB.StreetTitle + " , "
+                                + buildingDB.HouseNumber + " , этаж "
+                                + premiseDB.FloorNumber + " , номер "
+                                + premiseDB.PremiseNumber + " , "
+                                + premiseDB.Area.ToString() + " кв. м.");
+                            
+                        }  
 
+                        
+                        
+                    }
+                }
+                
+            }
 
-            return typesOfFinishing;
+            return premises;
         }
 
-        //public int GetTypeOfFinishingSelectedIndex(DataRow row)
-        //{
-        //    List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
 
-        //    return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
-        //}
+        public List<string> GetPremisesForEdit()
+        {
+            List<string> premises = new();
 
+            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+
+            List<IOrderDB> ordersDB = DataManager.GetInstance().OrderDB_Repository.Read().ToList(); ;
+
+            foreach (IBuildingDB buildingDB in buildingsDB)
+            {
+                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+                {
+                    List<IPremiseDB> premisesDB = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
+
+                    foreach (IPremiseDB premiseDB in premisesDB)
+                    {
+                        if (ordersDB.Find((item) => item.PremiseID == premiseDB.Id) == null)
+                        {
+                            if (premiseDB.BuildingID == buildingDB.Id)
+                                premises.Add(buildingDB.DistrictTitle + " , "
+                                + buildingDB.StreetTitle + " , "
+                                + buildingDB.HouseNumber + " , этаж "
+                                + premiseDB.FloorNumber + " , номер "
+                                + premiseDB.PremiseNumber + " , "
+                                + premiseDB.Area.ToString() + " кв. м.");
+
+                        }
+                        else if ( _dataDictionary[row].PremiseID == premiseDB.Id)
+
+
+                    }
+                }
+
+            }
+
+            return premises;
+        }
+
+        private List<IPremiseDB> GetPremisesDB()
+        {
+            List<IPremiseDB> premises = new();
+
+            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+
+            List<IOrderDB> ordersDB = DataManager.GetInstance().OrderDB_Repository.Read().ToList(); ;
+
+            foreach (IBuildingDB buildingDB in buildingsDB)
+            {
+                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+                {
+                    List<IPremiseDB> premisesDB = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
+
+                    foreach (IPremiseDB premiseDB in premisesDB)
+                    {
+                        if (ordersDB.Find((item) => item.PremiseID == premiseDB.Id) == null)
+                        {
+                            if (premiseDB.BuildingID == buildingDB.Id)
+                                premises.Add(premiseDB);
+
+                        }
+
+
+
+                    }
+                }
+
+            }
+
+            return premises;
+        }
+
+
+        public List<string> GetRentalPurposes()
+        {
+            List<string> rentalPurposes = new();
+
+            List<IHandbookDB> rentalPurposesDB = DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList();
+
+            foreach (IHandbookDB rentalPurposeDB in rentalPurposesDB)
+                rentalPurposes.Add(rentalPurposeDB.Title);
+
+
+            return rentalPurposes;
+        }
+
+        public int GetRentalPurposesSelectedIndex(DataRow row)
+        {
+            List<IHandbookDB> rentalPurposes = DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList();
+
+            return rentalPurposes.FindIndex((elem) => elem.Id == _dataDictionary[row].RentalPurposeId);
+        }
+
+
+        public int GetPremisesSelectedIndex(DataRow row)
+        {
+            List<IPremiseDB> premises = new();
+            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+
+            foreach (IBuildingDB buildingDB in buildingsDB)
+            {
+                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+                    premises = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
+            }
+
+            return premises.FindIndex((elem) => elem.Id == _dataDictionary[row].PremiseID);
+        }
 
 
         public void Add(uint contractId, int premiseSelectedIndex, 
@@ -103,7 +245,7 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         {
             DataManager.GetInstance().OrderDB_Repository.Create(new OrderDB(
                 contractId,
-                DataManager.GetInstance().PremiseDB_Repository.Read().ToList()[premiseSelectedIndex].Id,
+                GetPremisesDB()[premiseSelectedIndex].Id,
                 DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList()[rentalPurposeSelectedIndex].Id,
                 beginOfRent.ToString("yyyy-MM-dd"),
                 endOfRent.ToString("yyyy-MM-dd"),
@@ -119,7 +261,7 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             DataManager.GetInstance().OrderDB_Repository.Update(new OrderDB(
                 _dataDictionary[row].Id,
                 contractId,
-                DataManager.GetInstance().PremiseDB_Repository.Read().ToList()[premiseSelectedIndex].Id,
+                GetPremisesDB()[premiseSelectedIndex].Id,
                 DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList()[rentalPurposeSelectedIndex].Id,
                 beginOfRent.ToString("yyyy-MM-dd"),
                 endOfRent.ToString("yyyy-MM-dd"),
