@@ -191,7 +191,8 @@ namespace DataBase1WPF.ViewModels.Contract
             set
             {
                 Set(ref _searchDataInTableOrders, value);
-                DataTableContracts = _tableService.SearchDataInTable(_searchDataInTableOrders);
+                if (_tableService is ContractService service)
+                    DataTableOrders = service.SearchDataInTableOrders(_searchDataInTableOrders);
             }
         }
         public string SearchDataInTablePayments
@@ -200,7 +201,8 @@ namespace DataBase1WPF.ViewModels.Contract
             set
             {
                 Set(ref _searchDataInTablePayments, value);
-                DataTableContracts = _tableService.SearchDataInTable(_searchDataInTablePayments);
+                if (_tableService is ContractService service)
+                    DataTablePayments = service.SearchDataInTablePayments(_searchDataInTablePayments);
             }
         }
 
@@ -267,6 +269,8 @@ namespace DataBase1WPF.ViewModels.Contract
             _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
+            _ordersVisibility = Visibility.Collapsed;
+            _paymentsVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
 
         }

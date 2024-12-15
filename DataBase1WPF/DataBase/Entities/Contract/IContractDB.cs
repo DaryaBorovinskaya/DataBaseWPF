@@ -10,7 +10,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
     public interface IContractDB
     {
         public uint Id { get; set; }
-        public uint IndividualId { get; set; }
+        public uint? IndividualId { get; set; }
 
         [DisplayName("Фамилия физ. лица")]
         public string IndividualSurname { get; set; }
@@ -20,7 +20,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         [DisplayName("Отчество физ. лица")]
         public string IndividualPatronymic { get; set; }
-        public uint JuridicalPersonId { get; set; }
+        public uint? JuridicalPersonId { get; set; }
 
         [DisplayName("Имя юр. лица")]
         public string JuridicalPersonName { get; set; }

@@ -143,7 +143,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
               CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
           SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexOrders}"
           ItemsSource="{Binding DataTableOrders}" 
-          MouseDown="DataGridPremises_MouseDown"
+          MouseDown="DataGrid_MouseDown"
               IsReadOnly="True"   />
 
                     <DockPanel Background="#b9d1ea">
@@ -154,7 +154,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                             </TextBlock>
                             <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
              Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
-                 MouseDown="TextBoxPremises_MouseDown"
+                 MouseDown="TextBox_MouseDown"
              Text="{Binding SearchDataInTableOrders, UpdateSourceTrigger=PropertyChanged}">
 
                             </TextBox>
@@ -199,7 +199,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
  SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPayments}"
  ItemsSource="{Binding DataTablePayments}" 
- MouseDown="DataGridPremises_MouseDown"
+ MouseDown="DataGrid_MouseDown"
      IsReadOnly="True"   />
 
                     <DockPanel Background="#b9d1ea">
@@ -210,7 +210,7 @@ Margin="35 3 0 0" DockPanel.Dock="Top">
                             </TextBlock>
                             <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
                             Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
-                            MouseDown="TextBoxPremises_MouseDown"
+                            MouseDown="TextBox_MouseDown"
                             Text="{Binding SearchDataInTablePayments, UpdateSourceTrigger=PropertyChanged}">
 
                             </TextBox>

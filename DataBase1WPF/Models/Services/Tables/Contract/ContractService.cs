@@ -17,7 +17,6 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 {
     public class ContractService : ITableService
     {
-        private IWorkRecordCardService _workRecordCardService;
         private DataRow _selectedContract;
         private uint? _individualId;
         private uint? _juridicalPersonId;
@@ -27,6 +26,13 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         private Dictionary<DataRow, IContractDB> _dataDictionary;
         
+
+        public ContractService() 
+        {
+            _orderService = new();
+            _paymentService = new();
+        }
+
 
         public DataTable GetValuesTable()
         {
@@ -126,28 +132,47 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public DataTable SearchDataInTable(string searchLine)
         {
-            return new DataTable();
-            //List<IEmployeeDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine)
-            //|| item.StreetTitle.Contains(searchLine) || item.HouseNumber.Contains(searchLine)
-            //|| item.Surname.Contains(searchLine) || item.Name.Contains(searchLine)
-            //|| item.Patronymic.Contains(searchLine) || item.DateOfBirth.ToString().Contains(searchLine)).ToList();
-            //DataTable table = DataTableConverter.ToDataTable(values);
-            //table.Columns.Remove(table.Columns[0]);
-            //table.Columns.Remove(table.Columns[5]);
-            //table.Columns.Remove(table.Columns[6]);
+            DataTable table = new();
+
+            if (DataManager.GetInstance().ContractDB_Repository is ContractDB_Repository repository)
+            {
+                List<IContractDB> values = new();
+
+                if (_individualId != null)
+                    values = repository.GetContractsByIndividualId((uint)_individualId).ToList();
+                else if (_juridicalPersonId != null)
+                    values = repository.GetContractsByJuridicalPersonId((uint)_juridicalPersonId).ToList();
+
+                values = values.Where(item =>
+                       item.EmployeeSurname.Contains(searchLine)
+                    || item.EmployeeName.Contains(searchLine)
+                    || item.EmployeePatronymic.Contains(searchLine)
+                    || item.EmployeeSurname.Contains(searchLine)
+                    || item.PaymentFrequencyTitle.Contains(searchLine)
+                    || item.EmployeeSurname.Contains(searchLine)
+                    || item.RegistrationNumber.Contains(searchLine)
+                    || item.BeginOfAction.Contains(searchLine)
+                    || item.EndOfAction.Contains(searchLine)
+                    || item.AdditionalConditions.Contains(searchLine)
+                    || item.Fine.ToString().Contains(searchLine)
+                ).ToList();
 
 
+                table = DataTableConverter.ToDataTable(values);
 
-            //_dataDictionary = new();
-            //for (int i = 0; i < values.Count; i++)
-            //    _dataDictionary.Add(table.Rows[i], values[i]);
+                for (int i = 0; i < 8; i++)
+                {
+                    table.Columns.Remove(table.Columns[0]);
+                }
+                table.Columns.Remove(table.Columns[3]);
 
 
-            //return table;
+                _dataDictionary = new();
+                for (int i = 0; i < values.Count; i++)
+                    _dataDictionary.Add(table.Rows[i], values[i]);
+            }
+            return table;
         }
-
-
-        
 
         public List<string> GetDistricts()
         {
@@ -175,42 +200,49 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return streets;
         }
 
-        public void Add(int districtSelectedIndex, int streetSelectedIndex,
-            string surname, string name, string? patronymic, DateTime dateOfBirth,
-            string houseNumber)
+        public void Add(int employeeSelectedIndex, int paymentFrequencySelectedIndex,
+            string registrationNumber,
+            DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
+            float fine)
         {
-            DataManager.GetInstance().EmployeeDB_Repository.Create(new EmployeeDB(
-                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
-                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
-                surname,
-                name,
-                patronymic,
-                dateOfBirth.ToString("yyyy-MM-dd"),
-                houseNumber
+            DataManager.GetInstance().ContractDB_Repository.Create(new ContractDB(
+                _individualId,
+                _juridicalPersonId,
+                DataManager.GetInstance().EmployeeDB_Repository.Read().ToList()[employeeSelectedIndex].Id,
+                DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList()[paymentFrequencySelectedIndex].Id,
+                registrationNumber,
+                beginOfAction.ToString("yyyy-MM-dd"),
+                endOfAction.ToString("yyyy-MM-dd"),
+                additionalConditions,
+                fine
                 ));
         }
 
 
         
-        public int GetPositionsSelectedIndex(DataRow row)
-        {
-            return _workRecordCardService.GetPositionsSelectedIndex(row);
-        }
+        //public int GetPositionsSelectedIndex(DataRow row)
+        //{
+        //    return _workRecordCardService.GetPositionsSelectedIndex(row);
+        //}
 
 
-        public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
-            string surname, string name, string? patronymic, DateTime dateOfBirth,
-            string houseNumber)
+        public void Update(DataRow row, int employeeSelectedIndex, 
+            int paymentFrequencySelectedIndex,
+            string registrationNumber,
+            DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
+            float fine)
         {
-            DataManager.GetInstance().EmployeeDB_Repository.Update(new EmployeeDB(
+            DataManager.GetInstance().ContractDB_Repository.Update(new ContractDB(
                 _dataDictionary[row].Id,
-                DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
-                DataManager.GetInstance().StreetDB_Repository.Read().ToList()[streetSelectedIndex].Id,
-                surname,
-                name,
-                patronymic,
-                dateOfBirth.ToString("yyyy-MM-dd"),
-                houseNumber
+                _individualId,
+                _juridicalPersonId,
+                DataManager.GetInstance().EmployeeDB_Repository.Read().ToList()[employeeSelectedIndex].Id,
+                DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList()[paymentFrequencySelectedIndex].Id,
+                registrationNumber,
+                beginOfAction.ToString("yyyy-MM-dd"),
+                endOfAction.ToString("yyyy-MM-dd"),
+                additionalConditions,
+                fine
                 ));
         }
 
@@ -233,31 +265,41 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
-        public DataTable SearchDataInTableWorkRecordCard(string searchLine)
+        public DataTable SearchDataInTableOrders(string searchLine)
         {
-            return _workRecordCardService.SearchDataInTable(_dataDictionary[_selectedEmployee].Id, searchLine);
+            return _orderService.SearchDataInTable(_dataDictionary[_selectedContract].Id, searchLine);
+        }
+
+        public DataTable SearchDataInTablePayments(string searchLine)
+        {
+            return _paymentService.SearchDataInTable(_dataDictionary[_selectedContract].Id, searchLine);
         }
 
 
-        public List<string> GetPositions()
+        //public List<string> GetPositions()
+        //{
+        //    return _workRecordCardService.GetPositions();
+        //}
+
+
+
+        public void AddOrder(int premiseSelectedIndex,
+            int rentalPurposeSelectedIndex,
+            DateTime beginOfRent, DateTime endOfRent,
+            float rentalPayment)
         {
-            return _workRecordCardService.GetPositions();
+            _orderService.Add(_dataDictionary[_selectedContract].Id, premiseSelectedIndex,
+                rentalPurposeSelectedIndex, beginOfRent, endOfRent, rentalPayment);
         }
 
-
-
-        public void AddOrder(int positionIndex, string orderNumber,
-            DateTime orderDate, string reasonOfRecording)
+        public void UpdateOrder(DataRow row, int premiseSelectedIndex,
+            int rentalPurposeSelectedIndex,
+            DateTime beginOfRent, DateTime endOfRent,
+            float rentalPayment)
         {
-            _workRecordCardService.Add(_dataDictionary[_selectedEmployee].Id, positionIndex,
-                orderNumber, orderDate, reasonOfRecording);
-        }
-
-        public void UpdateOrder(DataRow row, int positionIndex, string orderNumber,
-            DateTime orderDate, string reasonOfRecording)
-        {
-            _workRecordCardService.Update(row, _dataDictionary[_selectedEmployee].Id, positionIndex,
-                orderNumber, orderDate, reasonOfRecording);
+            _orderService.Update(row, _dataDictionary[_selectedContract].Id,
+                premiseSelectedIndex, rentalPurposeSelectedIndex, beginOfRent, 
+                endOfRent, rentalPayment);
         }
 
         public void DeleteOrder(DataRow row)
@@ -267,18 +309,18 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
 
 
-        public void AddPayment(int positionIndex, string orderNumber,
-            DateTime orderDate, string reasonOfRecording)
+        public void AddPayment(DateTime dateOfPayment,
+            float amountOfPayment)
         {
-            _workRecordCardService.Add(_dataDictionary[_selectedEmployee].Id, positionIndex,
-                orderNumber, orderDate, reasonOfRecording);
+            _paymentService.Add(_dataDictionary[_selectedContract].Id, dateOfPayment, 
+                amountOfPayment);
         }
 
-        public void UpdatePayment(DataRow row, int positionIndex, string orderNumber,
-            DateTime orderDate, string reasonOfRecording)
+        public void UpdatePayment(DataRow row, DateTime dateOfPayment,
+            float amountOfPayment)
         {
-            _workRecordCardService.Update(row, _dataDictionary[_selectedEmployee].Id, positionIndex,
-                orderNumber, orderDate, reasonOfRecording);
+            _paymentService.Update(row, _dataDictionary[_selectedContract].Id, dateOfPayment,
+                amountOfPayment);
         }
 
         public void DeletePayment(DataRow row)

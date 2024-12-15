@@ -35,18 +35,16 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
             return table;
         }
 
-        public DataTable SearchDataInTable(uint buildingId, string searchLine)
+        public DataTable SearchDataInTable(uint contractId, string searchLine)
         {
             DataTable table = new();
-            if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+            if (DataManager.GetInstance().PaymentDB_Repository is PaymentDB_Repository repository)
             {
-                List<IPremiseDB> values = repository.GetPremisesByBuildingId(buildingId).ToList().Where(
-                    item => item.TypeOfFinishingTitle.Contains(searchLine)
-                    || item.PremiseNumber.Contains(searchLine) || item.Area.ToString().Contains(searchLine)
-                    || item.FloorNumber.ToString().Contains(searchLine)
-                    || item.TempRentalPayment.ToString().Contains(searchLine)).ToList();
+                List<IPaymentDB> values = repository.GetPaymentsByContractId(contractId).ToList().Where(
+                    item => 
+                    item.DateOfPayment.Contains(searchLine)
+                    || item.AmountOfPayment.ToString().Contains(searchLine)).ToList();
                 table = DataTableConverter.ToDataTable(values);
-                table.Columns.Remove(table.Columns[0]);
                 table.Columns.Remove(table.Columns[0]);
                 table.Columns.Remove(table.Columns[0]);
 
@@ -72,12 +70,12 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
             return typesOfFinishing;
         }
 
-        public int GetTypeOfFinishingSelectedIndex(DataRow row)
-        {
-            List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
+        //public int GetTypeOfFinishingSelectedIndex(DataRow row)
+        //{
+        //    List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
 
-            return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
-        }
+        //    return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
+        //}
 
 
 

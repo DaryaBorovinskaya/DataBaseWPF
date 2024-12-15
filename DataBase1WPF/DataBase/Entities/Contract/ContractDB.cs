@@ -10,14 +10,14 @@ namespace DataBase1WPF.DataBase.Entities.Contract
     public class ContractDB : IContractDB
     {
         public uint Id { get; set; }
-        public uint IndividualId { get; set; }
+        public uint? IndividualId { get; set; }
 
         public string IndividualSurname { get; set; }
 
         public string IndividualName { get; set; }
 
         public string IndividualPatronymic { get; set; }
-        public uint JuridicalPersonId { get; set; }
+        public uint? JuridicalPersonId { get; set; }
 
         public string JuridicalPersonName { get; set; }
         public uint EmployeeId { get; set; }
@@ -70,7 +70,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         }
 
 
-        public ContractDB(uint id, uint individualId, uint juridicalPersonId,
+        public ContractDB(uint id, uint? individualId, uint? juridicalPersonId,
             uint employeeId, uint paymentFrequencyId, string registrationNumber,
             string/*DateTime*/ beginOfAction, string/*DateTime*/ endOfAction, string additionalConditions,
             float fine)
@@ -87,7 +87,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
             Fine = fine;
         }
 
-        public ContractDB(uint individualId, uint juridicalPersonId,
+        public ContractDB(uint? individualId, uint? juridicalPersonId,
             uint employeeId, uint paymentFrequencyId, string registrationNumber,
             string beginOfAction, string endOfAction, string additionalConditions,
             float fine)
