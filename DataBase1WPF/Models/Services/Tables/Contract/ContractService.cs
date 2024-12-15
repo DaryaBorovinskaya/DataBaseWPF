@@ -3,6 +3,8 @@ using DataBase1WPF.DataBase.Entities.Employee;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.DataBase.Repositories;
+using DataBase1WPF.Models.Services.Tables.Order;
+using DataBase1WPF.Models.Services.Tables.Payment;
 using DataBase1WPF.Models.Services.Tables.WorkRecordCard;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,12 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
     public class ContractService : ITableService
     {
         private IWorkRecordCardService _workRecordCardService;
-        private DataRow _selectedEmployee;
+        private DataRow _selectedContract;
         private uint? _individualId;
         private uint? _juridicalPersonId;
+
+        private OrderService _orderService;
+        private PaymentService _paymentService;
 
         private Dictionary<DataRow, IContractDB> _dataDictionary;
         
@@ -104,16 +109,21 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
 
 
-
         public string GetTableName()
         {
             return "Договоры";
         }
 
-        public string GetOtherTableName()
+        public string GetOrdersTableName()
         {
-            return "Трудовая книжка";
+            return "Заказы";
         }
+
+        public string GetPaymentsTableName()
+        {
+            return "Платежи";
+        }
+
         public DataTable SearchDataInTable(string searchLine)
         {
             return new DataTable();
@@ -210,12 +220,18 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
-        public DataTable? GetWorkRecordCardByEmployee(DataRow row)
+        public DataTable? GetOrdersByContract(DataRow row)
         {
-            _selectedEmployee = row;
-            return _workRecordCardService.GetWorkRecordCardByEmployee(_dataDictionary[row].Id);
+            _selectedContract = row;
+            return _orderService.GetOrdersByContractId(_dataDictionary[row].Id);
         }
-        
+
+        public DataTable? GetPaymentsByContract(DataRow row)
+        {
+            _selectedContract = row;
+            return _paymentService.GetPaymentsByContractId(_dataDictionary[row].Id);
+        }
+
 
         public DataTable SearchDataInTableWorkRecordCard(string searchLine)
         {
@@ -230,24 +246,47 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
 
 
-        public void AddWorkRecordCard(int positionIndex, string orderNumber,
+        public void AddOrder(int positionIndex, string orderNumber,
             DateTime orderDate, string reasonOfRecording)
         {
             _workRecordCardService.Add(_dataDictionary[_selectedEmployee].Id, positionIndex,
                 orderNumber, orderDate, reasonOfRecording);
         }
 
-        public void UpdateWorkRecordCard(DataRow row, int positionIndex, string orderNumber,
+        public void UpdateOrder(DataRow row, int positionIndex, string orderNumber,
             DateTime orderDate, string reasonOfRecording)
         {
             _workRecordCardService.Update(row, _dataDictionary[_selectedEmployee].Id, positionIndex,
                 orderNumber, orderDate, reasonOfRecording);
         }
 
-        public void DeleteWorkRecordCard(DataRow row)
+        public void DeleteOrder(DataRow row)
         {
-            _workRecordCardService.Delete(row);
+            _orderService.Delete(row);
         }
+
+
+
+        public void AddPayment(int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
+        {
+            _workRecordCardService.Add(_dataDictionary[_selectedEmployee].Id, positionIndex,
+                orderNumber, orderDate, reasonOfRecording);
+        }
+
+        public void UpdatePayment(DataRow row, int positionIndex, string orderNumber,
+            DateTime orderDate, string reasonOfRecording)
+        {
+            _workRecordCardService.Update(row, _dataDictionary[_selectedEmployee].Id, positionIndex,
+                orderNumber, orderDate, reasonOfRecording);
+        }
+
+        public void DeletePayment(DataRow row)
+        {
+            _paymentService.Delete(row);
+        }
+
+
 
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {

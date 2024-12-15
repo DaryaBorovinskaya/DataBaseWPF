@@ -134,15 +134,15 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <!--
-            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16"
-                     Visibility="{Binding PremisesVisibility}">
+
+            <TabItem Header="{Binding DataTableOrdersTitle}" FontSize="16"
+                     Visibility="{Binding OrdersVisibility}">
                 <DockPanel>
                     <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
           HorizontalScrollBarVisibility="Auto"
               CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPremises}"
-          ItemsSource="{Binding DataTablePremises}" 
+          SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexOrders}"
+          ItemsSource="{Binding DataTableOrders}" 
           MouseDown="DataGridPremises_MouseDown"
               IsReadOnly="True"   />
 
@@ -155,7 +155,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                             <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
              Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
                  MouseDown="TextBoxPremises_MouseDown"
-             Text="{Binding SearchDataInTablePremises, UpdateSourceTrigger=PropertyChanged}">
+             Text="{Binding SearchDataInTableOrders, UpdateSourceTrigger=PropertyChanged}">
 
                             </TextBox>
                         </StackPanel>
@@ -167,7 +167,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     Height="35"
                     Background="White"
                     FontWeight="Bold" Content="Добавить"
-                    Command="{Binding ClickAddPremises}"
+                    Command="{Binding ClickAddOrders}"
                     Visibility="{Binding WriteVisibility}"/>
 
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
@@ -176,13 +176,13 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                 Height="35"
                 FontWeight="Bold" Content="Изменить"
                     Visibility="{Binding EditVisibility}"
-                    Command="{Binding ClickEditPremises}"/>
+                    Command="{Binding ClickEditOrders}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
                     Margin="20 0"            
                     Background="White" Width="70" 
                     Height="35"
                     FontWeight="Bold" Content="Удалить"
-                    Command="{Binding ClickDeletePremises}"
+                    Command="{Binding ClickDeleteOrders}"
                     Visibility="{Binding DeleteVisibility}"/>
 
                         </StackPanel>
@@ -190,14 +190,15 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            <TabItem Header="{Binding DataTableOtherTitle}" FontSize="16"
-            Visibility="{Binding PremisesVisibility}">
+
+            <TabItem Header="{Binding DataTablePaymentsTitle}" FontSize="16"
+            Visibility="{Binding PaymentsVisibility}">
                 <DockPanel>
                     <DataGrid DockPanel.Dock="Top" FontSize="16" CanUserSortColumns="False"
  HorizontalScrollBarVisibility="Auto"
      CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
- SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPremises}"
- ItemsSource="{Binding DataTablePremises}" 
+ SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndexPayments}"
+ ItemsSource="{Binding DataTablePayments}" 
  MouseDown="DataGridPremises_MouseDown"
      IsReadOnly="True"   />
 
@@ -208,44 +209,44 @@ Margin="35 3 0 0" DockPanel.Dock="Top">
    Поиск
                             </TextBlock>
                             <TextBox Style="{DynamicResource TextBoxStyle1}"   Height="30" Width="300" HorizontalAlignment="Left" 
-    Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
-        MouseDown="TextBoxPremises_MouseDown"
-    Text="{Binding SearchDataInTablePremises, UpdateSourceTrigger=PropertyChanged}">
+                            Margin="30 0 0 0" DockPanel.Dock="Left" VerticalAlignment="Top"
+                            MouseDown="TextBoxPremises_MouseDown"
+                            Text="{Binding SearchDataInTablePayments, UpdateSourceTrigger=PropertyChanged}">
 
                             </TextBox>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" 
            VerticalAlignment="Top" Margin="0 20">
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}" 
-           Margin="20 0"
-            Width="90" 
-           Height="35"
-           Background="White"
-           FontWeight="Bold" Content="Добавить"
-           Command="{Binding ClickAddPremises}"
-           Visibility="{Binding WriteVisibility}"/>
+                               Margin="20 0"
+                                Width="90" 
+                               Height="35"
+                               Background="White"
+                               FontWeight="Bold" Content="Добавить"
+                               Command="{Binding ClickAddPayments}"
+                               Visibility="{Binding WriteVisibility}"/>
 
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
-        Margin="20 0"
-       Background="White" Width="85" 
-       Height="35"
-       FontWeight="Bold" Content="Изменить"
-           Visibility="{Binding EditVisibility}"
-           Command="{Binding ClickEditPremises}"/>
+                            Margin="20 0"
+                           Background="White" Width="85" 
+                           Height="35"
+                           FontWeight="Bold" Content="Изменить"
+                               Visibility="{Binding EditVisibility}"
+                               Command="{Binding ClickEditPayments}"/>
                             <Button Template="{StaticResource NoMouseOverButtonTemplate}"
-           Margin="20 0"            
-           Background="White" Width="70" 
-           Height="35"
-           FontWeight="Bold" Content="Удалить"
-           Command="{Binding ClickDeletePremises}"
-           Visibility="{Binding DeleteVisibility}"/>
+                               Margin="20 0"            
+                            Background="White" Width="70" 
+                            Height="35"
+                            FontWeight="Bold" Content="Удалить"
+                            Command="{Binding ClickDeletePayments}"
+                            Visibility="{Binding DeleteVisibility}"/>
 
                         </StackPanel>
 
                     </DockPanel>
                 </DockPanel>
             </TabItem>
-            -->
+            
         </TabControl>
     </Grid>
 </Window>

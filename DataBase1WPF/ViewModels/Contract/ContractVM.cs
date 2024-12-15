@@ -1,5 +1,6 @@
 ﻿using DataBase1WPF.DataBase.Entities.MenuElem;
 using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Models.Services.Tables.Building;
 using DataBase1WPF.Models.Services.Tables.Contract;
 using DataBase1WPF.Models.Services.Tables.Employee;
 using DataBase1WPF.Models.Services.Tables.Individual;
@@ -22,9 +23,23 @@ namespace DataBase1WPF.ViewModels.Contract
         private DataRow _row;
         private string _windowTitle;
         private DataTable _dataTableContracts;
+        private DataTable _dataTableOrders;
+        private DataTable _dataTablePayments;
+
         private string _dataTableTitle;
+        private string _dataTableOrdersTitle;
+        private string _dataTablePaymentsTitle;
+
         private int _selectedIndex;
+        private int _selectedIndexOrders;
+        private int _selectedIndexPayments;
+
         private string _searchDataInTable;
+        private string _searchDataInTableOrders;
+        private string _searchDataInTablePayments;
+
+        private Visibility _ordersVisibility;
+        private Visibility _paymentsVisibility;
         private Visibility _writeVisibility;
         private Visibility _editVisibility;
         private Visibility _deleteVisibility;
@@ -35,6 +50,13 @@ namespace DataBase1WPF.ViewModels.Contract
         public Action<DataRow, ITableService> OnEdit;
         public Action<DataRow, ITableService> OnDelete;
 
+        public Action<ITableService> OnAddOrders;
+        public Action<DataRow, ITableService> OnEditOrders;
+        public Action<DataRow, ITableService> OnDeleteOrders;
+
+        public Action<ITableService> OnAddPayments;
+        public Action<DataRow, ITableService> OnEditPayments;
+        public Action<DataRow, ITableService> OnDeletePayments;
 
         public string WindowTitle
         {
@@ -50,6 +72,45 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        public string DataTableOrdersTitle
+        {
+            get { return _dataTableOrdersTitle; }
+            set
+            {
+                Set(ref _dataTableOrdersTitle, value);
+            }
+        }
+
+        public string DataTablePaymentsTitle
+        {
+            get { return _dataTablePaymentsTitle; }
+            set
+            {
+                Set(ref _dataTablePaymentsTitle, value);
+            }
+        }
+
+
+        public Visibility OrdersVisibility
+        {
+            get { return _ordersVisibility; }
+            set
+            {
+                Set(ref _ordersVisibility, value);
+            }
+        }
+
+        public Visibility PaymentsVisibility
+        {
+            get { return _paymentsVisibility; }
+            set
+            {
+                Set(ref _paymentsVisibility, value);
+            }
+        }
+
+
+
         public DataTable DataTableContracts
         {
             get { return _dataTableContracts; }
@@ -58,6 +119,23 @@ namespace DataBase1WPF.ViewModels.Contract
                 Set(ref _dataTableContracts, value);
             }
         }
+        public DataTable DataTableOrders
+        {
+            get { return _dataTableOrders; }
+            set
+            {
+                Set(ref _dataTableOrders, value);
+            }
+        }
+        public DataTable DataTablePayments
+        {
+            get { return _dataTablePayments; }
+            set
+            {
+                Set(ref _dataTablePayments, value);
+            }
+        }
+
 
         public int SelectedIndex
         {
@@ -65,16 +143,38 @@ namespace DataBase1WPF.ViewModels.Contract
             set
             {
                 Set(ref _selectedIndex, value);
-                //if (SelectedIndex >= 0 && SelectedIndex < DataTableEmployees.Rows.Count
-                //    && _tableService is EmployeeService service)
-                //{
-                //    DataTable? table = service.GetWorkRecordCardByEmployee(DataTableEmployees.Rows[SelectedIndex]);
-
-                //    WorkRecordCardVisibility = Visibility.Visible;
-                //    DataTableWorkRecordCard = table;
-                //}
+                if (SelectedIndex >= 0 && SelectedIndex < DataTableContracts.Rows.Count
+                    && _tableService is ContractService service)
+                {
+                    DataTable? tableOrders = service.GetOrdersByContract(DataTableContracts.Rows[SelectedIndex]);
+                    DataTable? tablePayments = service.GetPaymentsByContract(DataTableContracts.Rows[SelectedIndex]);
+                    OrdersVisibility = Visibility.Visible;
+                    PaymentsVisibility = Visibility.Visible;
+                    DataTableOrders = tableOrders;
+                    DataTablePayments = tablePayments;
+                }
             }
         }
+        public int SelectedIndexOrders
+        {
+            get { return _selectedIndexOrders; }
+            set
+            {
+                Set(ref _selectedIndexOrders, value);
+                
+            }
+        }
+
+        public int SelectedIndexPayments
+        {
+            get { return _selectedIndexPayments; }
+            set
+            {
+                Set(ref _selectedIndexPayments, value);
+                
+            }
+        }
+
 
         public string SearchDataInTable
         {
@@ -85,6 +185,26 @@ namespace DataBase1WPF.ViewModels.Contract
                 DataTableContracts = _tableService.SearchDataInTable(_searchDataInTable);
             }
         }
+        public string SearchDataInTableOrders
+        {
+            get { return _searchDataInTableOrders; }
+            set
+            {
+                Set(ref _searchDataInTableOrders, value);
+                DataTableContracts = _tableService.SearchDataInTable(_searchDataInTableOrders);
+            }
+        }
+        public string SearchDataInTablePayments
+        {
+            get { return _searchDataInTablePayments; }
+            set
+            {
+                Set(ref _searchDataInTablePayments, value);
+                DataTableContracts = _tableService.SearchDataInTable(_searchDataInTablePayments);
+            }
+        }
+
+
         public Visibility WriteVisibility
         {
             get { return _writeVisibility; }
@@ -116,7 +236,6 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
-
         public ContractVM(DataRow row, ITableService clientService,
             ITableService tableService, uint client_id)
         {
@@ -124,8 +243,12 @@ namespace DataBase1WPF.ViewModels.Contract
             _row = row;
             _clientService = clientService;
             _dataTableTitle = _tableService.GetTableName();
+            
             if (_tableService is ContractService contractService)
             {
+                _dataTableOrdersTitle = contractService.GetOrdersTableName();
+                _dataTablePaymentsTitle = contractService.GetPaymentsTableName();
+                
                 if (_clientService is IndividualService service)
                 {
                     _windowTitle = $"Договоры клиента: {row[0].ToString() + " "
@@ -145,10 +268,8 @@ namespace DataBase1WPF.ViewModels.Contract
             _editVisibility = Visibility.Collapsed;
             _deleteVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
+
         }
-
-
-
 
 
 
@@ -175,8 +296,6 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
-
-
         public ICommand ClickDelete
         {
             get
@@ -185,6 +304,80 @@ namespace DataBase1WPF.ViewModels.Contract
                 {
                     if (SelectedIndex >= 0 && SelectedIndex < DataTableContracts.Rows.Count)
                         OnDelete?.Invoke(DataTableContracts.Rows[SelectedIndex], _tableService);
+                });
+            }
+        }
+
+
+        public ICommand ClickAddOrders
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnAddOrders?.Invoke(_tableService);
+                });
+            }
+        }
+
+        public ICommand ClickEditOrders
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexOrders >= 0 && SelectedIndexOrders < DataTableOrders.Rows.Count)
+                        OnEditOrders?.Invoke(DataTableOrders.Rows[SelectedIndexOrders], _tableService);
+                });
+            }
+        }
+
+        public ICommand ClickDeleteOrders
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexOrders >= 0 && SelectedIndexOrders < DataTableOrders.Rows.Count)
+                        OnDeleteOrders?.Invoke(DataTableOrders.Rows[SelectedIndexOrders], _tableService);
+                });
+            }
+        }
+
+
+
+        public ICommand ClickAddPayments
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnAddPayments?.Invoke(_tableService);
+                });
+            }
+        }
+
+        public ICommand ClickEditPayments
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexPayments >= 0 && SelectedIndexPayments < DataTablePayments.Rows.Count)
+                        OnEditPayments?.Invoke(DataTablePayments.Rows[SelectedIndexPayments], _tableService);
+                });
+            }
+        }
+
+
+        public ICommand ClickDeletePayments
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    if (SelectedIndexPayments >= 0 && SelectedIndexPayments < DataTablePayments.Rows.Count)
+                        OnDeletePayments?.Invoke(DataTablePayments.Rows[SelectedIndexPayments], _tableService);
                 });
             }
         }
@@ -206,9 +399,11 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
+
         public void Delete()
         {
-            //WorkRecordCardVisibility = Visibility.Collapsed;
+            OrdersVisibility = Visibility.Collapsed;
+            PaymentsVisibility = Visibility.Collapsed;
             _tableService.Delete(DataTableContracts.Rows[SelectedIndex]);
             UpdateDataTable();
         }
@@ -217,5 +412,32 @@ namespace DataBase1WPF.ViewModels.Contract
         {
             DataTableContracts = _tableService.GetValuesTable();
         }
+
+        public void DeleteOrder()
+        {
+            if (_tableService is ContractService service)
+                service.DeleteOrder(DataTableOrders.Rows[SelectedIndexOrders]);
+            UpdateDataTableOrders();
+        }
+
+        public void UpdateDataTableOrders()
+        {
+            if (_tableService is ContractService service)
+                DataTableOrders = service.GetOrdersByContract(DataTableContracts.Rows[SelectedIndex]);
+        }
+
+        public void DeletePayment()
+        {
+            if (_tableService is ContractService service)
+                service.DeletePayment(DataTablePayments.Rows[SelectedIndexPayments]);
+            UpdateDataTablePayments();
+        }
+
+        public void UpdateDataTablePayments()
+        {
+            if (_tableService is ContractService service)
+                DataTablePayments = service.GetPaymentsByContract(DataTableContracts.Rows[SelectedIndex]);
+        }
+
     }
 }

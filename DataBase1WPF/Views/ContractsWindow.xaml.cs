@@ -36,18 +36,26 @@ namespace DataBase1WPF.Views
                 contractVM.OnAdd += Add;
                 contractVM.OnEdit += Edit;
                 contractVM.OnDelete += Delete;
+
+                contractVM.OnAddOrders += AddOrder;
+                contractVM.OnEditOrders += EditOrder;
+                contractVM.OnDeleteOrders += DeleteOrder;
+
+                contractVM.OnAddPayments += AddPayment;
+                contractVM.OnEditPayments += EditPayment;
+                contractVM.OnDeletePayments += DeletePayment;
             }
         }
 
         public void Add(ITableService tableService)
         {
-            AddOrEditEmployeeWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            AddOrEditContractWindow window = new(AddEditDeleteEnum.Add, tableService, this);
             window.ShowDialog();
         }
 
         public void Edit(DataRow row, ITableService tableService)
         {
-            AddOrEditEmployeeWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
+            AddOrEditContractWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
             window.ShowDialog();
         }
 
@@ -57,6 +65,51 @@ namespace DataBase1WPF.Views
                 " начало действия " + row[1].ToString() + " конец действия " + row[2].ToString());
             window.ShowDialog();
         }
+
+        public void AddOrder(ITableService tableService)
+        {
+            AddOrEditOrderWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            window.ShowDialog();
+        }
+
+        public void EditOrder(DataRow row, ITableService tableService)
+        {
+            AddOrEditOrderWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
+            window.ShowDialog();
+        }
+
+        public void DeleteOrder(DataRow row, ITableService tableService)
+        {
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " регистр. номер " + row[0].ToString() +
+                " начало действия " + row[1].ToString() + " конец действия " + row[2].ToString(),
+                OtherTablesEnum.Orders);
+            window.ShowDialog();
+        }
+
+        public void AddPayment(ITableService tableService)
+        {
+            AddOrEditPaymentWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            window.ShowDialog();
+        }
+
+        public void EditPayment(DataRow row, ITableService tableService)
+        {
+            AddOrEditPaymentWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
+            window.ShowDialog();
+        }
+
+        public void DeletePayment(DataRow row, ITableService tableService)
+        {
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " регистр. номер " + row[0].ToString() +
+                " начало действия " + row[1].ToString() + " конец действия " + row[2].ToString(),
+                OtherTablesEnum.Payments);
+            window.ShowDialog();
+        }
+
+
+
+
+
 
 
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
@@ -72,5 +125,7 @@ namespace DataBase1WPF.Views
             if (DataContext is ContractVM contractVM)
                 contractVM.DataTableMouseLeave();
         }
+
+        
     }
 }

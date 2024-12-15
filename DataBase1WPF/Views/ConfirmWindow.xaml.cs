@@ -134,7 +134,36 @@ namespace DataBase1WPF.Views
             }
             else if (_confirmWindow.DataContext is ContractVM contractVM)
             {
-                contractVM.Delete();
+                if (_otherTables == OtherTablesEnum.Orders)
+                    contractVM.DeleteOrder();
+                else if (_otherTables == OtherTablesEnum.Payments)
+                    contractVM.DeletePayment();
+                else
+                    contractVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddContractVM addContractVM)
+            {
+                addContractVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditContractVM editContractVM)
+            {
+                editContractVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is AddOrderVM addOrderVM)
+            {
+                addOrderVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditOrderVM editOrderVM)
+            {
+                editOrderVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is AddPaymentVM addPaymentVM)
+            {
+                addPaymentVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditPaymentVM editPaymentVM)
+            {
+                editPaymentVM.Edit();
             }
         }
         public void Exit()

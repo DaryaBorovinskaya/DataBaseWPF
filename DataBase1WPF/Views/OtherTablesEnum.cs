@@ -10,6 +10,8 @@ namespace DataBase1WPF.Views
     {
         None,
         Premises,
-        WorkRecordCard
+        WorkRecordCard,
+        Orders,
+        Payments
     }
 }
