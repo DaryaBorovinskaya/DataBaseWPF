@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using DataBase1WPF.Models.Services.Tables.Contract;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
@@ -15,8 +16,130 @@ namespace DataBase1WPF.ViewModels.Contract
         private ITableService _tableService;
         private string _windowTitle;
         private string _buttonContent;
+        private string _registrationNumberText;
+        private DateTime _beginOfActionDate;
+        private DateTime _endOfActionDate;
+        private string _additionalConditionsText;
+
+        private List<string> _paymentFrequenciesComboBox;
+        private int _selectedIndexPaymentFrequencies;
+        private List<string> _employeesComboBox;
+        private int _selectedIndexEmployees;
+        private List<string> _fineComboBox;
+        private int _selectedIndexFine;
+
 
         public Action<string> OnApply;
+
+        public string RegistrationNumberText
+        {
+            get { return _registrationNumberText; }
+            set
+            {
+                Set(ref _registrationNumberText, value);
+            }
+        }
+
+        public DateTime BeginOfActionDate
+        {
+            get { return _beginOfActionDate; }
+            set
+            {
+                Set(ref _beginOfActionDate, value);
+            }
+        }
+
+
+        public DateTime EndOfActionDate
+        {
+            get { return _endOfActionDate; }
+            set
+            {
+                Set(ref _endOfActionDate, value);
+            }
+        }
+
+
+
+        public List<string> PaymentFrequenciesComboBox
+        {
+            get { return _paymentFrequenciesComboBox; }
+            set
+            {
+                Set(ref _paymentFrequenciesComboBox, value);
+            }
+        }
+
+        public int SelectedIndexPaymentFrequencies
+        {
+            get { return _selectedIndexPaymentFrequencies; }
+            set
+            {
+                Set(ref _selectedIndexPaymentFrequencies, value);
+            }
+        }
+
+
+        public List<string> EmployeesComboBox
+        {
+            get { return _employeesComboBox; }
+            set
+            {
+                Set(ref _employeesComboBox, value);
+            }
+        }
+
+        public int SelectedIndexEmployees
+        {
+            get { return _selectedIndexEmployees; }
+            set
+            {
+                Set(ref _selectedIndexEmployees, value);
+            }
+        }
+
+        public List<string> FineComboBox
+        {
+            get { return _fineComboBox; }
+            set
+            {
+                Set(ref _fineComboBox, value);
+            }
+        }
+
+        public int SelectedIndexFine
+        {
+            get { return _selectedIndexFine; }
+            set
+            {
+                Set(ref _selectedIndexFine, value);
+            }
+        }
+
+
+        public string AdditionalConditionsText
+        {
+            get { return _additionalConditionsText; }
+            set
+            {
+                Set(ref _additionalConditionsText, value);
+            }
+        }
+
+
+
+
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+        }
+
+        public string ButtonContent
+        {
+            get { return _buttonContent; }
+        }
+
+
 
         public AddContractVM(ITableService tableService)
         {
@@ -24,11 +147,14 @@ namespace DataBase1WPF.ViewModels.Contract
             _windowTitle = $"Добавление в таблицу: {_tableService.GetTableName()}";
             _buttonContent = "Добавить";
 
-            //if (_tableService is BuildingService service)
-            //{
-            //    _districtsComboBox = service.GetDistricts();
-            //    _streetsComboBox = service.GetStreets();
-            //}
+            if (_tableService is ContractService service)
+            {
+                _paymentFrequenciesComboBox = service.GetPaymentFrequencies();
+                _employeesComboBox = service.GetEmployees();
+                _fineComboBox = service.GetFines();
+            }
+            _beginOfActionDate = DateTime.Now;
+            _endOfActionDate = DateTime.Now;
         }
 
 
@@ -38,55 +164,40 @@ namespace DataBase1WPF.ViewModels.Contract
             {
                 return new DelegateCommand((obj) =>
                 {
-                    //if (SelectedIndexDistricts == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение района");
-                    //else if (SelectedIndexStreets == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение улицы");
-                    //else if (string.IsNullOrEmpty(HouseNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(NumberOfFloorsText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CountRentalPremisesText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CommandantPhoneNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
+                    if (SelectedIndexPaymentFrequencies == -1)
+                        MessageBox.Show("ОШИБКА: не выбрано значение периодичности оплаты");
+                    else if (SelectedIndexEmployees == -1)
+                        MessageBox.Show("ОШИБКА: не выбрано значение сотрудника");
+                    else if (SelectedIndexFine == -1)
+                        MessageBox.Show("ОШИБКА: не выбрано значение штрафа");
+                    else if (string.IsNullOrEmpty(RegistrationNumberText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
 
-
-                    //else
-                    //{
-                    //    uint valueNumberOfFloors = CheckValuesUint(NumberOfFloorsText);
-                    //    uint valueCountRentalPremises = CheckValuesUint(CountRentalPremisesText);
-
-                    //    if (valueNumberOfFloors != 0 && valueCountRentalPremises != 0)
-                    //    {
-                    //        if (!CheckValueNumberOfFloors(valueNumberOfFloors))
-                    //            MessageBox.Show("ОШИБКА: число больше 255");
-                    //        else if (!CheckValueCountRentalPremises(valueCountRentalPremises))
-                    //            MessageBox.Show("ОШИБКА: число больше 65535");
-                    //        else
-                    //            OnApply?.Invoke(
-                    //                DistrictsComboBox[SelectedIndexDistricts] + " "
-                    //                + StreetsComboBox[SelectedIndexStreets] + " "
-                    //                + HouseNumberText);
-                    //    }
-
-                    //}
+                    else
+                    {
+                        OnApply?.Invoke(" регистр. номер " + RegistrationNumberText 
+                            + " начало действия " + BeginOfActionDate.ToString().Substring(0,10) 
+                            + " конец действия " + EndOfActionDate.ToString().Substring(0, 10)
+                        );
+                    }
                 });
             }
         }
 
         public void Add()
         {
-            //if (_tableService is BuildingService service)
-            //    service.Add(SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
-            //        uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
-            //        CommandantPhoneNumberText);
-            //SelectedIndexDistricts = -1;
-            //SelectedIndexStreets = -1;
-            //HouseNumberText = string.Empty;
-            //NumberOfFloorsText = string.Empty;
-            //CountRentalPremisesText = string.Empty;
-            //CommandantPhoneNumberText = string.Empty;
+            if (_tableService is ContractService service)
+                service.Add(SelectedIndexEmployees, SelectedIndexPaymentFrequencies,
+                    RegistrationNumberText, BeginOfActionDate, EndOfActionDate,
+                    AdditionalConditionsText, SelectedIndexFine);
+            
+            SelectedIndexPaymentFrequencies = -1;
+            SelectedIndexEmployees = -1;
+            SelectedIndexFine = -1;
+            RegistrationNumberText = string.Empty;
+            AdditionalConditionsText = string.Empty;
+            BeginOfActionDate = DateTime.Now;
+            EndOfActionDate = DateTime.Now;
         }
     }
 }

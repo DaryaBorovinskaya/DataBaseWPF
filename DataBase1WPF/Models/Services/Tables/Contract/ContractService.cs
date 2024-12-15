@@ -1,7 +1,10 @@
 ﻿using DataBase1WPF.DataBase.Entities.Contract;
 using DataBase1WPF.DataBase.Entities.Employee;
+using DataBase1WPF.DataBase.Entities.Fine;
 using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.Position;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
+using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using DataBase1WPF.DataBase.Repositories;
 using DataBase1WPF.Models.Services.Tables.Order;
 using DataBase1WPF.Models.Services.Tables.Payment;
@@ -174,47 +177,124 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return table;
         }
 
-        public List<string> GetDistricts()
+        public List<string> GetPaymentFrequencies()
         {
-            List<string> districts = new();
+            List<string> paymentFrequencies = new();
 
-            List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
+            List<IHandbookDB> paymentFrequenciesDB = DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList();
 
-            foreach (IHandbookDB districtDB in districtsDB)
-                districts.Add(districtDB.Title);
+            foreach (IHandbookDB paymentFrequency in paymentFrequenciesDB)
+                paymentFrequencies.Add(paymentFrequency.Title);
 
 
-            return districts;
+            return paymentFrequencies;
         }
 
-        public List<string> GetStreets()
+        public int GetPaymentFrequencySelectedIndex(DataRow row) 
         {
-            List<string> streets = new();
+            List<IHandbookDB> paymentFrequenciesDB = DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList();
 
-            List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
+            return paymentFrequenciesDB.FindIndex((elem) => elem.Id == _dataDictionary[row].PaymentFrequencyId);
+        }
 
-            foreach (IHandbookDB streetDB in streetsDB)
-                streets.Add(streetDB.Title);
+        public List<IEmployeeDB> GetEmployeeDB() 
+        {
+            List<IEmployeeDB> foundEmployees = new();
+            List<IEmployeeDB> employeesDB = DataManager.GetInstance().EmployeeDB_Repository.Read().ToList();
+            List<IPositionDB> positionsDB = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
 
 
-            return streets;
+            foreach (IEmployeeDB employeeDB in employeesDB)
+            {
+                if (DataManager.GetInstance().WorkRecordCardDB_Repository is WorkRecordCardDB_Repository repository)
+                {
+                    List<IWorkRecordCardDB> workRecordCardsDB = repository.GetWorkRecordCardByEmployeeId(employeeDB.Id).ToList();
+                    foreach (IWorkRecordCardDB workRecordCardDB in workRecordCardsDB)
+                    {
+                        foreach (IPositionDB positionDB in positionsDB)
+                        {
+                            if (workRecordCardDB.PositionId == positionDB.Id
+                                && positionDB.Name == "Менеджер")
+                                foundEmployees.Add(employeeDB);
+                        }
+                    }
+                }
+
+            }
+            return foundEmployees;
+        }
+
+
+        public int GetEmployeeSelectedIndex(DataRow row)
+        {
+            return GetEmployeeDB().FindIndex((elem) => elem.Id == _dataDictionary[row].EmployeeId);
+        }
+
+        public int GetFineSelectedIndex(DataRow row)
+        {
+            List<IFineDB> finesDB = DataManager.GetInstance().FineDB_Repository.Read().ToList();
+
+            return finesDB.FindIndex((elem) => elem.Amount == _dataDictionary[row].Fine);
+        }
+
+        public List<string> GetEmployees()
+        {
+            List<string> employees = new();
+
+            List<IEmployeeDB> employeesDB = DataManager.GetInstance().EmployeeDB_Repository.Read().ToList();
+            List<IPositionDB> positionsDB = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
+            
+
+            foreach (IEmployeeDB employeeDB in employeesDB)
+            {
+                if (DataManager.GetInstance().WorkRecordCardDB_Repository is WorkRecordCardDB_Repository repository)
+                {
+                    List<IWorkRecordCardDB> workRecordCardsDB = repository.GetWorkRecordCardByEmployeeId(employeeDB.Id).ToList();
+                    foreach (IWorkRecordCardDB workRecordCardDB in workRecordCardsDB)
+                    {
+                        foreach (IPositionDB positionDB in positionsDB)
+                        {
+                            if (workRecordCardDB.PositionId == positionDB.Id
+                                && positionDB.Name == "Менеджер")
+                                employees.Add(employeeDB.Surname + " " + employeeDB.Name + " " + employeeDB.Patronymic);
+                        }
+                    }
+                }
+                
+            }
+
+            return employees;
+        }
+
+
+        public List<string> GetFines()
+        {
+            List<string> fines = new();
+
+            List<IFineDB> finesDB = DataManager.GetInstance().FineDB_Repository.Read().ToList();
+
+            foreach (IFineDB fineDB in finesDB)
+                fines.Add(fineDB.Amount.ToString());
+
+
+            return fines;
         }
 
         public void Add(int employeeSelectedIndex, int paymentFrequencySelectedIndex,
             string registrationNumber,
             DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
-            float fine)
+            int fineSelectedIndex)
         {
             DataManager.GetInstance().ContractDB_Repository.Create(new ContractDB(
                 _individualId,
                 _juridicalPersonId,
-                DataManager.GetInstance().EmployeeDB_Repository.Read().ToList()[employeeSelectedIndex].Id,
+                GetEmployeeDB()[employeeSelectedIndex].Id,
                 DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList()[paymentFrequencySelectedIndex].Id,
                 registrationNumber,
                 beginOfAction.ToString("yyyy-MM-dd"),
                 endOfAction.ToString("yyyy-MM-dd"),
                 additionalConditions,
-                fine
+                DataManager.GetInstance().FineDB_Repository.Read().ToList()[fineSelectedIndex].Amount
                 ));
         }
 
@@ -230,19 +310,19 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             int paymentFrequencySelectedIndex,
             string registrationNumber,
             DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
-            float fine)
+            int fineSelectedIndex)
         {
             DataManager.GetInstance().ContractDB_Repository.Update(new ContractDB(
                 _dataDictionary[row].Id,
                 _individualId,
                 _juridicalPersonId,
-                DataManager.GetInstance().EmployeeDB_Repository.Read().ToList()[employeeSelectedIndex].Id,
+                GetEmployeeDB()[employeeSelectedIndex].Id,
                 DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList()[paymentFrequencySelectedIndex].Id,
                 registrationNumber,
                 beginOfAction.ToString("yyyy-MM-dd"),
                 endOfAction.ToString("yyyy-MM-dd"),
                 additionalConditions,
-                fine
+                DataManager.GetInstance().FineDB_Repository.Read().ToList()[fineSelectedIndex].Amount
                 ));
         }
 

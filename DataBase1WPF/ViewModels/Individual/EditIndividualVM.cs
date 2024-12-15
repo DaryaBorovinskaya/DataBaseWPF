@@ -150,8 +150,6 @@ namespace DataBase1WPF.ViewModels.Individual
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(IssuedByText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (DateOfIssue.Date == DateTime.Now.Date)
-                        MessageBox.Show("ОШИБКА: поле даты заполнено неверно");
 
                     else
                     {

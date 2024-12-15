@@ -15,14 +15,26 @@ namespace DataBase1WPF.DataBase.Repositories
         private string _exception = string.Empty;
         public void Create(IContractDB entity)
         {
-            _query = $"insert into contracts " +
-                     $"(individual_id, juridical_person_id," +
-                     $"employee_id, payment_frequency_id, registration_number," +
+            if (entity.IndividualId != null) 
+                _query = $"insert into contracts " +
+                     $"(individual_id, " +
+                     $"employee_id, payment_frequency_id, registration_number, " +
                      $"begin_of_action, end_of_action, additional_conditions, fine) " +
-                     $"values ({entity.IndividualId}, {entity.JuridicalPersonId}," +
-                     $"{entity.EmployeeId}, {entity.PaymentFrequencyId}," +
+                     $"values ({entity.IndividualId}, " +
+                     $"{entity.EmployeeId}, {entity.PaymentFrequencyId}, " +
                      $"'{entity.RegistrationNumber}', '{entity.BeginOfAction}', " +
-                     $"'{entity.EndOfAction}', '{entity.AdditionalConditions}'," +
+                     $"'{entity.EndOfAction}', '{entity.AdditionalConditions}', " +
+                     $"{entity.Fine})";
+
+            else if (entity.JuridicalPersonId != null)
+            _query = $"insert into contracts " +
+                     $"(juridical_person_id, " +
+                     $"employee_id, payment_frequency_id, registration_number, " +
+                     $"begin_of_action, end_of_action, additional_conditions, fine) " +
+                     $"values ({entity.JuridicalPersonId}, " +
+                     $"{entity.EmployeeId}, {entity.PaymentFrequencyId}, " +
+                     $"'{entity.RegistrationNumber}', '{entity.BeginOfAction}', " +
+                     $"'{entity.EndOfAction}', '{entity.AdditionalConditions}', " +
                      $"{entity.Fine})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
@@ -34,13 +46,24 @@ namespace DataBase1WPF.DataBase.Repositories
 
         public void Update(IContractDB entity)
         {
-            _query = $"update contracts set " +
-                     $"individual_id={entity.IndividualId}, juridical_person_id={entity.JuridicalPersonId}," +
-                     $"employee_id={entity.EmployeeId}, payment_frequency_id={entity.PaymentFrequencyId}," +
-                     $"registration_number='{entity.RegistrationNumber}', begin_of_action='{entity.BeginOfAction}'," +
-                     $"end_of_action='{entity.EndOfAction}', additional_conditions='{entity.AdditionalConditions}'," +
+            if (entity.IndividualId != null)
+                _query = $"update contracts set " +
+                     $"individual_id={entity.IndividualId}, " +
+                     $"employee_id={entity.EmployeeId}, payment_frequency_id={entity.PaymentFrequencyId}, " +
+                     $"registration_number='{entity.RegistrationNumber}', begin_of_action='{entity.BeginOfAction}', " +
+                     $"end_of_action='{entity.EndOfAction}', additional_conditions='{entity.AdditionalConditions}', " +
                      $"fine={entity.Fine} " +
                      $"where id={entity.Id}";
+
+            else if (entity.JuridicalPersonId != null)
+                _query = $"update contracts set " +
+                         $"juridical_person_id={entity.JuridicalPersonId}, " +
+                         $"employee_id={entity.EmployeeId}, payment_frequency_id={entity.PaymentFrequencyId}, " +
+                         $"registration_number='{entity.RegistrationNumber}', begin_of_action='{entity.BeginOfAction}', " +
+                         $"end_of_action='{entity.EndOfAction}', additional_conditions='{entity.AdditionalConditions}', " +
+                         $"fine={entity.Fine} " +
+                         $"where id={entity.Id}";
+
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
         public void Delete(uint id)

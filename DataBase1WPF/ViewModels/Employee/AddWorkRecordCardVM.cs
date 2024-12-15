@@ -119,8 +119,6 @@ namespace DataBase1WPF.ViewModels.Employee
                         MessageBox.Show("ОШИБКА: пустое поле");
                     else if (string.IsNullOrEmpty(ReasonOfRecordingText))
                         MessageBox.Show("ОШИБКА: пустое поле");
-                    else if (OrderDate.Date == DateTime.Now.Date)
-                        MessageBox.Show("ОШИБКА: поле даты заполнено неверно");
 
 
                     else
