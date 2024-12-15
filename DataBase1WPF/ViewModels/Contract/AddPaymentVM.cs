@@ -1,10 +1,12 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
+using DataBase1WPF.Models.Services.Tables.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
@@ -14,21 +16,75 @@ namespace DataBase1WPF.ViewModels.Contract
         private ITableService _tableService;
         private string _windowTitle;
         private string _buttonContent;
+        private DateTime _dateOfPayment;
+        private string _amountOfPaymentText;
 
         public Action<string> OnApply;
+
+        public string AmountOfPaymentText
+        {
+            get { return _amountOfPaymentText; }
+            set
+            {
+                Set(ref _amountOfPaymentText, value);
+            }
+        }
+
+        public DateTime DateOfPayment
+        {
+            get { return _dateOfPayment; }
+            set
+            {
+                Set(ref _dateOfPayment, value);
+            }
+        }
+
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+        }
+
+        public string ButtonContent
+        {
+            get { return _buttonContent; }
+        }
+
+
         public AddPaymentVM(ITableService tableService)
         {
             _tableService = tableService;
 
             _buttonContent = "Добавить";
 
-            if (_tableService is BuildingService service)
+            if (_tableService is ContractService service)
             {
-                _windowTitle = $"Добавление в таблицу: {service.GetOtherTableName()}";
-                //_typeOfFinishingComboBox = service.GetTypesOfFinishing();
-                //_buildingText = service.GetSelectedBuildingText();
+                _windowTitle = $"Добавление в таблицу: {service.GetPaymentsTableName()}";
+                
+            }
+            _dateOfPayment = DateTime.Now;
+        }
+
+        private float CheckValuesFloat(string line)
+        {
+            try
+            {
+                float value = float.Parse(line);
+                if (value > 0)
+                    return value;
+                else
+                {
+                    MessageBox.Show("ОШИБКА: введенное значение меньше или равно 0");
+
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ОШИБКА: введенное значение не является целым или дробным числом");
+                return 0;
             }
         }
+
 
         public ICommand Click
         {
@@ -36,55 +92,29 @@ namespace DataBase1WPF.ViewModels.Contract
             {
                 return new DelegateCommand((obj) =>
                 {
-                    //if (SelectedIndexDistricts == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение района");
-                    //else if (SelectedIndexStreets == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение улицы");
-                    //else if (string.IsNullOrEmpty(HouseNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(NumberOfFloorsText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CountRentalPremisesText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CommandantPhoneNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
+                    if (string.IsNullOrEmpty(AmountOfPaymentText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
 
 
-                    //else
-                    //{
-                    //    uint valueNumberOfFloors = CheckValuesUint(NumberOfFloorsText);
-                    //    uint valueCountRentalPremises = CheckValuesUint(CountRentalPremisesText);
-
-                    //    if (valueNumberOfFloors != 0 && valueCountRentalPremises != 0)
-                    //    {
-                    //        if (!CheckValueNumberOfFloors(valueNumberOfFloors))
-                    //            MessageBox.Show("ОШИБКА: число больше 255");
-                    //        else if (!CheckValueCountRentalPremises(valueCountRentalPremises))
-                    //            MessageBox.Show("ОШИБКА: число больше 65535");
-                    //        else
-                    //            OnApply?.Invoke(
-                    //                DistrictsComboBox[SelectedIndexDistricts] + " "
-                    //                + StreetsComboBox[SelectedIndexStreets] + " "
-                    //                + HouseNumberText);
-                    //    }
-
-                    //}
+                    else
+                    {
+                        float value = CheckValuesFloat(AmountOfPaymentText);
+                            
+                        if (value != 0)
+                        {
+                            OnApply?.Invoke(" дата платежа " + DateOfPayment.Date.ToString().Substring(0,10) +  " сумма " + AmountOfPaymentText);
+                        }
+                    }
                 });
             }
         }
 
         public void Add()
         {
-            //if (_tableService is BuildingService service)
-            //    service.Add(SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
-            //        uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
-            //        CommandantPhoneNumberText);
-            //SelectedIndexDistricts = -1;
-            //SelectedIndexStreets = -1;
-            //HouseNumberText = string.Empty;
-            //NumberOfFloorsText = string.Empty;
-            //CountRentalPremisesText = string.Empty;
-            //CommandantPhoneNumberText = string.Empty;
+            if (_tableService is ContractService service)
+                service.AddPayment(DateOfPayment, float.Parse(AmountOfPaymentText));
+            DateOfPayment = DateTime.Now;
+            AmountOfPaymentText = string.Empty;
         }
     }
 }

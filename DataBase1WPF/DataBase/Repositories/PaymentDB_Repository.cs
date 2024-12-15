@@ -52,8 +52,8 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new PaymentDB(
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
-                    row[3].ToString().Substring(0, 10),
-                    float.Parse(row[4].ToString())
+                    row[2].ToString().Substring(0, 10),
+                    float.Parse(row[3].ToString())
                 ));
             }
             return result;

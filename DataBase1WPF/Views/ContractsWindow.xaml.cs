@@ -100,8 +100,8 @@ namespace DataBase1WPF.Views
 
         public void DeletePayment(DataRow row, ITableService tableService)
         {
-            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " регистр. номер " + row[0].ToString() +
-                " начало действия " + row[1].ToString() + " конец действия " + row[2].ToString(),
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " дата  платежа " + row[0].ToString() +
+                " сумма " + row[1].ToString() ,
                 OtherTablesEnum.Payments);
             window.ShowDialog();
         }

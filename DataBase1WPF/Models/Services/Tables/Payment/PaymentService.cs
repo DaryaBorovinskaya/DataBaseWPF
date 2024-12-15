@@ -92,7 +92,7 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
         public void Update(DataRow row, uint contractId, DateTime dateOfPayment,
             float amountOfPayment)
         {
-            DataManager.GetInstance().PaymentDB_Repository.Create(new PaymentDB(
+            DataManager.GetInstance().PaymentDB_Repository.Update(new PaymentDB(
                 _dataDictionary[row].Id,
                 contractId,
                 dateOfPayment.ToString("yyyy-MM-dd"),

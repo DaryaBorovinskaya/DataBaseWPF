@@ -1,11 +1,13 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
+using DataBase1WPF.Models.Services.Tables.Contract;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
@@ -16,8 +18,40 @@ namespace DataBase1WPF.ViewModels.Contract
         private ITableService _tableService;
         private string _windowTitle;
         private string _buttonContent;
+        private DateTime _dateOfPayment;
+        private string _amountOfPaymentText;
+
 
         public Action<string> OnApply;
+
+        public string AmountOfPaymentText
+        {
+            get { return _amountOfPaymentText; }
+            set
+            {
+                Set(ref _amountOfPaymentText, value);
+            }
+        }
+
+        public DateTime DateOfPayment
+        {
+            get { return _dateOfPayment; }
+            set
+            {
+                Set(ref _dateOfPayment, value);
+            }
+        }
+
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+        }
+
+        public string ButtonContent
+        {
+            get { return _buttonContent; }
+        }
+
         public EditPaymentVM(DataRow row, ITableService tableService)
         {
             _row = row;
@@ -25,19 +59,35 @@ namespace DataBase1WPF.ViewModels.Contract
 
             _buttonContent = "Внести изменения";
 
-            if (_tableService is BuildingService service)
+            if (_tableService is ContractService service)
             {
-                _windowTitle = $"Изменение данных таблицы: {service.GetOtherTableName()}";
-                //_typeOfFinishingComboBox = service.GetTypesOfFinishing();
-                //_buildingText = service.GetSelectedBuildingText();
-                //_selectedIndexTypeOfFinishing = service.GetTypeOfFinishingSelectedIndex(row);
-                //_premiseNumberText = row[1].ToString();
-                //_areaText = row[2].ToString();
-                //_floorNumberText = row[3].ToString();
-                //_availabilityOfPhoneNumber = bool.Parse(row[4].ToString());
-                //_tempRentalPaymentText = row[5].ToString();
+                _windowTitle = $"Изменение данных таблицы: {service.GetPaymentsTableName()}";
+                _dateOfPayment = DateTime.Parse(row[0].ToString());
+                _amountOfPaymentText = row[1].ToString();
             }
         }
+
+        private float CheckValuesFloat(string line)
+        {
+            try
+            {
+                float value = float.Parse(line);
+                if (value > 0)
+                    return value;
+                else
+                {
+                    MessageBox.Show("ОШИБКА: введенное значение меньше или равно 0");
+
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ОШИБКА: введенное значение не является целым или дробным числом");
+                return 0;
+            }
+        }
+
 
         public ICommand Click
         {
@@ -45,39 +95,19 @@ namespace DataBase1WPF.ViewModels.Contract
             {
                 return new DelegateCommand((obj) =>
                 {
-                    //if (SelectedIndexDistricts == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение района");
-                    //else if (SelectedIndexStreets == -1)
-                    //    MessageBox.Show("ОШИБКА: не выбрано значение улицы");
-                    //else if (string.IsNullOrEmpty(HouseNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(NumberOfFloorsText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CountRentalPremisesText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
-                    //else if (string.IsNullOrEmpty(CommandantPhoneNumberText))
-                    //    MessageBox.Show("ОШИБКА: пустое поле");
+                    if (string.IsNullOrEmpty(AmountOfPaymentText))
+                        MessageBox.Show("ОШИБКА: пустое поле");
 
 
-                    //else
-                    //{
-                    //    uint valueNumberOfFloors = CheckValuesUint(NumberOfFloorsText);
-                    //    uint valueCountRentalPremises = CheckValuesUint(CountRentalPremisesText);
+                    else
+                    {
+                        float value = CheckValuesFloat(AmountOfPaymentText);
 
-                    //    if (valueNumberOfFloors != 0 && valueCountRentalPremises != 0)
-                    //    {
-                    //        if (!CheckValueNumberOfFloors(valueNumberOfFloors))
-                    //            MessageBox.Show("ОШИБКА: число больше 255");
-                    //        else if (!CheckValueCountRentalPremises(valueCountRentalPremises))
-                    //            MessageBox.Show("ОШИБКА: число больше 65535");
-                    //        else
-                    //            OnApply?.Invoke(
-                    //                DistrictsComboBox[SelectedIndexDistricts] + " "
-                    //                + StreetsComboBox[SelectedIndexStreets] + " "
-                    //                + HouseNumberText);
-                    //    }
-
-                    //}
+                        if (value != 0)
+                        {
+                            OnApply?.Invoke(" дата платежа " + DateOfPayment.Date.ToString().Substring(0, 10) + " сумма " + AmountOfPaymentText);
+                        }
+                    }
 
                 });
             }
@@ -85,10 +115,9 @@ namespace DataBase1WPF.ViewModels.Contract
 
         public void Edit()
         {
-            //if (_tableService is BuildingService service)
-            //    service.Update(_row, SelectedIndexDistricts, SelectedIndexStreets, HouseNumberText,
-            //        uint.Parse(NumberOfFloorsText), uint.Parse(CountRentalPremisesText),
-            //        CommandantPhoneNumberText);
+            if (_tableService is ContractService service)
+                service.UpdatePayment(_row, DateOfPayment, float.Parse(AmountOfPaymentText));
+            
         }
     }
 }
