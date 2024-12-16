@@ -22,6 +22,7 @@ namespace DataBase1WPF.Views
 
             if (DataContext is MainVM mainVM)
             {
+                mainVM.OnRegistration += Registration;
                 mainVM.OnUserManagement += UserManagement;
                 mainVM.OnChangePassword += ChangePassword;
                 mainVM.OnSQLquery += SQLquery;
@@ -44,6 +45,11 @@ namespace DataBase1WPF.Views
             }
         }
 
+        private void Registration()
+        {
+            RegistrationWindow window = new();
+            window.ShowDialog();
+        }
         private void UserManagement(ITableService tableService, uint menuElemId)
         {
             UserManagementWindow window = new( tableService,  menuElemId);

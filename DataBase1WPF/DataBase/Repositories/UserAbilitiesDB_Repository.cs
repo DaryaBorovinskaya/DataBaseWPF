@@ -23,7 +23,21 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IUserAbilitiesDB> Read()
         {
-            _query = "select * from users_abilities";
+            _query = "SELECT rentapp.users_abilities.id, " +
+                "rentapp.users_abilities.user_id, " +
+                "rentapp.users.login as user_login, " +
+                "rentapp.users_abilities.menu_element_id, " +
+                "rentapp.menu_elements.name as menu_element_name, " +
+                "rentapp.users_abilities.r, " +
+                "rentapp.users_abilities.w, " +
+                "rentapp.users_abilities.e, " +
+                "rentapp.users_abilities.d " +
+                "FROM rentapp.users_abilities " +
+                "left outer join rentapp.users " +
+                " on rentapp.users_abilities.user_id = rentapp.users.id " +
+                "left outer join rentapp.menu_elements on " +
+                " rentapp.users_abilities.menu_element_id = rentapp.menu_elements.id " +
+                "order by rentapp.users_abilities.id;";
             IList<IUserAbilitiesDB> result = new List<IUserAbilitiesDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -31,11 +45,13 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new UserAbilitiesDB(
                     uint.Parse(row[0].ToString()),
                     uint.Parse(row[1].ToString()),
-                    uint.Parse(row[2].ToString()),
-                    int.Parse(row[3].ToString()) == 1 ? true : false,
-                    int.Parse(row[4].ToString()) == 1 ? true : false,
+                    row[2].ToString(),
+                    uint.Parse(row[3].ToString()),
+                    row[4].ToString(),
                     int.Parse(row[5].ToString()) == 1 ? true : false,
-                    int.Parse(row[6].ToString()) == 1 ? true : false
+                    int.Parse(row[6].ToString()) == 1 ? true : false,
+                    int.Parse(row[7].ToString()) == 1 ? true : false,
+                    int.Parse(row[8].ToString()) == 1 ? true : false
                 ));
             }
             return result;

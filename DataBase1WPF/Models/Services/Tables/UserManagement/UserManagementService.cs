@@ -1,4 +1,6 @@
 ﻿using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.MenuElem;
+using DataBase1WPF.DataBase.Entities.User;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using System;
 using System.Collections.Generic;
@@ -11,18 +13,20 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
 {
     public class UserManagementService : ITableService
     {
-        private Dictionary<DataRow, IHandbookDB> _dataDictionary;
-        private List<IHandbookDB> GetValues()
+        private Dictionary<DataRow, IUserAbilitiesDB> _dataDictionary;
+        private List<IUserAbilitiesDB> GetValues()
         {
-            List<IHandbookDB> values = DataManager.GetInstance().BankDB_Repository.Read().ToList();
+            List<IUserAbilitiesDB> values = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
             return values;
         }
 
         public DataTable GetValuesTable()
         {
-            List<IHandbookDB> values = GetValues();
+            List<IUserAbilitiesDB> values = GetValues();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[1]);
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -33,13 +37,17 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
 
         public string GetTableName()
         {
-            return "Банки";
+            return "Права пользователей";
         }
         public DataTable SearchDataInTable(string searchLine)
         {
-            List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
+            List<IUserAbilitiesDB> values = GetValues().Where(item => 
+            item.UserLogin.Contains(searchLine)
+            || item.MenuElemName.Contains(searchLine)).ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
             table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[0]);
+            table.Columns.Remove(table.Columns[1]);
 
             _dataDictionary = new();
             for (int i = 0; i < values.Count; i++)
@@ -72,19 +80,96 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
         }
 
 
-        public void Add(string title)
+        public List<string> GetUsers()
         {
-            DataManager.GetInstance().BankDB_Repository.Create(new HandbookDB(title));
+            List<string> users = new();
+
+            List<IUserDB> usersDB = DataManager.GetInstance().UserDB_Repository.Read().ToList();
+
+            foreach (IUserDB userDB in usersDB)
+                users.Add(userDB.Login);
+
+
+            return users;
         }
 
-        public void Update(DataRow row, string title)
+
+        public List<IMenuElemDB> GetMenuElemsDB()
         {
-            DataManager.GetInstance().BankDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
+            List<IMenuElemDB> menuElems = new();
+
+            List<IMenuElemDB> menuElemsDB = DataManager.GetInstance().MenuElemDB_Repository.Read().ToList();
+
+            foreach (IMenuElemDB menuElemDB in menuElemsDB)
+            {
+                if (menuElemDB.FuncName != null && menuElemDB.FuncName != string.Empty)
+                    menuElems.Add(menuElemDB);
+            }
+
+            return menuElems;
+        }
+
+        public List<string> GetMenuElems()
+        {
+            List<string> menuElems = new();
+
+            List<IMenuElemDB> menuElemsDB = DataManager.GetInstance().MenuElemDB_Repository.Read().ToList();
+
+            foreach (IMenuElemDB menuElemDB in menuElemsDB)
+            {
+                if (menuElemDB.FuncName != null && menuElemDB.FuncName != string.Empty)
+                    menuElems.Add(menuElemDB.Name);
+            }
+
+            return menuElems;
+        }
+
+        public int GetUserSelectedIndex(DataRow row)
+        {
+            List<IUserDB> usersDB = DataManager.GetInstance().UserDB_Repository.Read().ToList();
+
+            return usersDB.FindIndex((elem) => elem.Id == _dataDictionary[row].UserId);
+
+        }
+
+        public int GetMenuElemSelectedIndex(DataRow row)
+        {
+            return GetMenuElemsDB().FindIndex((elem) => elem.Id == _dataDictionary[row].MenuElemId);
+
+        }
+        
+        public void Add(int userSelectedIndex, 
+            int menuElemSelectedIndex, bool canRead,
+            bool canWrite, bool canEdit, bool canDelete)
+        {
+            DataManager.GetInstance().UserAbilitiesDB_Repository.Create(new UserAbilitiesDB(
+                DataManager.GetInstance().UserDB_Repository.Read().ToList()[userSelectedIndex].Id,
+                GetMenuElemsDB()[menuElemSelectedIndex].Id,
+                canRead,
+                canWrite,
+                canEdit,
+                canDelete
+                ));
+        }
+
+        public void Update(DataRow row, int userSelectedIndex,
+            int menuElemSelectedIndex, bool canRead,
+            bool canWrite, bool canEdit, bool canDelete)
+        {
+            DataManager.GetInstance().UserAbilitiesDB_Repository.Update(new UserAbilitiesDB(
+                _dataDictionary[row].Id,
+                DataManager.GetInstance().UserDB_Repository.Read().ToList()[userSelectedIndex].Id,
+                GetMenuElemsDB()[menuElemSelectedIndex].Id,
+                canRead,
+                canWrite,
+                canEdit,
+                canDelete
+                ));
         }
 
         public void Delete(DataRow row)
         {
-            DataManager.GetInstance().BankDB_Repository.Delete(_dataDictionary[row].Id);
+            DataManager.GetInstance().UserAbilitiesDB_Repository.Delete(_dataDictionary[row].Id);
         }
     }
 }

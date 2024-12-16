@@ -13,7 +13,6 @@ namespace DataBase1WPF.ViewModels.UserManagementVM
     public class UserManagementVM : BasicVM
     {
         private ITableService _tableService;
-        private string _windowTitle;
         private DataTable _dataTableUsers;
         private string _dataTableTitle;
         private string _searchDataInTable;
@@ -28,25 +27,7 @@ namespace DataBase1WPF.ViewModels.UserManagementVM
         public Action<DataRow, ITableService> OnEdit;
         public Action<DataRow, ITableService> OnDelete;
 
-        public string WindowTitle
-        {
-            get { return _windowTitle; }
-        }
-
-
-
-        public UserManagementVM(ITableService tableService, uint menuElemId)
-        {
-            _tableService = tableService;
-            DataTableUsers = _tableService.GetValuesTable();
-            DataTableTitle = _tableService.GetTableName();
-            _userAbilities = _tableService.GetUserAbilities(menuElemId);
-            _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
-            _editVisibility = Visibility.Collapsed;
-            _deleteVisibility = Visibility.Collapsed;
-            _selectedIndex = -1;
-        }
-
+        
 
 
         public string SearchDataInTable
@@ -92,21 +73,6 @@ namespace DataBase1WPF.ViewModels.UserManagementVM
             }
         }
 
-        public void DataTableMouseDown()
-        {
-            EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
-            DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
-
-        }
-
-        public void DataTableMouseLeave()
-        {
-            EditVisibility = Visibility.Collapsed;
-            DeleteVisibility = Visibility.Collapsed;
-
-        }
-
-
         public Visibility WriteVisibility
         {
             get { return _writeVisibility; }
@@ -136,6 +102,38 @@ namespace DataBase1WPF.ViewModels.UserManagementVM
 
             }
         }
+
+
+        public UserManagementVM(ITableService tableService, uint menuElemId)
+        {
+            _tableService = tableService;
+            DataTableUsers = _tableService.GetValuesTable();
+            DataTableTitle = _tableService.GetTableName();
+            _userAbilities = _tableService.GetUserAbilities(menuElemId);
+            _writeVisibility = _userAbilities.CanWrite ? Visibility.Visible : Visibility.Collapsed;
+            _editVisibility = Visibility.Collapsed;
+            _deleteVisibility = Visibility.Collapsed;
+            _selectedIndex = -1;
+        }
+
+        
+
+        public void DataTableMouseDown()
+        {
+            EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
+            DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
+
+        }
+
+        public void DataTableMouseLeave()
+        {
+            EditVisibility = Visibility.Collapsed;
+            DeleteVisibility = Visibility.Collapsed;
+
+        }
+
+
+       
 
         public ICommand ClickAdd
         {

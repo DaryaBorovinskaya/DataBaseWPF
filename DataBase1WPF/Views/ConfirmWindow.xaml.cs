@@ -6,6 +6,8 @@ using DataBase1WPF.ViewModels.Employee;
 using DataBase1WPF.ViewModels.Handbooks;
 using DataBase1WPF.ViewModels.Individual;
 using DataBase1WPF.ViewModels.JuridicalPerson;
+using DataBase1WPF.ViewModels.UserManagement;
+using DataBase1WPF.ViewModels.UserManagementVM;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -164,6 +166,18 @@ namespace DataBase1WPF.Views
             else if (_confirmWindow.DataContext is EditPaymentVM editPaymentVM)
             {
                 editPaymentVM.Edit();
+            }
+            else if (_confirmWindow.DataContext is UserManagementVM userManagementVM)
+            {
+                userManagementVM.Delete();
+            }
+            else if (_confirmWindow.DataContext is AddUserManagementVM addUserManagementVM)
+            {
+                addUserManagementVM.Add();
+            }
+            else if (_confirmWindow.DataContext is EditUserManagementVM editUserManagementVM)
+            {
+                editUserManagementVM.Edit();
             }
         }
         public void Exit()

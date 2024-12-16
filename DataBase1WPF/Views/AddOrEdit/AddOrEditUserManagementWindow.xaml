@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBase1WPF.Views.AddOrEdit"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="200" Width="600" 
+        Title="{Binding WindowTitle}" Height="250" Width="600" 
         ResizeMode="CanMinimize" WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
@@ -37,11 +37,14 @@ BorderThickness="{TemplateBinding BorderThickness}">
                 <DockPanel Margin="10 0">
                     <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center"
                                Margin="0 0 0 0">Имя пользователя</TextBlock>
-                    <TextBox DockPanel.Dock="Top" HorizontalAlignment="Center" 
-Width="200" Height="30"  AcceptsReturn="True" MaxLength="100" 
-                             Text="{Binding UserLoginText}" Margin="0 0 0 5" FontSize="16"></TextBox>
+                    <ComboBox DockPanel.Dock="Top" Height="30" Background="White" Width="200"
+ItemsSource="{Binding UserLoginComboBox}" SelectedIndex="{Binding SelectedIndexUserLogin}"
+            Margin="0 0 0 5" IsReadOnly="True" FontSize="16"></ComboBox>
 
-
+                    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 0 0 5">Элемент меню</TextBlock>
+                    <ComboBox DockPanel.Dock="Top" Height="30" Background="White" Width="200"
+ItemsSource="{Binding MenuElemComboBox}" SelectedIndex="{Binding SelectedIndexMenuElem}"
+            Margin="0 0 0 5" IsReadOnly="True" FontSize="16"></ComboBox>
 
                 </DockPanel>
                 <DockPanel Margin="20 0">
@@ -60,7 +63,7 @@ Width="200" Height="30"  AcceptsReturn="True" MaxLength="100"
                Margin="15 0 0 5"></CheckBox>
                 </DockPanel>
 
-                <DockPanel Margin="20 0">
+                <DockPanel Margin="20 0 0 0">
                     <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" 
                Margin="0 15 0 0">Изменение</TextBlock>
                     <CheckBox  DockPanel.Dock="Right" Height="35" 

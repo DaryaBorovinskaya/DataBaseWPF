@@ -2,6 +2,7 @@
 using DataBase1WPF.ViewModels.Building;
 using DataBase1WPF.ViewModels.Handbooks;
 using DataBase1WPF.ViewModels.UserManagementVM;
+using DataBase1WPF.Views.AddOrEdit;
 using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
@@ -40,19 +41,20 @@ namespace DataBase1WPF.Views
 
         public void Add(ITableService tableService)
         {
-            AddOrEditBuildingWindow window = new(AddEditDeleteEnum.Add, tableService, this);
+            AddOrEditUserManagementWindow window = new(AddEditDeleteEnum.Add, tableService, this);
             window.ShowDialog();
         }
 
         public void Edit(DataRow row, ITableService tableService)
         {
-            AddOrEditBuildingWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
+            AddOrEditUserManagementWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
             window.ShowDialog();
         }
 
         public void Delete(DataRow row, ITableService tableService)
         {
-            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, row[0].ToString() + " " + row[1].ToString() + " " + row[2].ToString());
+            ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " пользователь " + row[0].ToString() 
+                + " элемент меню " + row[1].ToString());
             window.ShowDialog();
         }
 
@@ -60,15 +62,15 @@ namespace DataBase1WPF.Views
 
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is HandbooksVM handbooksVM)
-                handbooksVM.DataTableMouseDown();
+            if (DataContext is UserManagementVM userManagementVM)
+                userManagementVM.DataTableMouseDown();
         }
 
 
         private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is HandbooksVM handbooksVM)
-                handbooksVM.DataTableMouseLeave();
+            if (DataContext is UserManagementVM userManagementVM)
+                userManagementVM.DataTableMouseLeave();
         }
     }
 }

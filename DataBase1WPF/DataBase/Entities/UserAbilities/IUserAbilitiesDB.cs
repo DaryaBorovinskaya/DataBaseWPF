@@ -11,18 +11,24 @@ namespace DataBase1WPF.DataBase.Entities.UserAbilities
     {
         public uint Id { get; set; }
         public uint UserId { get; set; }
+
+        [DisplayName("Имя пользователя")]
+        public string UserLogin { get; set; }
         public uint MenuElemId { get; set; }
 
-        [DisplayName("R")]
+        [DisplayName("Элемент меню")]
+        public string MenuElemName { get; set; }
+
+        [DisplayName("Чтение")]
         public bool R {  get; set; }
 
-        [DisplayName("W")]
+        [DisplayName("Добавление")]
         public bool W { get; set; }
 
-        [DisplayName("E")]
+        [DisplayName("Изменение")]
         public bool E { get; set; }
 
-        [DisplayName("D")]
+        [DisplayName("Удаление")]
         public bool D { get; set; }
     }
 }

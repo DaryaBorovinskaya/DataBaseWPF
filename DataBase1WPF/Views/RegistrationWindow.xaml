@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:DataBase1WPF.ViewModels"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Окно регистрации" Height="300" Width="500">
+        Title="Окно регистрации" Height="350" Width="500" ResizeMode="CanMinimize">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -79,7 +79,7 @@ BorderThickness="{TemplateBinding BorderThickness}">
                      PasswordChanged="textBoxRepeatedPassword_PasswordChanged">
         </PasswordBox>
         <Button FontSize="16" Grid.Row="7" Height="30" Width="150"
-                Background="#f0f0f0" 
+                Background="White" 
                 Template="{StaticResource NoMouseOverButtonTemplate}"
                 Command="{Binding ClickRegistrate}">
             Регистрация

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBase1WPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,15 @@ namespace DataBase1WPF.Views
         public RegistrationWindow()
         {
             InitializeComponent();
+            if (DataContext is RegistrationVM registrationVM)
+            {
+                registrationVM.OnSuccessRegistration += SuccessRegistration;
+            }
+        }
+
+        private void SuccessRegistration()
+        {
+            this.Close();
         }
 
         private void textBoxPassword_PasswordChanged(object sender, RoutedEventArgs e)

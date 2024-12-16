@@ -20,6 +20,23 @@ namespace DataBase1WPF.DataBase.Entities.UserAbilities
         public bool E { get; set; }
 
         public bool D { get; set; }
+        public string UserLogin {  get; set; }
+        public string MenuElemName {  get; set; }
+
+        public UserAbilitiesDB(uint id, uint userId, string userLogin, uint menuElemId,
+            string menuElemName, bool r, bool w, bool e, bool d)
+        {
+            Id = id;
+            UserId = userId;
+            UserLogin = userLogin;
+            MenuElemId = menuElemId;
+            MenuElemName = menuElemName;
+            R = r;
+            W = w;
+            E = e;
+            D = d;
+        }
+
 
         public UserAbilitiesDB(uint id, uint userId, uint menuElemId, 
             bool r, bool w, bool e, bool d)

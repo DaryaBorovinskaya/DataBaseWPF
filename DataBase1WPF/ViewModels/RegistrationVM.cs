@@ -17,6 +17,7 @@ namespace DataBase1WPF.ViewModels
         private string _password;
         private string _repeatedPassword;
 
+        public Action OnSuccessRegistration;
         public string Name
         {
             get { return _name; }
@@ -67,6 +68,7 @@ namespace DataBase1WPF.ViewModels
                         RegistrationService registrationService = new(new Encryptor());
                         registrationService.Registration(Name, Password);
                         MessageBox.Show("Регистрация прошла успешно");
+                        OnSuccessRegistration?.Invoke();
                         Name = string.Empty;
                         Password = null;
                         RepeatedPassword = null;
