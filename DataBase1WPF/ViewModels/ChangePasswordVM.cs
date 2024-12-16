@@ -39,18 +39,7 @@ namespace DataBase1WPF.ViewModels
             set { Set<string>(ref _repeatedPassword, value); }
         }
 
-        public ICommand ClickCancellation
-        {
-            get
-            {
-                return new DelegateCommand((obj) =>
-                {
-                    OldPassword = null;
-                    NewPassword = null;
-                    RepeatedPassword = null;
-                });
-            }
-        }
+        
 
         public ICommand ClickChange
         {

@@ -81,6 +81,11 @@ namespace DataBase1WPF.Views
             }
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxOldPassword.Clear();
+            textBoxNewPassword.Clear();
+            textBoxConfirmPassword.Clear();
+        }
     }
 }

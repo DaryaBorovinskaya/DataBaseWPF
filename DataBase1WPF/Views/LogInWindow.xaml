@@ -127,7 +127,7 @@
                     </Button>
                     <Button Command="{Binding ClickCancellation}" HorizontalAlignment="Right" Width="80" Height="30"
                     Margin="0 40 100 0" Template="{StaticResource NoMouseOverButtonTemplate}"
-                    Background="#f0f0f0" FontSize="16">
+                    Background="#f0f0f0" FontSize="16" Click="Button_Click">
                         Отмена
                     </Button>
                 </DockPanel>

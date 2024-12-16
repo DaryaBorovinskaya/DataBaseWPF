@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DataBase1WPF.Views.Constructors;
 using System.Windows.Data;
-using DataBase1WPF.Models.Services.Tables;
+using DataBase1WPF.Models.Services.Tables; 
 using DataBase1WPF.DataBase.Entities.JuridicalPerson;
 
 namespace DataBase1WPF.Views
@@ -22,7 +22,7 @@ namespace DataBase1WPF.Views
 
             if (DataContext is MainVM mainVM)
             {
-                mainVM.OnRegistration += Registration;
+                mainVM.OnUserManagement += UserManagement;
                 mainVM.OnChangePassword += ChangePassword;
                 mainVM.OnSQLquery += SQLquery;
 
@@ -44,10 +44,10 @@ namespace DataBase1WPF.Views
             }
         }
 
-        private void Registration()
+        private void UserManagement(ITableService tableService, uint menuElemId)
         {
-            RegistrationWindow window = new();
-            window.Show();
+            UserManagementWindow window = new( tableService,  menuElemId);
+            window.ShowDialog();
             
         }
 

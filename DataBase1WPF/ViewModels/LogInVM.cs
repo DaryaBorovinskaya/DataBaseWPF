@@ -38,7 +38,6 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                     {
                         Name = string.Empty;
-                        Password = null;
                     });
             }
         }

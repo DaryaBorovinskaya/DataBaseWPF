@@ -19,6 +19,7 @@ using DataBase1WPF.Models.Services.Tables.Building;
 using DataBase1WPF.Models.Services.Tables.Employee;
 using DataBase1WPF.Models.Services.Tables.Individual;
 using DataBase1WPF.Models.Services.Tables.JuridicalPerson;
+using DataBase1WPF.DataBase.Entities.MenuElem;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -26,7 +27,7 @@ namespace DataBase1WPF.ViewModels
     {
         private IMenuElemsService _menuElemsService = new MenuElemsService();
 
-        public Action OnRegistration;
+        public Action<ITableService, uint> OnUserManagement;
         public Action OnChangePassword;
         public Action OnSQLquery;
 
@@ -47,13 +48,15 @@ namespace DataBase1WPF.ViewModels
 
         public Action OnAboutProgram;
 
-        public ICommand ClickRegistration
+        public ICommand ClickUserManagement
         {
             get
             {
                 return new DelegateCommand((obj) =>
                 {
-                    OnRegistration?.Invoke();
+                    OnUserManagement?.Invoke(
+                        new DistrictsService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickDistricts))
+                        );
                 });
             }
         }

@@ -72,5 +72,10 @@ namespace DataBase1WPF.Views
             window.Show();
             this.Close();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxPassword.Clear();
+        }
     }
 }
