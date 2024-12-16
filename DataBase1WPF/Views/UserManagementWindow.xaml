@@ -85,7 +85,7 @@ BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
                       HorizontalScrollBarVisibility="Auto"
                           CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                       SelectionMode="Single" Height="300" SelectedIndex="{Binding SelectedIndex}"
-                      ItemsSource="{Binding DataTableHandbooks}" 
+                      ItemsSource="{Binding DataTableUsers}" 
                       MouseDown="DataGrid_MouseDown"
                           
                           IsReadOnly="True"
