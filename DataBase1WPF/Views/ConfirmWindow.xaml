@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataBase1WPF.Views"
         mc:Ignorable="d"
-        Title="Подтверждение" Height="200" Width="auto" WindowStartupLocation="CenterScreen">
+        Title="Подтверждение" Height="200" SizeToContent="Width"
+        Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -40,7 +41,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center" 
+        <TextBlock Padding="20" TextWrapping="Wrap" Grid.ColumnSpan="2" FontSize="16" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    Text="{Binding ConfirmLine}"></TextBlock>
         <Button Grid.Row="1" Grid.Column="0" Width="100" Height="30"
