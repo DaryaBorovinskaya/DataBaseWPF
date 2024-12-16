@@ -362,9 +362,9 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return _orderService.GetPremises();
         }
 
-        public List<string> GetOrderPremisesForEdit()
+        public List<string> GetOrderPremisesForEdit(DataRow row)
         {
-            return _orderService.GetPremisesForEdit();
+            return _orderService.GetPremisesForEdit(row);
         }
 
         public List<string> GetOrdersRentalPurposes()

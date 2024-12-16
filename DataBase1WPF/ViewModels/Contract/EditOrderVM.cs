@@ -116,7 +116,7 @@ namespace DataBase1WPF.ViewModels.Contract
             if (_tableService is ContractService service)
             {
                 _windowTitle = $"Изменение данных таблицы: {service.GetOrdersTableName()}";
-                _premisesComboBox = service.GetOrderPremisesForEdit();
+                _premisesComboBox = service.GetOrderPremisesForEdit(row);
                 _rentalPurposesComboBox = service.GetOrdersRentalPurposes();
                 _selectedIndexPremises = service.GetOrdersPremisesSelectedIndex(_row);
                 _selectedIndexRentalPurposes = service.GetOrdersRentalPurposesSelectedIndex(_row);
@@ -186,7 +186,7 @@ namespace DataBase1WPF.ViewModels.Contract
             {
                 service.UpdateOrder(_row, SelectedIndexPremises, SelectedIndexRentalPurposes, BeginOfRentDate,
                     EndOfRentDate, float.Parse(RentalPaymentText));
-                PremisesComboBox = service.GetOrderPremises();
+                //PremisesComboBox = service.GetOrderPremises();
             }
         }
     }

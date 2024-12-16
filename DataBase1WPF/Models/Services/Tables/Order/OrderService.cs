@@ -19,6 +19,7 @@ namespace DataBase1WPF.Models.Services.Tables.Order
     {
         private Dictionary<DataRow, IOrderDB> _dataDictionary;
         private uint _contractId;
+        private DataRow _rowForEdit;
         public DataTable? GetOrdersByContractId(uint id)
         {
             _contractId = id;
@@ -130,8 +131,46 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         }
 
 
-        public List<string> GetPremisesForEdit()
+        public List<IPremiseDB> GetPremisesDBForEdit(DataRow row)
         {
+            List<IPremiseDB> premises = new();
+
+            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
+
+            List<IOrderDB> ordersDB = DataManager.GetInstance().OrderDB_Repository.Read().ToList(); ;
+
+            foreach (IBuildingDB buildingDB in buildingsDB)
+            {
+                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
+                {
+                    List<IPremiseDB> premisesDB = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
+
+                    foreach (IPremiseDB premiseDB in premisesDB)
+                    {
+                        IOrderDB? foundOrder = ordersDB.Find((item) => item.PremiseID == premiseDB.Id);
+                        if (foundOrder == null)
+                        {
+                            if (premiseDB.BuildingID == buildingDB.Id)
+                                premises.Add(premiseDB);
+
+                        }
+                        else if (_dataDictionary[row].PremiseID == premiseDB.Id
+                            && foundOrder.Id == _dataDictionary[row].Id)
+                            premises.Add(premiseDB);
+
+
+                    }
+                }
+
+            }
+
+            return premises;
+        }
+
+        public List<string> GetPremisesForEdit(DataRow row)
+        {
+            _rowForEdit = row;
+
             List<string> premises = new();
 
             List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
@@ -146,7 +185,8 @@ namespace DataBase1WPF.Models.Services.Tables.Order
 
                     foreach (IPremiseDB premiseDB in premisesDB)
                     {
-                        if (ordersDB.Find((item) => item.PremiseID == premiseDB.Id) == null)
+                        IOrderDB? foundOrder = ordersDB.Find((item) => item.PremiseID == premiseDB.Id);
+                        if (foundOrder == null)
                         {
                             if (premiseDB.BuildingID == buildingDB.Id)
                                 premises.Add(buildingDB.DistrictTitle + " , "
@@ -157,7 +197,14 @@ namespace DataBase1WPF.Models.Services.Tables.Order
                                 + premiseDB.Area.ToString() + " кв. м.");
 
                         }
-                        else if ( _dataDictionary[row].PremiseID == premiseDB.Id)
+                        else if ( _dataDictionary[row].PremiseID == premiseDB.Id
+                            && foundOrder.Id == _dataDictionary[row].Id)
+                            premises.Add(buildingDB.DistrictTitle + " , "
+                                + buildingDB.StreetTitle + " , "
+                                + buildingDB.HouseNumber + " , этаж "
+                                + premiseDB.FloorNumber + " , номер "
+                                + premiseDB.PremiseNumber + " , "
+                                + premiseDB.Area.ToString() + " кв. м.");
 
 
                     }
@@ -225,16 +272,7 @@ namespace DataBase1WPF.Models.Services.Tables.Order
 
         public int GetPremisesSelectedIndex(DataRow row)
         {
-            List<IPremiseDB> premises = new();
-            List<IBuildingDB> buildingsDB = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
-
-            foreach (IBuildingDB buildingDB in buildingsDB)
-            {
-                if (DataManager.GetInstance().PremiseDB_Repository is PremiseDB_Repository repository)
-                    premises = repository.GetPremisesByBuildingId(buildingDB.Id).ToList();
-            }
-
-            return premises.FindIndex((elem) => elem.Id == _dataDictionary[row].PremiseID);
+            return GetPremisesDBForEdit(_rowForEdit).FindIndex((elem) => elem.Id == _dataDictionary[row].PremiseID);
         }
 
 
@@ -260,9 +298,9 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         {
             DataManager.GetInstance().OrderDB_Repository.Update(new OrderDB(
                 _dataDictionary[row].Id,
-                contractId,
-                GetPremisesDB()[premiseSelectedIndex].Id,
+                GetPremisesDBForEdit(_rowForEdit)[premiseSelectedIndex].Id,
                 DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList()[rentalPurposeSelectedIndex].Id,
+                contractId,
                 beginOfRent.ToString("yyyy-MM-dd"),
                 endOfRent.ToString("yyyy-MM-dd"),
                 rentalPayment
