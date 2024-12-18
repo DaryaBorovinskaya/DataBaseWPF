@@ -26,6 +26,7 @@ namespace DataBase1WPF.Views
                 mainVM.OnUserManagement += UserManagement;
                 mainVM.OnChangePassword += ChangePassword;
                 mainVM.OnSQLquery += SQLquery;
+                mainVM.OnExport += Export;
 
                 mainVM.OnDistricts += Handbooks;
                 mainVM.OnStreets += Handbooks;
@@ -56,6 +57,16 @@ namespace DataBase1WPF.Views
             window.ShowDialog();
             
         }
+
+
+        private void Export(ITableService tableService, uint menuElemId)
+        {
+            ExportWindow window = new(tableService, menuElemId);
+            window.ShowDialog();
+
+        }
+
+
 
         private void ChangePassword()
         {

@@ -40,8 +40,65 @@ namespace DataBase1WPF.DataBase.Repositories
         }
         public IList<IContractDB> Read()
         {
-            throw new NotImplementedException();
-            
+            _query = $"SELECT  rentapp.contracts.id,   " +
+                $" COALESCE(rentapp.contracts.individual_id, 0) AS individual_id, " +
+                $" MAX(rentapp.individuals.surname) AS individual_surname, " +
+                $" MAX(rentapp.individuals.name) AS individual_name, " +
+                $" MAX(rentapp.individuals.patronymic) AS individual_patronymic, " +
+                $" COALESCE(rentapp.contracts.juridical_person_id, 0) " +
+                $" AS juridical_person_id,  " +
+                $" MAX(rentapp.juridical_persons.name_of_organization) " +
+                $" AS juridical_person_name,   " +
+                $" COALESCE(rentapp.contracts.employee_id, 0) AS employee_id, " +
+                $" MAX(rentapp.employees.surname) AS employee_surname,  " +
+                $" MAX(rentapp.employees.name) AS employee_name,   " +
+                $" MAX(rentapp.employees.patronymic) AS employee_patronymic,   " +
+                $" COALESCE(rentapp.contracts.payment_frequency_id, 0) AS payment_frequency_id,   " +
+                $" MAX(rentapp.payment_frequencies.title) AS payment_frequency_title,  " +
+                $" rentapp.contracts.registration_number,  " +
+                $" rentapp.contracts.begin_of_action,  " +
+                $" rentapp.contracts.end_of_action,    rentapp.contracts.additional_conditions,  " +
+                $"  rentapp.contracts.fine FROM   " +
+                $"  rentapp.contracts LEFT OUTER JOIN   " +
+                $"  rentapp.individuals ON rentapp.contracts.individual_id = rentapp.individuals.id LEFT OUTER JOIN   " +
+                $"  rentapp.juridical_persons ON rentapp.contracts.juridical_person_id = rentapp.juridical_persons.id " +
+                $" LEFT OUTER JOIN   " +
+                $"  rentapp.employees ON rentapp.contracts.employee_id = rentapp.employees.id  LEFT OUTER JOIN   " +
+                $"  rentapp.payment_frequencies ON rentapp.contracts.payment_frequency_id = rentapp.payment_frequencies.id " +
+                $" GROUP BY   " +
+                $"  rentapp.contracts.id,  " +
+                $"  rentapp.contracts.registration_number, " +
+                $"   rentapp.contracts.begin_of_action,   rentapp.contracts.end_of_action,  " +
+                $"  rentapp.contracts.additional_conditions,\r\n   " +
+                $" rentapp.contracts.fine\r\nORDER BY \r\n    rentapp.contracts.id;\r\n";
+
+            IList<IContractDB> result = new List<IContractDB>();
+            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result.Add(new ContractDB(
+                    uint.Parse(row[0].ToString()),
+                    uint.Parse(row[1].ToString()),
+                    row[2].ToString(),
+                    row[3].ToString(),
+                    row[4].ToString(),
+                    uint.Parse(row[5].ToString()),
+                    row[6].ToString(),
+                    uint.Parse(row[7].ToString()),
+                    row[8].ToString(),
+                    row[9].ToString(),
+                    row[10].ToString(),
+                    uint.Parse(row[11].ToString()),
+                    row[12].ToString(),
+                    row[13].ToString(),
+                    row[14].ToString().Substring(0, 10),
+                    row[15].ToString().Substring(0, 10),
+                    row[16].ToString(),
+                    float.Parse(row[17].ToString())
+                ));
+            }
+            return result;
+
         }
 
         public void Update(IContractDB entity)

@@ -45,19 +45,21 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             {
                 List<IContractDB> values = new();
 
-                 if  ( _individualId != null )
-                      values = repository.GetContractsByIndividualId((uint)_individualId).ToList();
-                 else if ( _juridicalPersonId != null )
+                if (_individualId != null)
+                    values = repository.GetContractsByIndividualId((uint)_individualId).ToList();
+                else if (_juridicalPersonId != null)
                     values = repository.GetContractsByJuridicalPersonId((uint)_juridicalPersonId).ToList();
-
+                else
+                    values = repository.Read().ToList();
 
                 table = DataTableConverter.ToDataTable(values);
 
-                for (int i = 0; i < 8; i++)
-                {
-                    table.Columns.Remove(table.Columns[0]);
-                }
+                
+                table.Columns.Remove(table.Columns[0]);
+                table.Columns.Remove(table.Columns[0]);
                 table.Columns.Remove(table.Columns[3]);
+                table.Columns.Remove(table.Columns[4]);
+                table.Columns.Remove(table.Columns[7]);
 
 
                 _dataDictionary = new();
@@ -434,5 +436,16 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         {
             throw new NotImplementedException();
         }
+
+        public void ExportWord(DataTable table)
+        {
+            ExportToWord.ExportTable(table);
+        }
+
+        public void ExportExcel(DataTable table)
+        {
+            ExportToExcel.ExportTable(table);
+        }
+
     }
 }

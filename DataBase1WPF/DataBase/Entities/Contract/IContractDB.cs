@@ -12,17 +12,17 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         public uint Id { get; set; }
         public uint? IndividualId { get; set; }
 
-        [DisplayName("Фамилия физ. лица")]
+        [DisplayName("Фамилия физического лица")]
         public string IndividualSurname { get; set; }
 
-        [DisplayName("Имя физ. лица")]
+        [DisplayName("Имя физического лица")]
         public string IndividualName { get; set; }
 
-        [DisplayName("Отчество физ. лица")]
+        [DisplayName("Отчество физического лица")]
         public string IndividualPatronymic { get; set; }
         public uint? JuridicalPersonId { get; set; }
 
-        [DisplayName("Имя юр. лица")]
+        [DisplayName("Имя юридического лица")]
         public string JuridicalPersonName { get; set; }
         public uint EmployeeId { get; set; }
 

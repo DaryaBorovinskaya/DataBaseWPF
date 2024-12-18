@@ -22,6 +22,7 @@ using DataBase1WPF.Models.Services.Tables.JuridicalPerson;
 using DataBase1WPF.DataBase.Entities.MenuElem;
 using DataBase1WPF.Models.Services.UserAbilities;
 using DataBase1WPF.Models.Services.Tables.UserManagement;
+using DataBase1WPF.Models.Services.Tables.Contract;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -47,6 +48,8 @@ namespace DataBase1WPF.ViewModels
         public Action<ITableService, uint> OnJuridicalPersons;
         public Action<ITableService, uint> OnBuilding;
         public Action<ITableService, uint> OnEmployees;
+
+        public Action<ITableService, uint> OnExport;
 
 
         public Action OnAboutProgram;
@@ -99,6 +102,18 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        public ICommand ClickExport
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnExport?.Invoke(
+                        new ContractService(), _menuElemsService.GetCurrentMenuElemId(nameof(ClickExport))
+                        );
+                });
+            }
+        }
 
         public ICommand ClickDistricts
         {

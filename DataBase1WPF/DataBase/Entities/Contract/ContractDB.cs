@@ -10,7 +10,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
     public class ContractDB : IContractDB
     {
         public uint Id { get; set; }
-        public uint? IndividualId { get; set; }
+        public uint? IndividualId { get; set; } 
 
         public string IndividualSurname { get; set; }
 
