@@ -46,5 +46,53 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 word.Visible = true;
             }
         }
+
+
+        public static void ExportContract(System.Data.DataTable dataTable)
+        {
+            string landlordName = "Иванов Иван Иванович";
+            string tenantName = "Петров Петр Петрович";
+            string propertyAddress = "г. Москва, ул. Ленина, д. 1";
+            string leaseTerm = "12 месяцев";
+            string rentAmount = "30000";
+
+            // Создание экземпляра приложения Word
+            Application wordApp = new Application();
+
+            Document doc = wordApp.Documents.Open(@"C:\Users\dashh\source\repos\DataBaseWPF\DataBase1WPF\Resources\Договор.docx");
+            //Document doc = wordApp.Documents.Open(@"\Resources\Договор.docx");
+            wordApp.Visible = true;
+
+
+
+            // Замена меток на данные
+            FindAndReplace(wordApp, "{TenantName}", dataTable.Rows[0][0].ToString() + " "
+                + dataTable.Rows[0][1].ToString() + " " + dataTable.Rows[0][2].ToString());
+            FindAndReplace(wordApp, "{LandlordName}", dataTable.Rows[0][8].ToString() + " "
+                + dataTable.Rows[0][9].ToString() + " " + dataTable.Rows[0][10].ToString());
+            FindAndReplace(wordApp, "{RegistrationNumber}", dataTable.Rows[0][4].ToString());
+            /*FindAndReplace(wordApp, "{LandlordName}", dataTable.Rows[0][0].ToString());
+            FindAndReplace(wordApp, "{TenantName}", dataTable.Rows[0][1].ToString());
+            FindAndReplace(wordApp, "{PropertyAddress}", dataTable.Rows[0][2].ToString());
+            FindAndReplace(wordApp, "{LeaseTerm}", dataTable.Rows[0][3].ToString());
+            FindAndReplace(wordApp, "{RentAmount}", dataTable.Rows[0][4].ToString());*/
+
+            // Сохранение документа
+            //object savePath = @"C:\Path\To\Your\FilledAgreement.docx";
+            //doc.SaveAs2(ref savePath);
+
+            // Закрытие документа и приложения Word
+            //doc.Close();
+            //wordApp.Quit();
+        }
+
+        private static void FindAndReplace(Application wordApp, object findText, object replaceWithText)
+        {
+            Microsoft.Office.Interop.Word.Range range = wordApp.ActiveDocument.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: ref findText,
+                               ReplaceWith: ref replaceWithText,
+                               Replace: WdReplace.wdReplaceAll);
+        }
     }
 }

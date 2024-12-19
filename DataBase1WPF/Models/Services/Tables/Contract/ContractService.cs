@@ -439,7 +439,8 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
 
         public void ExportWord(DataTable table)
         {
-            ExportToWord.ExportTable(table);
+            //ExportToWord.ExportTable(table);
+            ExportToWord.ExportContract(table);
         }
 
         public void ExportExcel(DataTable table)
