@@ -6,6 +6,7 @@ using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,20 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         {
             Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
 
-            Document doc = wordApp.Documents.Open(@"C:\Users\dashh\source\repos\DataBaseWPF\RentAppResources\Resources\Договор.docx");
-            //Document doc = wordApp.Documents.Open(@"/Resources/Договор.docx");
-            wordApp.Visible = true;
+            string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Договор.docx");//@"C:\Users\dashh\source\repos\DataBaseWPF\RentAppResources\Resources\Договор.docx";
+
+            Document doc = wordApp.Documents.Open(fullPath);
+
+            doc.Content.Select(); 
+            wordApp.Selection.Copy(); 
+            doc.Close();
+
+            doc = wordApp.Documents.Add(Type.Missing);
+            Microsoft.Office.Interop.Word.Range range = doc.Content;
+            range.Select(); 
+            wordApp.Selection.Paste();
+
+            
 
             if (contract.IndividualId != 0)
                 FindAndReplace(wordApp, "{TenantName}", contract.IndividualSurname + " "
@@ -47,6 +59,8 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 FindAndReplace(wordApp, "{Orders}", " ");
             else
                 FindAndReplaceTable(doc, "{Orders}", orders);
+
+            wordApp.Visible = true;
         }
 
         private static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object findText, object replaceWithText)
