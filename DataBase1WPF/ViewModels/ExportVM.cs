@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows;
 using DataBase1WPF.Views;
 using DataBase1WPF.Models.Services.Tables.Contract;
+using DataBase1WPF.Models.Services.Tables.Building;
 
 namespace DataBase1WPF.ViewModels
 {
@@ -102,8 +103,8 @@ namespace DataBase1WPF.ViewModels
             _dataTableExport = _tableService.GetValuesTable();
             _dataTableTitle = _tableService.GetTableName();
             
-            _exportWordVisibility =  Visibility.Visible ;
-            _exportExcelVisibility = Visibility.Visible;
+            _exportWordVisibility =  Visibility.Collapsed ;
+            _exportExcelVisibility = Visibility.Collapsed;
             _selectedIndex = -1;
 
             _windowTitle = $"Экспорт таблицы {_dataTableTitle}";
@@ -117,7 +118,7 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     if (_tableService is ContractService service)
-                        service.ExportWord(DataTableExport);
+                        service.ExportWord(DataTableExport.Rows[SelectedIndex]);
                 });
             }
         }
@@ -132,6 +133,13 @@ namespace DataBase1WPF.ViewModels
                         service.ExportExcel(DataTableExport);
                 });
             }
+        }
+
+        public void DataTableMouseDown()
+        {
+            ExportWordVisibility =  Visibility.Visible;
+            ExportExcelVisibility = Visibility.Visible;
+
         }
 
 

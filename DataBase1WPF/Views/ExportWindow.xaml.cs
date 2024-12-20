@@ -1,5 +1,6 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels;
+using DataBase1WPF.ViewModels.Building;
 using DataBase1WPF.ViewModels.Handbooks;
 using Mysqlx.Crud;
 using System;
@@ -28,6 +29,12 @@ namespace DataBase1WPF.Views
             InitializeComponent();
             DataContext = new ExportVM(tableService, menuElemId);
             
+        }
+
+        private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is ExportVM exportVM)
+                exportVM.DataTableMouseDown();
         }
     }
 }

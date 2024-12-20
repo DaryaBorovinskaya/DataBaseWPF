@@ -92,6 +92,7 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        
         public void Update(IJuridicalPersonDB entity)
         {
             _query = $"update juridical_persons set " +
@@ -110,6 +111,22 @@ namespace DataBase1WPF.DataBase.Repositories
         {
             _query = $"delete from juridical_persons where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+        }
+
+        public IJuridicalPersonDB GetDirectorFullNameByContractId(uint contractId)
+        {
+            _query = $"SELECT director_surname, director_name, director_patronymic FROM rentapp.contracts " +
+                $"join rentapp.juridical_persons on " +
+                $" rentapp.contracts.juridical_person_id = rentapp.juridical_persons.id " +
+                $"where rentapp.contracts.id = {contractId};";
+            IJuridicalPersonDB result = null;
+            DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
+            
+            result = new JuridicalPersonDB(
+                 dataTable.Rows[0][0].ToString(), dataTable.Rows[0][1].ToString(), dataTable.Rows[0][2].ToString()
+            );
+            
+            return result;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return table;
         }
 
-        private List<IOrderDB> GetOrdersDBbyContractId(uint id)
+        public List<IOrderDB> GetOrdersDBbyContractId(uint id)
         {
             if (DataManager.GetInstance().OrderDB_Repository is OrderDB_Repository repository)
             {

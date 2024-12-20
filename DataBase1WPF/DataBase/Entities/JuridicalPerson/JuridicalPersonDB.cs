@@ -105,5 +105,12 @@ namespace DataBase1WPF.DataBase.Entities.JuridicalPerson
             PaymentAccount = paymentAccount;
             IndividualTaxpayerNumber = individualTaxpayerNumber;
         }
+
+        public JuridicalPersonDB(string directorSurname, string directorName, string directorPatronymic)
+        {
+            DirectorSurname = directorSurname;
+            DirectorName = directorName;
+            DirectorPatronymic = directorPatronymic;
+        }
     }
 }

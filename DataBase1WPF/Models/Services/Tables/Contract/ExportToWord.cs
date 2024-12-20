@@ -1,4 +1,8 @@
-﻿using Microsoft.Office.Interop.Word;
+﻿using DataBase1WPF.DataBase.Entities.Contract;
+using DataBase1WPF.DataBase.Entities.JuridicalPerson;
+using DataBase1WPF.DataBase.Entities.Order;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Word;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -47,46 +51,43 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             }
         }
 
+        
 
-        public static void ExportContract(System.Data.DataTable dataTable)
+        public static void ExportContract(IContractDB contract, System.Data.DataTable orders, 
+            IJuridicalPersonDB juridicalPersonDB = null)
         {
-            string landlordName = "Иванов Иван Иванович";
-            string tenantName = "Петров Петр Петрович";
-            string propertyAddress = "г. Москва, ул. Ленина, д. 1";
-            string leaseTerm = "12 месяцев";
-            string rentAmount = "30000";
-
-            // Создание экземпляра приложения Word
-            Application wordApp = new Application();
+            Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
 
             Document doc = wordApp.Documents.Open(@"C:\Users\dashh\source\repos\DataBaseWPF\DataBase1WPF\Resources\Договор.docx");
-            //Document doc = wordApp.Documents.Open(@"\Resources\Договор.docx");
+            //Document doc = wordApp.Documents.Open(@"/Resources/Договор.docx");
             wordApp.Visible = true;
 
+            if (contract.IndividualId != 0)
+                FindAndReplace(wordApp, "{TenantName}", contract.IndividualSurname + " "
+                    + contract.IndividualName + " " + contract.IndividualPatronymic);
+            else if (contract.JuridicalPersonId != 0)
+                FindAndReplace(wordApp, "{TenantName}", juridicalPersonDB.DirectorSurname + " "
+                    + juridicalPersonDB.DirectorName + " " + juridicalPersonDB.DirectorPatronymic);
 
+            FindAndReplace(wordApp, "{LandlordName}", contract.EmployeeSurname + " "
+                    + contract.EmployeeName + " " + contract.EmployeePatronymic);
 
-            // Замена меток на данные
-            FindAndReplace(wordApp, "{TenantName}", dataTable.Rows[0][0].ToString() + " "
-                + dataTable.Rows[0][1].ToString() + " " + dataTable.Rows[0][2].ToString());
-            FindAndReplace(wordApp, "{LandlordName}", dataTable.Rows[0][8].ToString() + " "
-                + dataTable.Rows[0][9].ToString() + " " + dataTable.Rows[0][10].ToString());
-            FindAndReplace(wordApp, "{RegistrationNumber}", dataTable.Rows[0][4].ToString());
-            /*FindAndReplace(wordApp, "{LandlordName}", dataTable.Rows[0][0].ToString());
-            FindAndReplace(wordApp, "{TenantName}", dataTable.Rows[0][1].ToString());
-            FindAndReplace(wordApp, "{PropertyAddress}", dataTable.Rows[0][2].ToString());
-            FindAndReplace(wordApp, "{LeaseTerm}", dataTable.Rows[0][3].ToString());
-            FindAndReplace(wordApp, "{RentAmount}", dataTable.Rows[0][4].ToString());*/
+            FindAndReplace(wordApp, "{RegistrationNumber}", contract.RegistrationNumber);
+            FindAndReplace(wordApp, "{Fine}", contract.Fine);
 
-            // Сохранение документа
-            //object savePath = @"C:\Path\To\Your\FilledAgreement.docx";
-            //doc.SaveAs2(ref savePath);
+            if (contract.AdditionalConditions != null && contract.AdditionalConditions != string.Empty)
+                FindAndReplace(wordApp, "{AdditionalConditions}", contract.AdditionalConditions);
+            else
+                FindAndReplace(wordApp, "{AdditionalConditions}", "отсутствуют");
 
-            // Закрытие документа и приложения Word
-            //doc.Close();
-            //wordApp.Quit();
+            FindAndReplace(wordApp, "{PaymentFrequencyTitle}", contract.PaymentFrequencyTitle);
+            if (orders == null)
+                FindAndReplace(wordApp, "{Orders}", " ");
+            else
+                FindAndReplaceTable(wordApp, doc, "{Orders}", orders);
         }
 
-        private static void FindAndReplace(Application wordApp, object findText, object replaceWithText)
+        private static void FindAndReplace(Microsoft.Office.Interop.Word.Application wordApp, object findText, object replaceWithText)
         {
             Microsoft.Office.Interop.Word.Range range = wordApp.ActiveDocument.Content;
             range.Find.ClearFormatting();
@@ -94,5 +95,55 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                                ReplaceWith: ref replaceWithText,
                                Replace: WdReplace.wdReplaceAll);
         }
+
+        static void FindAndReplaceTable(Microsoft.Office.Interop.Word.Application wordApp,
+    Document doc, string findText, System.Data.DataTable dataTable)
+        {
+            // Найти текст и заменить его на таблицу
+            Microsoft.Office.Interop.Word.Range range = doc.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(findText);
+
+            // Проверка, найден ли текст
+            if (range.Find.Found)
+            {
+                // Создать таблицу в месте найденного текста
+                Microsoft.Office.Interop.Word.Table table = doc.Tables.Add(range, dataTable.Rows.Count + 1, dataTable.Columns.Count, Type.Missing, Type.Missing);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    float fontSize = 14;
+                    if (dataTable.Columns.Count > 8)
+                    {
+                        fontSize = 10;
+                    }
+
+                    // Заполнение заголовков таблицы
+                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    {
+                        table.Cell(1, i + 1).Range.Text = dataTable.Columns[i].ColumnName;
+                        table.Cell(1, i + 1).Range.Font.Size = fontSize;
+                    }
+
+                    // Заполнение данных таблицы
+                    for (int i = 0; i < dataTable.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataTable.Columns.Count; j++)
+                        {
+                            table.Cell(i + 2, j + 1).Range.Text = dataTable.Rows[i][j].ToString();
+                            table.Cell(i + 2, j + 1).Range.Font.Size = fontSize;
+                        }
+                    }
+
+                    // Установка стилей границ таблицы
+                    table.Borders.OutsideLineStyle = Microsoft.Office.Interop.Word.WdLineStyle.wdLineStyleSingle;
+                    table.Borders.InsideLineStyle = Microsoft.Office.Interop.Word.WdLineStyle.wdLineStyleSingle;
+
+                    // Удаляем оригинальный текст
+                    range.Text = "";
+                }
+            }
+        }
+
     }
 }

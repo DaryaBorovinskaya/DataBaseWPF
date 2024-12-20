@@ -2,6 +2,8 @@
 using DataBase1WPF.DataBase.Entities.Employee;
 using DataBase1WPF.DataBase.Entities.Fine;
 using DataBase1WPF.DataBase.Entities.Handbook;
+using DataBase1WPF.DataBase.Entities.JuridicalPerson;
+using DataBase1WPF.DataBase.Entities.Order;
 using DataBase1WPF.DataBase.Entities.Position;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.DataBase.Entities.WorkRecordCard;
@@ -337,6 +339,12 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return _orderService.GetOrdersByContractId(_dataDictionary[row].Id);
         }
 
+        public List<IOrderDB> GetOrdersDBbyContract(DataRow row)
+        {
+            _selectedContract = row;
+            return _orderService.GetOrdersDBbyContractId(_dataDictionary[row].Id);
+        }
+
         public DataTable? GetPaymentsByContract(DataRow row)
         {
             _selectedContract = row;
@@ -437,10 +445,17 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             throw new NotImplementedException();
         }
 
-        public void ExportWord(DataTable table)
+        public void ExportWord(DataRow row)
         {
-            //ExportToWord.ExportTable(table);
-            ExportToWord.ExportContract(table);
+            IJuridicalPersonDB juridicalPersonDB = null;
+            if (_dataDictionary[row].JuridicalPersonId != 0)
+            {
+                if (DataManager.GetInstance().JuridicalPersonDB_Repository is JuridicalPersonDB_Repository repository)
+                {
+                    juridicalPersonDB = repository.GetDirectorFullNameByContractId(_dataDictionary[row].Id);
+                }
+            }
+            ExportToWord.ExportContract(_dataDictionary[row], GetOrdersByContract(row), juridicalPersonDB);
         }
 
         public void ExportExcel(DataTable table)
