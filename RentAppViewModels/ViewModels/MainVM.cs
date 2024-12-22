@@ -53,6 +53,7 @@ namespace DataBase1WPF.ViewModels
 
 
         public Action OnAboutProgram;
+        public Action OnContent;
 
 
         public ICommand ClickRegistration
@@ -238,6 +239,18 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+        public ICommand ClickContent
+        {
+            get
+            {
+                return new DelegateCommand((obj) =>
+                {
+                    OnContent?.Invoke();
+                });
+            }
+        }
+
 
         public ICommand ClickEmployees
         {

@@ -1,6 +1,7 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.ViewModels;
 using DataBase1WPF.Views.Constructors;
+using RentAppViews.Views;
 using System.Windows;
 
 namespace DataBase1WPF.Views
@@ -39,6 +40,7 @@ namespace DataBase1WPF.Views
                 mainVM.OnEmployees += Employee;
 
                 mainVM.OnAboutProgram += AboutProgram;
+                mainVM.OnContent += Content;
             }
         }
 
@@ -54,6 +56,12 @@ namespace DataBase1WPF.Views
             
         }
 
+        private void Content()
+        {
+            ContentWindow window = new();
+            window.ShowDialog();
+
+        }
 
         private void Export(ITableService tableService, uint menuElemId)
         {
@@ -67,7 +75,7 @@ namespace DataBase1WPF.Views
         private void ChangePassword()
         {
             ChangePasswordWindow window = new();
-            window.Show();
+            window.ShowDialog();
         }
 
         private void SQLquery()
