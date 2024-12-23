@@ -61,7 +61,7 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
         public DataTable SearchDataInTable(string searchLine)
         {
             List<IEmployeeDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine)
-            || item.StreetTitle.Contains(searchLine) || item.HouseNumber.Contains(searchLine)
+            || item.StreetTitle.Contains(searchLine) || item.HouseNumber.Contains(searchLine) || item.FlatNumber.Contains(searchLine)
             || item.Surname.Contains(searchLine) || item.Name.Contains(searchLine)
             || item.Patronymic.Contains(searchLine) || item.DateOfBirth.ToString().Contains(searchLine)).ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
@@ -129,7 +129,7 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
 
         public void Add(int districtSelectedIndex, int streetSelectedIndex,
             string surname, string name, string? patronymic, DateTime dateOfBirth,
-            string houseNumber)
+            string houseNumber, string flatNumber)
         {
             DataManager.GetInstance().EmployeeDB_Repository.Create(new EmployeeDB(
                 DataManager.GetInstance().DistrictDB_Repository.Read().ToList()[districtSelectedIndex].Id,
@@ -138,7 +138,8 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
                 name,
                 patronymic,
                 dateOfBirth.ToString("yyyy-MM-dd"),
-                houseNumber
+                houseNumber,
+                flatNumber
                 ));
         }
 
@@ -166,7 +167,7 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
 
         public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
             string surname, string name, string? patronymic, DateTime dateOfBirth,
-            string houseNumber)
+            string houseNumber, string flatNumber)
         {
             DataManager.GetInstance().EmployeeDB_Repository.Update(new EmployeeDB(
                 _dataDictionary[row].Id,
@@ -176,7 +177,8 @@ namespace DataBase1WPF.Models.Services.Tables.Employee
                 name,
                 patronymic,
                 dateOfBirth.ToString("yyyy-MM-dd"),
-                houseNumber
+                houseNumber,
+                flatNumber
                 ));
         }
 

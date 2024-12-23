@@ -17,7 +17,6 @@ namespace DataBase1WPF.DataBase.Entities.Employee
         public string? Patronymic { get; set; }
 
         public string DateOfBirth { get; set; }
-        //public DateTime DateOfBirth { get; set; }
         public uint DistrictId { get; set; }
         public string DistrictTitle { get; set; }
         public uint StreetId { get; set; }
@@ -26,10 +25,12 @@ namespace DataBase1WPF.DataBase.Entities.Employee
         
 
         public string HouseNumber { get; set; }
+        public string FlatNumber { get; set; }
 
         public EmployeeDB(uint id, uint districtId, string districtTitle, 
             uint streetId, string streetTitle, string surname, string name, 
-            string? patronymic, string dateOfBirth /*DateTime dateOfBirth*/, string houseNumber)
+            string? patronymic, string dateOfBirth , string houseNumber,
+            string flatNumber)
         {
             Id = id;
             DistrictId = districtId;
@@ -41,11 +42,13 @@ namespace DataBase1WPF.DataBase.Entities.Employee
             Patronymic = patronymic;
             DateOfBirth = dateOfBirth;
             HouseNumber = houseNumber;
+            FlatNumber = flatNumber;
         }
 
         public EmployeeDB(uint id, uint districtId, uint streetId, 
             string surname, string name,
-            string? patronymic, string dateOfBirth /*DateTime dateOfBirth*/, string houseNumber)
+            string? patronymic, string dateOfBirth , 
+            string houseNumber, string flatNumber)
         {
             Id= id;
             DistrictId = districtId;
@@ -55,11 +58,13 @@ namespace DataBase1WPF.DataBase.Entities.Employee
             Patronymic = patronymic;
             DateOfBirth = dateOfBirth;
             HouseNumber = houseNumber;
+            FlatNumber = flatNumber;
         }
 
 
         public EmployeeDB(uint districtId, uint streetId, string surname, string name, 
-            string? patronymic, string dateOfBirth /*DateTime dateOfBirth*/, string houseNumber)
+            string? patronymic, string dateOfBirth /*DateTime dateOfBirth*/, 
+            string houseNumber, string flatNumber)
         {
             DistrictId = districtId;
             StreetId = streetId;
@@ -68,6 +73,7 @@ namespace DataBase1WPF.DataBase.Entities.Employee
             Patronymic = patronymic;
             DateOfBirth = dateOfBirth;
             HouseNumber = houseNumber;
+            FlatNumber = flatNumber;
         }
     }
 }

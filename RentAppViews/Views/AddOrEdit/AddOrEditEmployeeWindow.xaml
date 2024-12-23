@@ -64,13 +64,26 @@ Width="180" Height="30" MaxLength="50" Text="{Binding PatronymicText}" Margin="0
   ItemsSource="{Binding StreetsComboBox}" SelectedIndex="{Binding SelectedIndexStreets}"
               Margin="0 0 0 5" IsReadOnly="True" FontSize="16"></ComboBox>
 
+            <DockPanel Margin="80 10" DockPanel.Dock="Top">
+                <DockPanel>
             <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 0 0 5">Номер дома</TextBlock>
-            <TextBox DockPanel.Dock="Top" HorizontalAlignment="Center" 
-             Width="300" Height="30" MaxLength="10" Text="{Binding HouseNumberText}" Margin="0 0 0 5" FontSize="16"></TextBox>
+            <TextBox DockPanel.Dock="Top" HorizontalAlignment="Center"  VerticalAlignment="Top"
+             Width="120" Height="30" MaxLength="10" Text="{Binding HouseNumberText}" 
+                     Margin="0 0 0 5" FontSize="16"></TextBox>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0 0 0 5">Номер квартиры
+                    </TextBlock>
+                    <TextBox DockPanel.Dock="Top" HorizontalAlignment="Center"  VerticalAlignment="Top"
+    Width="120" Height="30" MaxLength="10" Text="{Binding FlatNumberText}" 
+        Margin="0 0 0 5" FontSize="16"></TextBox>
+                </DockPanel>
+            </DockPanel>
 
             
 
-            <Button DockPanel.Dock="Top" HorizontalAlignment="Center" Height="40"
+
+            <Button DockPanel.Dock="Top" HorizontalAlignment="Center" Height="35"
             Width="200" Background="White" Template="{StaticResource NoMouseOverButtonTemplate}" 
             Content="{Binding ButtonContent}"
             Command="{Binding Click}"/>

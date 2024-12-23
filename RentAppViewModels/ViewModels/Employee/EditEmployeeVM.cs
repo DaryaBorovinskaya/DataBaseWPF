@@ -19,6 +19,7 @@ namespace DataBase1WPF.ViewModels.Employee
         private string _windowTitle;
         private string _buttonContent;
         private string _houseNumberText;
+        private string _flatNumberText;
         private string _surnameText;
         private string _nameText;
         private string _patronymicText;
@@ -95,6 +96,15 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        public string FlatNumberText
+        {
+            get { return _flatNumberText; }
+            set
+            {
+                Set(ref _flatNumberText, value);
+            }
+        }
+
         public string SurnameText
         {
             get { return _surnameText; }
@@ -142,6 +152,7 @@ namespace DataBase1WPF.ViewModels.Employee
                 _patronymicText = _row[2].ToString();
                 _dateOfBirth = DateTime.Parse(_row[3].ToString());
                 _houseNumberText = _row[6].ToString();
+                _flatNumberText = _row[7].ToString();
             }
         }
 
@@ -178,9 +189,12 @@ namespace DataBase1WPF.ViewModels.Employee
 
         public void Edit()
         {
+            if (FlatNumberText == null)
+                FlatNumberText = string.Empty;
+
             if (_tableService is EmployeeService service)
                 service.Update(_row, SelectedIndexDistricts, SelectedIndexStreets, SurnameText,
-                    NameText, PatronymicText, DateOfBirth, HouseNumberText);
+                    NameText, PatronymicText, DateOfBirth, HouseNumberText, FlatNumberText);
         }
     }
 }

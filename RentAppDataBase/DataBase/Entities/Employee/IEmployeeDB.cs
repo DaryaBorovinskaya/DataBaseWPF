@@ -36,5 +36,7 @@ namespace DataBase1WPF.DataBase.Entities.Employee
 
         [DisplayName("Номер дома")]
         public string HouseNumber { get; set; }
+        [DisplayName("Номер квартиры")]
+        public string FlatNumber { get; set; }
     }
 }

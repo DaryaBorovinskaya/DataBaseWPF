@@ -17,11 +17,11 @@ namespace DataBase1WPF.DataBase.Repositories
         {
             _query = $"insert into employees " +
                      $"(district_id, street_id, surname, name, patronymic, " +
-                     $"date_of_birth, house_number) " +
+                     $"date_of_birth, house_number, flat_number) " +
                      $"values ({entity.DistrictId}, {entity.StreetId}," +
                      $" '{entity.Surname}', '{entity.Name}'," +
-                     $"'{entity.Patronymic}', '{entity.DateOfBirth /*entity.DateOfBirth.ToString("yyyy-MM-dd")*/}', " +
-                     $"'{entity.HouseNumber}')";
+                     $"'{entity.Patronymic}', '{entity.DateOfBirth}', " +
+                     $"'{entity.HouseNumber}', '{entity.FlatNumber}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
         public IList<IEmployeeDB> Read()
@@ -29,11 +29,12 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = "SELECT  rentapp.employees.id, COALESCE(rentapp.employees.district_id, 0) AS district_id, " +
                 "  MAX(rentapp.districts.title) AS district_title,     COALESCE(rentapp.employees.street_id, 0) AS street_id," +
                 "    MAX(rentapp.streets.title) AS street_title,    rentapp.employees.surname,  rentapp.employees.name,  " +
-                " rentapp.employees.patronymic,    rentapp.employees.date_of_birth,   rentapp.employees.house_number FROM  " +
+                " rentapp.employees.patronymic,    rentapp.employees.date_of_birth,   rentapp.employees.house_number, rentapp.employees.flat_number " +
+                " FROM  " +
                 "  rentapp.employees LEFT OUTER JOIN    rentapp.districts ON rentapp.employees.district_id = rentapp.districts.id " +
                 " LEFT OUTER JOIN     rentapp.streets ON rentapp.employees.street_id = rentapp.streets.id  GROUP BY " +
                 "   rentapp.employees.id,    rentapp.employees.surname,    rentapp.employees.name,     rentapp.employees.patronymic," +
-                "    rentapp.employees.date_of_birth,   rentapp.employees.house_number ORDER BY    rentapp.employees.id;";
+                "    rentapp.employees.date_of_birth,   rentapp.employees.house_number, rentapp.employees.flat_number   ORDER BY    rentapp.employees.id;";
             IList<IEmployeeDB> result = new List<IEmployeeDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -48,7 +49,8 @@ namespace DataBase1WPF.DataBase.Repositories
                     row[6].ToString(),
                     row[7].ToString(),
                     row[8].ToString().Substring(0,10),
-                    row[9].ToString()
+                    row[9].ToString(),
+                    row[10].ToString()
                 ));
             }
             return result;
@@ -59,8 +61,8 @@ namespace DataBase1WPF.DataBase.Repositories
             _query = $"update employees set " +
                      $"district_id={entity.DistrictId}, street_id={entity.StreetId}, " +
                      $"surname='{entity.Surname}', name='{entity.Name}', " +
-                     $"patronymic='{entity.Patronymic}', date_of_birth='{entity.DateOfBirth /*entity.DateOfBirth.ToString("yyyy-MM-dd")*/}', " +
-                     $"house_number='{entity.HouseNumber}' " +
+                     $"patronymic='{entity.Patronymic}', date_of_birth='{entity.DateOfBirth}', " +
+                     $"house_number='{entity.HouseNumber}', flat_number='{entity.FlatNumber}' " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
