@@ -5,18 +5,11 @@ using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.JuridicalPerson;
 using DataBase1WPF.DataBase.Entities.Order;
 using DataBase1WPF.DataBase.Entities.Position;
-using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using DataBase1WPF.DataBase.Repositories;
 using DataBase1WPF.Models.Services.Tables.Order;
 using DataBase1WPF.Models.Services.Tables.Payment;
-using DataBase1WPF.Models.Services.Tables.WorkRecordCard;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Contract
 {

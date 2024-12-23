@@ -1,11 +1,5 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
-using DataBase1WPF.Models.Services.Tables.Building;
 using DataBase1WPF.Models.Services.Tables.Contract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 

@@ -1,10 +1,4 @@
-﻿using DataBase1WPF.DataBase.Entities.Handbook;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Premise
 {

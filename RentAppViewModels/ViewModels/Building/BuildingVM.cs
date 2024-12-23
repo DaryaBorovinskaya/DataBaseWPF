@@ -1,12 +1,6 @@
-﻿using DataBase1WPF.DataBase.Entities.MenuElem;
-using DataBase1WPF.Models.Services.Tables;
+﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -149,15 +143,6 @@ namespace DataBase1WPF.ViewModels.Building
 
                     PremisesVisibility = Visibility.Visible;
                     DataTablePremises = table;
-                    //if (table != null && table.Rows.Count != 0)
-                    //{
-                    //    PremisesVisibility = Visibility.Visible;
-                    //    DataTablePremises = table;
-                    //}
-                    //else
-                    //{
-                    //    PremisesVisibility = Visibility.Collapsed;
-                    //}
                 }
             }
         }

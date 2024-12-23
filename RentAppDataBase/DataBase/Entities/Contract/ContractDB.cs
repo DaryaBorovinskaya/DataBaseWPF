@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataBase1WPF.DataBase.Entities.Contract
+﻿namespace DataBase1WPF.DataBase.Entities.Contract
 {
     public class ContractDB : IContractDB
     {
@@ -33,9 +26,9 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public string RegistrationNumber { get; set; }
 
-        public string/*DateTime*/ BeginOfAction { get; set; }
+        public string BeginOfAction { get; set; }
 
-        public string/*DateTime*/ EndOfAction { get; set; }
+        public string EndOfAction { get; set; }
 
         public string AdditionalConditions { get; set; }
 
@@ -46,7 +39,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
             uint juridicalPersonId, string juridicalPersonName,
             uint employeeId, string employeeSurname, string employeeName, string employeePatronymic,
             uint paymentFrequencyId, string paymentFrequencyTitle, string registrationNumber,
-            string/*DateTime*/ beginOfAction, string/*DateTime*/ endOfAction, string additionalConditions, 
+            string  beginOfAction, string  endOfAction, string additionalConditions, 
             float fine)
         {
             Id = id;
@@ -72,7 +65,7 @@ namespace DataBase1WPF.DataBase.Entities.Contract
 
         public ContractDB(uint id, uint? individualId, uint? juridicalPersonId,
             uint employeeId, uint paymentFrequencyId, string registrationNumber,
-            string/*DateTime*/ beginOfAction, string/*DateTime*/ endOfAction, string additionalConditions,
+            string  beginOfAction, string  endOfAction, string additionalConditions,
             float fine)
         {
             Id = id;

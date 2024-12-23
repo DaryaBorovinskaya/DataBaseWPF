@@ -1,13 +1,7 @@
 ﻿using DataBase1WPF.DataBase.Entities.Handbook;
-using DataBase1WPF.DataBase.Entities.Individual;
 using DataBase1WPF.DataBase.Entities.JuridicalPerson;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 {

@@ -1,28 +1,13 @@
-﻿using DataBase1WPF.Models.Encryptors;
-using DataBase1WPF.Models.Services.LogIn;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows;
-using System.Data;
-using DataBase1WPF.DataBase;
-using System.Collections;
-using DataBase1WPF.Models;
-using DataBase1WPF.DataBase.Entities.Handbook;
-using DataBase1WPF.Models.Services.Tables.Handbooks;
+﻿using DataBase1WPF.Models.Services.MenuElems;
 using DataBase1WPF.Models.Services.Tables;
-using DataBase1WPF.Models.Services.MenuElems;
 using DataBase1WPF.Models.Services.Tables.Building;
+using DataBase1WPF.Models.Services.Tables.Contract;
 using DataBase1WPF.Models.Services.Tables.Employee;
+using DataBase1WPF.Models.Services.Tables.Handbooks;
 using DataBase1WPF.Models.Services.Tables.Individual;
 using DataBase1WPF.Models.Services.Tables.JuridicalPerson;
-using DataBase1WPF.DataBase.Entities.MenuElem;
-using DataBase1WPF.Models.Services.UserAbilities;
 using DataBase1WPF.Models.Services.Tables.UserManagement;
-using DataBase1WPF.Models.Services.Tables.Contract;
+using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {

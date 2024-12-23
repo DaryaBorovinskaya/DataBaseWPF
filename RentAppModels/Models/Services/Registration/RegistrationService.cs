@@ -1,10 +1,5 @@
 ﻿using DataBase1WPF.DataBase.Entities.User;
 using DataBase1WPF.Models.Encryptors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Registration
 {

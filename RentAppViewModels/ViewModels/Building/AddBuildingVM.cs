@@ -1,13 +1,7 @@
-﻿using DataBase1WPF.Models.Services.Tables.Handbooks;
-using DataBase1WPF.Models.Services.Tables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows;
+﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Building;
+using System.Windows;
+using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Building
 {

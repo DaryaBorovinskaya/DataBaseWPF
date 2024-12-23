@@ -1,15 +1,8 @@
-﻿using DataBase1WPF.DataBase.Entities.Building;
-using DataBase1WPF.DataBase.Entities.Employee;
+﻿using DataBase1WPF.DataBase.Entities.Employee;
 using DataBase1WPF.DataBase.Entities.Handbook;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
-using DataBase1WPF.Models.Services.Tables.Premise;
 using DataBase1WPF.Models.Services.Tables.WorkRecordCard;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Employee
 {

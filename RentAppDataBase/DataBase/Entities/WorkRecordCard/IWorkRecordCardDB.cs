@@ -19,7 +19,7 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
         public string OrderNumber { get; set; }
 
         [DisplayName("Дата приказа")]
-        public string OrderDate { get; set; } //public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; } 
 
         [DisplayName("Должность")]
         public string PositionName { get; set; }

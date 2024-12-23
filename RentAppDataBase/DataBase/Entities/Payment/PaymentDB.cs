@@ -12,13 +12,13 @@ namespace DataBase1WPF.DataBase.Entities.Payment
         public uint Id { get; set; }
         public uint ContractId { get; set; }
 
-        public string/*DateTime*/ DateOfPayment { get; set; }
+        public string DateOfPayment { get; set; }
 
         public float AmountOfPayment { get; set; }
 
         public PaymentDB(uint id, 
             uint contractId,
-            string/*DateTime*/ dateOfPayment, float amountOfPayment)
+            string dateOfPayment, float amountOfPayment)
         {
             Id = id;
             ContractId = contractId;
@@ -28,7 +28,7 @@ namespace DataBase1WPF.DataBase.Entities.Payment
 
 
         
-        public PaymentDB(uint contractId, string/*DateTime*/ dateOfPayment, 
+        public PaymentDB(uint contractId, string dateOfPayment, 
             float amountOfPayment)
         {
             ContractId = contractId;

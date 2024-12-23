@@ -1,10 +1,5 @@
 ﻿using DataBase1WPF.ViewModels;
 using RentAppModels.Models.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentAppViewModels.ViewModels
 {

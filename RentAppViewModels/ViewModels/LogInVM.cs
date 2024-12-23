@@ -1,12 +1,5 @@
 ﻿using DataBase1WPF.Models.Encryptors;
 using DataBase1WPF.Models.Services.LogIn;
-using DataBase1WPF.Models.Services.Registration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -50,7 +43,6 @@ namespace DataBase1WPF.ViewModels
                 {
                     LogInService logIn = new(new Encryptor());
 
-                    //OnLogInSuccess?.Invoke();
                     if (logIn.LogIn(Name, Password))
                     {
                         OnLogInSuccess?.Invoke();

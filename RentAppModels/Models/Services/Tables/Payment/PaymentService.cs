@@ -1,14 +1,7 @@
 ﻿using DataBase1WPF.DataBase.Entities.Handbook;
-using DataBase1WPF.DataBase.Entities.Order;
 using DataBase1WPF.DataBase.Entities.Payment;
-using DataBase1WPF.DataBase.Entities.Premise;
 using DataBase1WPF.DataBase.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Payment
 {
@@ -69,14 +62,6 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
 
             return typesOfFinishing;
         }
-
-        //public int GetTypeOfFinishingSelectedIndex(DataRow row)
-        //{
-        //    List<IHandbookDB> typeOfFinishing = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
-
-        //    return typeOfFinishing.FindIndex((elem) => elem.Id == _dataDictionary[row].TypeOfFinishingId);
-        //}
-
 
 
         public void Add(uint contractId, DateTime dateOfPayment,

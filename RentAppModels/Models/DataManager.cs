@@ -14,12 +14,6 @@ using DataBase1WPF.DataBase.Entities.User;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
 using DataBase1WPF.DataBase.Entities.WorkRecordCard;
 using DataBase1WPF.DataBase.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models
 {

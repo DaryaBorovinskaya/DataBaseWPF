@@ -63,7 +63,7 @@ namespace DataBase1WPF.DataBase.Entities.Employee
 
 
         public EmployeeDB(uint districtId, uint streetId, string surname, string name, 
-            string? patronymic, string dateOfBirth /*DateTime dateOfBirth*/, 
+            string? patronymic, string dateOfBirth , 
             string houseNumber, string flatNumber)
         {
             DistrictId = districtId;

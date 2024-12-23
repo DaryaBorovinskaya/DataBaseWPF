@@ -31,10 +31,10 @@ namespace DataBase1WPF.DataBase.Entities.Contract
         public string RegistrationNumber { get; set; }
 
         [DisplayName("Начало действия")]
-        public string/*DateTime*/ BeginOfAction {  get; set; }
+        public string BeginOfAction {  get; set; }
 
         [DisplayName("Конец действия")]
-        public string/*DateTime*/ EndOfAction { get; set; }
+        public string EndOfAction { get; set; }
 
 
         public uint PaymentFrequencyId { get; set; }

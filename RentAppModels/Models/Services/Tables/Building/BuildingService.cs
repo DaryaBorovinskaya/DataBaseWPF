@@ -1,15 +1,8 @@
 ﻿using DataBase1WPF.DataBase.Entities.Building;
 using DataBase1WPF.DataBase.Entities.Handbook;
-using DataBase1WPF.DataBase.Entities.Premise;
 using DataBase1WPF.DataBase.Entities.UserAbilities;
-using DataBase1WPF.DataBase.Repositories;
 using DataBase1WPF.Models.Services.Tables.Premise;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services.Tables.Building
 {
@@ -43,10 +36,6 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             for (int i = 0; i < values.Count; i++)
                 _dataDictionary.Add(table.Rows[i], values[i]);
 
-            //DataTable tableForView = table.Copy();
-            //tableForView.Columns.Remove(tableForView.Columns[1]);
-            //tableForView.Columns.Remove(tableForView.Columns[2]);
-            //return tableForView;
 
             
             return table;

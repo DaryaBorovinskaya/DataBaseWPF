@@ -1,11 +1,5 @@
 ﻿using DataBase1WPF.Models.Services.Tables;
 using DataBase1WPF.Models.Services.Tables.Handbooks;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -117,9 +111,7 @@ namespace DataBase1WPF.ViewModels.Handbooks
                      if (string.IsNullOrEmpty(Title))
                         MessageBox.Show("ОШИБКА: пустое поле");
 
-                    //else if(!CheckLengthString(Title))
-                    //    MessageBox.Show("ОШИБКА: длина введенного значения больше 50 символов");
-
+                    
 
                     else if (_tableService is PositionsService positionsService)
                     {

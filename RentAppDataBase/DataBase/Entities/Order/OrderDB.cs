@@ -45,10 +45,10 @@ namespace DataBase1WPF.DataBase.Entities.Order
 
 
         [DisplayName("Начало срока аренды")]
-        public string/*DateTime*/ BeginOfRent { get; set; }
+        public string BeginOfRent { get; set; }
 
         [DisplayName("Конец срока аренды")]
-        public string/*DateTime*/ EndOfRent { get; set; }
+        public string EndOfRent { get; set; }
 
         [DisplayName("Арендная плата")]
         public float RentalPayment { get; set; }
@@ -58,7 +58,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
             uint streetId, string streetTitle, 
             uint buildingId, string houseNumber, int floorNumber, string premiseNumber,
             float area, uint rentalPurposeId,  string rentalPurposeTitle,
-             string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent, 
+             string beginOfRent, string endOfRent, 
             float rentalPayment)
         {
             Id = id;
@@ -84,7 +84,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
             uint streetId, 
             uint buildingId, string houseNumber, int floorNumber, string premiseNumber,
             float area, uint rentalPurposeId, 
-             string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent,
+             string beginOfRent, string endOfRent,
             float rentalPayment)
         {
             Id = id;
@@ -109,7 +109,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
             uint streetId,
             uint buildingId, string houseNumber, int floorNumber, string premiseNumber,
             float area, uint rentalPurposeId,
-             string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent,
+             string beginOfRent, string endOfRent,
             float rentalPayment)
         {
             ContractId = contractId;
@@ -129,7 +129,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
 
 
         public OrderDB(uint id,  uint premiseID, uint rentalPurposeId, uint contractId,
-             string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent,
+             string beginOfRent, string endOfRent,
             float rentalPayment)
         {
             Id = id;
@@ -143,7 +143,7 @@ namespace DataBase1WPF.DataBase.Entities.Order
 
 
         public OrderDB(uint contractId, uint premiseID, uint rentalPurposeId,
-            string/*DateTime*/ beginOfRent, string/*DateTime*/ endOfRent,
+            string beginOfRent, string endOfRent,
             float rentalPayment)
         {
             ContractId = contractId;

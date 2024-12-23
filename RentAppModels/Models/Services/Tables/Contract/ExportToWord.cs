@@ -1,16 +1,7 @@
 ﻿using DataBase1WPF.DataBase.Entities.Contract;
 using DataBase1WPF.DataBase.Entities.JuridicalPerson;
-using DataBase1WPF.DataBase.Entities.Order;
-using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Word;
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace DataBase1WPF.Models.Services.Tables.Contract
 {

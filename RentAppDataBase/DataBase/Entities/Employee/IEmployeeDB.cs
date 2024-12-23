@@ -21,7 +21,7 @@ namespace DataBase1WPF.DataBase.Entities.Employee
         public string? Patronymic { get; set; }
 
         [DisplayName("Дата рождения")]
-        public string DateOfBirth { get; set; } //public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; } 
 
 
         [DisplayName("Район")]
