@@ -7,9 +7,12 @@ namespace DataBase1WPF.ViewModels
 {
     public class RegistrationVM : BasicVM
     {
+        private RegistrationService _service;
         private string _name;
         private string _password;
         private string _repeatedPassword;
+        private List<string> _employeesComboBox;
+        private int _selectedIndexEmployees;
 
         public Action OnSuccessRegistration;
         public string Name
@@ -30,6 +33,29 @@ namespace DataBase1WPF.ViewModels
             set { Set<string>(ref _repeatedPassword, value); }
         }
 
+        public List<string> EmployeesComboBox
+        {
+            get { return _employeesComboBox; }
+            set
+            {
+                Set(ref _employeesComboBox, value);
+            }
+        }
+
+        public int SelectedIndexEmployees
+        {
+            get { return _selectedIndexEmployees; }
+            set
+            {
+                Set(ref _selectedIndexEmployees, value);
+            }
+        }
+
+        public RegistrationVM()
+        {
+            _service = new(new Encryptor());
+            _employeesComboBox = _service.GetEmployees();
+        }
 
         public ICommand ClickRegistrate
         {
@@ -38,6 +64,12 @@ namespace DataBase1WPF.ViewModels
                 return new DelegateCommand((obj) =>
                 {
                     bool isCorrect = true;
+
+                    if (SelectedIndexEmployees == -1)
+                    {
+                        MessageBox.Show("ОШИБКА: не выбрано значение сотрудника");
+                        isCorrect = false;
+                    }
 
                     if (Password == null || Password == string.Empty)
                     {
@@ -59,8 +91,7 @@ namespace DataBase1WPF.ViewModels
 
                     if (isCorrect)
                     {
-                        RegistrationService registrationService = new(new Encryptor());
-                        registrationService.Registration(Name, Password);
+                        _service.Registration(Name, Password, SelectedIndexEmployees);
                         MessageBox.Show("Регистрация прошла успешно");
                         OnSuccessRegistration?.Invoke();
                         Name = string.Empty;

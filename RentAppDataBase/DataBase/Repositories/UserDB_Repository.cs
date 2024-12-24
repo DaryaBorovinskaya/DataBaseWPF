@@ -16,13 +16,20 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Create(IUserDB entity)
         {
             _query = $"insert into users " +
-                     $"(login, password) " +
-                     $"values ('{entity.Login}', '{entity.Password}')";
+                     $"(login, password, employee_id) " +
+                     $"values ('{entity.Login}', '{entity.Password}', {entity.EmployeeId})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
         public IList<IUserDB> Read()
         {
-            _query = "select * from users";
+            _query = "SELECT rentapp.users.id ,\r\nrentapp.users.login, " +
+                " rentapp.users.password, " +
+                " rentapp.users.employee_id,\r\nrentapp.employees.surname, " +
+                " rentapp.employees.name,\r\nrentapp.employees.patronymic " +
+                " FROM rentapp.users " +
+                " join rentapp.employees " +
+                " on rentapp.users.employee_id = rentapp.employees.id " +
+                " order by rentapp.users.id;";
             IList<IUserDB> result = new List<IUserDB>();
             DataTable dataTable = RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
             foreach (DataRow row in dataTable.Rows)
@@ -30,7 +37,11 @@ namespace DataBase1WPF.DataBase.Repositories
                 result.Add(new UserDB(
                     uint.Parse(row[0].ToString()),
                     row[1].ToString(),
-                    row[2].ToString()
+                    row[2].ToString(),
+                    uint.Parse(row[3].ToString()),
+                    row[4].ToString(),
+                    row[5].ToString(),
+                    row[6].ToString()
                 ));
             }
             return result;
@@ -39,7 +50,7 @@ namespace DataBase1WPF.DataBase.Repositories
         public void Update(IUserDB entity)
         {
             _query = $"update users set " +
-                     $"login='{entity.Login}', password='{entity.Password}' " +
+                     $"login='{entity.Login}', password='{entity.Password}', employee_id={entity.EmployeeId} " +
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }

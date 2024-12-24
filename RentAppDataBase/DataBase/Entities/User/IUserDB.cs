@@ -16,5 +16,11 @@ namespace DataBase1WPF.DataBase.Entities.User
 
         [DisplayName("Пароль")]
         public string Password { get; set; }
+        public uint EmployeeId { get; set; }
+        public string Surname { get; set; }
+
+        public string Name { get; set; }
+
+        public string? Patronymic { get; set; }
     }
 }

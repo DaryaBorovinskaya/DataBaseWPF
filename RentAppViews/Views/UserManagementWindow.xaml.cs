@@ -40,7 +40,7 @@ namespace DataBase1WPF.Views
         public void Delete(DataRow row, ITableService tableService)
         {
             ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, " пользователь " + row[0].ToString() 
-                + " элемент меню " + row[1].ToString());
+                + " элемент меню " + row[4].ToString());
             window.ShowDialog();
         }
 

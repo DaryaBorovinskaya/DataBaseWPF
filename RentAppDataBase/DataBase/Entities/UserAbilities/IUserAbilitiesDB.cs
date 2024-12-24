@@ -14,6 +14,17 @@ namespace DataBase1WPF.DataBase.Entities.UserAbilities
 
         [DisplayName("Имя пользователя")]
         public string UserLogin { get; set; }
+
+        public uint EmployeeId {  get; set; }
+
+        [DisplayName("Фамилия")]
+        public string Surname { get; set; }
+
+        [DisplayName("Имя")]
+        public string Name { get; set; }
+
+        [DisplayName("Отчество")]
+        public string? Patronymic { get; set; }
         public uint MenuElemId { get; set; }
 
         [DisplayName("Элемент меню")]

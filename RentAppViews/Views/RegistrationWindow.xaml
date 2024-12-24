@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         
-        
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Окно регистрации" Height="350" Width="500" ResizeMode="CanMinimize">
+        Title="Регистрация пользователей" Height="450" Width="500" ResizeMode="CanMinimize">
 
     <Window.Resources>
         <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
@@ -44,6 +43,8 @@ BorderThickness="{TemplateBinding BorderThickness}">
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock  Grid.Row="0"
                        FontSize="20" 
@@ -57,25 +58,32 @@ BorderThickness="{TemplateBinding BorderThickness}">
         </TextBlock>
         <TextBox Grid.Row="2" Height="30" Width="300" FontSize="16"
                  Text="{Binding Name}"></TextBox>
-        <TextBlock Grid.Row="3"
+
+        <TextBlock Grid.Row="3" FontSize="16" 
+   FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 5">Сотрудник</TextBlock>
+        <ComboBox Grid.Row="4"  Height="30" Background="White" Width="300"
+ItemsSource="{Binding EmployeesComboBox}" SelectedIndex="{Binding SelectedIndexEmployees}"
+            Margin="0 0 0 5" IsReadOnly="True" FontSize="16"></ComboBox>
+        
+        <TextBlock Grid.Row="5"
             FontSize="16" 
             FontWeight="Medium"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             >Пароль
         </TextBlock>
-        <PasswordBox Grid.Row="4" Height="30" Width="300" FontSize="16"
+        <PasswordBox Grid.Row="6" Height="30" Width="300" FontSize="16"
                  PasswordChanged="textBoxPassword_PasswordChanged"></PasswordBox>
-        <TextBlock Grid.Row="5"
+        <TextBlock Grid.Row="7"
             FontSize="16" 
        FontWeight="Medium"
        HorizontalAlignment="Center"
         VerticalAlignment="Center">Повторите пароль
         </TextBlock>
-        <PasswordBox Grid.Row="6" Height="30" Width="300" FontSize="16"
+        <PasswordBox Grid.Row="8" Height="30" Width="300" FontSize="16"
                      PasswordChanged="textBoxRepeatedPassword_PasswordChanged">
         </PasswordBox>
-        <Button FontSize="16" Grid.Row="7" Height="30" Width="150"
+        <Button FontSize="16" Grid.Row="9" Height="30" Width="150"
                 Background="White" 
                 Template="{StaticResource NoMouseOverButtonTemplate}"
                 Command="{Binding ClickRegistrate}">

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataBase1WPF.DataBase.Entities.UserAbilities
+﻿namespace DataBase1WPF.DataBase.Entities.UserAbilities
 {
     public class UserAbilitiesDB : IUserAbilitiesDB
     {
         public uint Id { get; set; }
         public uint UserId { get; set; }
+        public string UserLogin { get; set; }
+        public uint EmployeeId { get; set; }
+        public string Surname { get; set; }
+
+        public string Name { get; set; }
+
+        public string? Patronymic { get; set; }
         public uint MenuElemId { get; set; }
 
         public bool R { get; set; }
@@ -20,15 +20,21 @@ namespace DataBase1WPF.DataBase.Entities.UserAbilities
         public bool E { get; set; }
 
         public bool D { get; set; }
-        public string UserLogin {  get; set; }
+        
         public string MenuElemName {  get; set; }
 
-        public UserAbilitiesDB(uint id, uint userId, string userLogin, uint menuElemId,
+        public UserAbilitiesDB(uint id, uint userId, string userLogin,
+            uint employeeId, string surname, string name, string? patronymic,
+            uint menuElemId,
             string menuElemName, bool r, bool w, bool e, bool d)
         {
             Id = id;
             UserId = userId;
             UserLogin = userLogin;
+            EmployeeId = employeeId;
+            Surname = surname;
+            Name = name;
+            Patronymic = patronymic;
             MenuElemId = menuElemId;
             MenuElemName = menuElemName;
             R = r;
@@ -50,7 +56,7 @@ namespace DataBase1WPF.DataBase.Entities.UserAbilities
             D = d;
         }
 
-        public UserAbilitiesDB(uint userId, uint menuElemId,
+        public UserAbilitiesDB(uint userId,  uint menuElemId,
             bool r, bool w, bool e, bool d)
         {
             UserId = userId;

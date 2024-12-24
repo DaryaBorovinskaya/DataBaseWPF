@@ -124,10 +124,10 @@ namespace DataBase1WPF.ViewModels.UserManagement
                 _selectedIndexUserLogin = service.GetUserSelectedIndex(row);
             }
 
-            _r = bool.Parse(row[2].ToString());
-            _w = bool.Parse(row[3].ToString());
-            _e = bool.Parse(row[4].ToString());
-            _d = bool.Parse(row[5].ToString());
+            _r = bool.Parse(row[5].ToString());
+            _w = bool.Parse(row[6].ToString());
+            _e = bool.Parse(row[7].ToString());
+            _d = bool.Parse(row[8].ToString());
         }
 
 
