@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с элементами меню из базы данных
+    /// </summary>
     public class MenuElemDB_Repository : IRepositoryDB<IMenuElemDB>
     {
         private string _query;
@@ -18,6 +21,10 @@ namespace DataBase1WPF.DataBase.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Чтение данных об элементах меню из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IMenuElemDB> Read()
         {
             _query = "select * from menu_elements";

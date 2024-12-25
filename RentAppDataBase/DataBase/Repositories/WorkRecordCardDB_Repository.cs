@@ -10,10 +10,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с записями трудовой книжки из базы данных
+    /// </summary>
     public class WorkRecordCardDB_Repository : IRepositoryDB<IWorkRecordCardDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление новой записи в трудовую книжку
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IWorkRecordCardDB entity)
         {
             _query = $"insert into work_record_cards " +
@@ -28,6 +36,10 @@ namespace DataBase1WPF.DataBase.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Изменение данных записи в трудовой книжке из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IWorkRecordCardDB entity)
         {
             _query = $"update work_record_cards set " +
@@ -37,12 +49,23 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление записи в трудовой книжке из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from work_record_cards where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
 
+
+        /// <summary>
+        /// Получение записей трудовой книжки по идентификатору сотрудника
+        /// </summary>
+        /// <param name="employee_id"></param>
+        /// <returns></returns>
         public  IList<IWorkRecordCardDB> GetWorkRecordCardByEmployeeId(uint employee_id)
         {
             _query = $"SELECT  rentapp.work_record_cards.id, rentapp.work_record_cards.employee_id, " +

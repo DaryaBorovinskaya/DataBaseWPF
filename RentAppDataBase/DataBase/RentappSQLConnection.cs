@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase
 { 
+    /// <summary>
+    /// Подключение к базе данных фирмы, занимающейся арендой помещений 
+    /// </summary>
     public class RentappSQLConnection
     {
         private readonly string _connectionString = "SERVER=localhost;DATABASE=rentapp;UID=root;PASSWORD=root;";
@@ -21,6 +24,10 @@ namespace DataBase1WPF.DataBase
             _connection = new(_connectionString);
         }
 
+        /// <summary>
+        /// Получение экземпляра класса (шаблон Одиночка)
+        /// </summary>
+        /// <returns></returns>
         public static RentappSQLConnection GetInstance()
         {
             if (_instance == null)
@@ -28,6 +35,12 @@ namespace DataBase1WPF.DataBase
             return _instance;
         }
 
+        /// <summary>
+        /// Выполнение запроса к базе данных
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public DataTable ExecuteRequest(string query, ref string exception)
         {
             _connection.Open();

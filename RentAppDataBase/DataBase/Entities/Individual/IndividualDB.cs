@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Individual
 {
+    /// <summary>
+    /// Данные о физических лицах из базы данных
+    /// </summary>
     public class IndividualDB : IIndividualDB
     {
         public uint Id { get; set; }

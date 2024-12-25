@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие со штрафами из базы данных
+    /// </summary>
     public class FineDB_Repository : IRepositoryDB<IFineDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового штрафа в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IFineDB entity)
         {
             _query = $"insert into fine " +
@@ -20,6 +28,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"values ({entity.Amount})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных штрафов из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IFineDB> Read()
         {
             _query = "select * from fine";
@@ -35,6 +48,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных штрафа из базы даныых
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IFineDB entity)
         {
             _query = $"update fine set " +
@@ -42,6 +59,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление штрафа из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from fine where id={id}";

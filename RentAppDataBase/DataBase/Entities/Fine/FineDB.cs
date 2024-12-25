@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Fine
 {
+    /// <summary>
+    /// Данные о штрафе из базы данных
+    /// </summary>
     public class FineDB : IFineDB
     {
         public uint Id { get; set; }

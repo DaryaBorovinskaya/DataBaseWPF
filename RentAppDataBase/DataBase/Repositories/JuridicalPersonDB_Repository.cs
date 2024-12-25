@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с юридическими лицами из базы данных
+    /// </summary>
     public class JuridicalPersonDB_Repository : IRepositoryDB<IJuridicalPersonDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового юридического лица в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IJuridicalPersonDB entity)
         {
             _query = $"insert into juridical_persons " +
@@ -28,6 +36,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"'{entity.IndividualTaxpayerNumber}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о юридических лицах из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IJuridicalPersonDB> Read()
         {
             _query = "SELECT   rentapp.juridical_persons.id,  " +
@@ -92,7 +105,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
-        
+        /// <summary>
+        /// Изменение данных юридического лица из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IJuridicalPersonDB entity)
         {
             _query = $"update juridical_persons set " +
@@ -107,12 +123,22 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление юридического лица из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from juridical_persons where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
 
+        /// <summary>
+        /// Получение полного имени руководителя по идентификатору договора
+        /// </summary>
+        /// <param name="contractId"></param>
+        /// <returns></returns>
         public IJuridicalPersonDB GetDirectorFullNameByContractId(uint contractId)
         {
             _query = $"SELECT director_surname, director_name, director_patronymic FROM rentapp.contracts " +

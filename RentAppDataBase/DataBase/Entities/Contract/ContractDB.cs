@@ -1,5 +1,8 @@
 ﻿namespace DataBase1WPF.DataBase.Entities.Contract
 {
+    /// <summary>
+    /// Данные о договорах из базы данных
+    /// </summary>
     public class ContractDB : IContractDB
     {
         public uint Id { get; set; }

@@ -1,5 +1,8 @@
 ﻿namespace DataBase1WPF.DataBase.Entities.UserAbilities
 {
+    /// <summary>
+    /// Данные о правах пользователей из базы данных
+    /// </summary>
     public class UserAbilitiesDB : IUserAbilitiesDB
     {
         public uint Id { get; set; }

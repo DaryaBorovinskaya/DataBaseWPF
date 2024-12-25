@@ -8,10 +8,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с целями аренды из базы данных
+    /// </summary>
     public class RentalPurposeDB_Repository : IRepositoryDB<IHandbookDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление новой цели аренды в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IHandbookDB entity)
         {
             _query = $"insert into rental_purposes " +
@@ -19,6 +27,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"values ('{entity.Title}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о целях аренды из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IHandbookDB> Read()
         {
             _query = "select * from rental_purposes";
@@ -34,6 +47,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных о цели аренды из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IHandbookDB entity)
         {
             _query = $"update rental_purposes set " +
@@ -41,6 +58,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление цели аренды из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from rental_purposes where id={id}";

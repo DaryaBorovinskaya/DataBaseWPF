@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Premise
 {
+    /// <summary>
+    /// Данные о помещениях из базы данных
+    /// </summary>
     public class PremiseDB : IPremiseDB
     {
         public uint Id { get; set; }

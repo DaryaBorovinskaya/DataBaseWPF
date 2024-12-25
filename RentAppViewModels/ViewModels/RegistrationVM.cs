@@ -91,12 +91,16 @@ namespace DataBase1WPF.ViewModels
 
                     if (isCorrect)
                     {
-                        _service.Registration(Name, Password, SelectedIndexEmployees);
-                        MessageBox.Show("Регистрация прошла успешно");
-                        OnSuccessRegistration?.Invoke();
-                        Name = string.Empty;
-                        Password = null;
-                        RepeatedPassword = null;
+                        if (_service.Registration(Name, Password, SelectedIndexEmployees))
+                        {
+                            MessageBox.Show("Регистрация прошла успешно");
+                            OnSuccessRegistration?.Invoke();
+                            Name = string.Empty;
+                            Password = null;
+                            RepeatedPassword = null;
+                        }
+                        else
+                            MessageBox.Show("Пользователь с таким именем уже зарегистрирован");
                     }
                 });
             }

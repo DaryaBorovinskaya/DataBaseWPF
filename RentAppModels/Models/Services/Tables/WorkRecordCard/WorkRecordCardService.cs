@@ -5,9 +5,18 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
 {
+    /// <summary>
+    /// Сервис для записей трудовой книжки
+    /// </summary>
     public class WorkRecordCardService : IWorkRecordCardService
     {
         private Dictionary<DataRow, IWorkRecordCardDB> _dataDictionary;
+
+        /// <summary>
+        /// Получение записей трудовой книжки по идентификатору сотрудника
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DataTable? GetWorkRecordCardByEmployee(uint id)
         {
             DataTable table = null;
@@ -29,6 +38,12 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
             return table;
         }
 
+        /// <summary>
+        /// Поиск данных по таблице записей в трудовой книжке
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(uint employeeId, string searchLine)
         {
             DataTable table = new();
@@ -51,7 +66,10 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
             return table;
         }
 
-
+        /// <summary>
+        /// Получение списка должностей
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetPositions()
         {
             List<string> positions = new();
@@ -65,6 +83,11 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
             return positions;
         }
 
+        /// <summary>
+        /// Получение индекса должности у выбранной записи в трудовой книжке
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetPositionsSelectedIndex(DataRow row)
         {
             List<IPositionDB> positions = DataManager.GetInstance().PositionDB_Repository.Read().ToList();
@@ -73,7 +96,14 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
         }
 
 
-
+        /// <summary>
+        /// Добавление записи в трудовую книжку
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <param name="positionIndex"></param>
+        /// <param name="orderNumber"></param>
+        /// <param name="orderDate"></param>
+        /// <param name="reasonOfRecording"></param>
         public void Add(uint employeeId, int positionIndex, string orderNumber,
             DateTime orderDate, string reasonOfRecording)
         {
@@ -86,6 +116,15 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
                 ));
         }
 
+        /// <summary>
+        /// Изменение данных записи в трудовой книжке
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="employeeId"></param>
+        /// <param name="positionIndex"></param>
+        /// <param name="orderNumber"></param>
+        /// <param name="orderDate"></param>
+        /// <param name="reasonOfRecording"></param>
         public void Update(DataRow row, uint employeeId, int positionIndex, string orderNumber,
             DateTime orderDate, string reasonOfRecording)
         {
@@ -99,6 +138,10 @@ namespace DataBase1WPF.Models.Services.Tables.WorkRecordCard
                 ));
         }
 
+        /// <summary>
+        /// Удаление записи из трудовой книжки
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().WorkRecordCardDB_Repository.Delete(_dataDictionary[row].Id);

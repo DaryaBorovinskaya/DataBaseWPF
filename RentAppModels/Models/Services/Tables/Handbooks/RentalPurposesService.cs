@@ -4,15 +4,28 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Handbooks
 {
+    /// <summary>
+    /// Сервис для целей аренды
+    /// </summary>
     public class RentalPurposesService : ITableService
     {
         private Dictionary<DataRow, IHandbookDB> _dataDictionary;
+
+        /// <summary>
+        /// Получение данных целей аренды
+        /// </summary>
+        /// <returns></returns>
         private List<IHandbookDB> GetValues()
         {
             List<IHandbookDB> values = DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList();
             return values;
         }
 
+
+        /// <summary>
+        /// Получение данных целей аренды в таблице DataTable
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetValuesTable()
         {
             List<IHandbookDB> values = GetValues();
@@ -25,10 +38,21 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
 
             return table;
         }
+
+        /// <summary>
+        /// Получение имени таблицы цели аренды
+        /// </summary>
+        /// <returns></returns>
         public string GetTableName()
         {
             return "Цели аренды";
         }
+
+        /// <summary>
+        /// Поиск данных по таблице цели аренды
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(string searchLine)
         {
             List<IHandbookDB> values = GetValues().Where(item => item.Title.Contains(searchLine)).ToList();
@@ -42,6 +66,13 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             return table;
         }
 
+
+
+        /// <summary>
+        /// Получение прав пользователей к целям аренды
+        /// </summary>
+        /// <param name="menuElemId"></param>
+        /// <returns></returns>
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
             UserAbilitiesType userAbilities = new();
@@ -63,16 +94,30 @@ namespace DataBase1WPF.Models.Services.Tables.Handbooks
             return userAbilities;
         }
 
+        /// <summary>
+        /// Добавление цели аренды
+        /// </summary>
+        /// <param name="title"></param>
         public void Add(string title)
         {
             DataManager.GetInstance().RentalPurposeDB_Repository.Create(new HandbookDB(title));
         }
 
+
+        /// <summary>
+        /// Изменение цели аренды
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="title"></param>
         public void Update(DataRow row, string title)
         {
             DataManager.GetInstance().RentalPurposeDB_Repository.Update(new HandbookDB(_dataDictionary[row].Id, title));
         }
 
+        /// <summary>
+        /// Удаление цели аренды
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().RentalPurposeDB_Repository.Delete(_dataDictionary[row].Id);

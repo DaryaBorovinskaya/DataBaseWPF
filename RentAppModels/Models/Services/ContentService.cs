@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RentAppModels.Models.Services
 {
+    /// <summary>
+    /// Сервис Содержание
+    /// </summary>
     public class ContentService
     {
         public string ContentText => "Иерархическая структура меню:\n" +

@@ -17,6 +17,9 @@ using DataBase1WPF.DataBase.Repositories;
 
 namespace DataBase1WPF.Models
 {
+    /// <summary>
+    /// Получение доступа к классам, взаимодействующими с базой данных
+    /// </summary>
     public class DataManager
     {
         private static DataManager _instance;
@@ -84,6 +87,10 @@ namespace DataBase1WPF.Models
             WorkRecordCardDB_Repository = workRecordCardDB_Repository;
         }
 
+        /// <summary>
+        /// Получение экземпляра класса (шаблон Одиночка)
+        /// </summary>
+        /// <returns></returns>
         public static DataManager GetInstance()
         {
             if (_instance == null)

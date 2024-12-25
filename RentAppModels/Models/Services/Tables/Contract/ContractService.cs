@@ -13,6 +13,9 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Contract
 {
+    /// <summary>
+    /// Сервис для договоров
+    /// </summary>
     public class ContractService : ITableService
     {
         private DataRow _selectedContract;
@@ -32,6 +35,10 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
+        /// <summary>
+        /// Получение значений договоров в таблице DataTable
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetValuesTable()
         {
             DataTable table = new();
@@ -65,6 +72,11 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
+        /// <summary>
+        /// Получение значений договоров по идентификатору физического лица в таблице DataTable
+        /// </summary>
+        /// <param name="individualId"></param>
+        /// <returns></returns>
         public DataTable GetValuesTableByIndividualId(uint individualId) 
         {
             _individualId = individualId;
@@ -90,6 +102,11 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
+        /// <summary>
+        /// Получение значений договоров по идентификатору юридического лица в таблице DataTable
+        /// </summary>
+        /// <param name="juridicalPersonId"></param>
+        /// <returns></returns>
         public DataTable GetValuesTableByJuridicalPersonId(uint juridicalPersonId)
         {
             _juridicalPersonId = juridicalPersonId;
@@ -114,22 +131,40 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
-
+        /// <summary>
+        /// Получение имени таблицы договоры
+        /// </summary>
+        /// <returns></returns>
         public string GetTableName()
         {
             return "Договоры";
         }
 
+        /// <summary>
+        /// Получение имени таблицы заказы
+        /// </summary>
+        /// <returns></returns>
         public string GetOrdersTableName()
         {
             return "Заказы";
         }
 
+
+        /// <summary>
+        /// Получение имени таблицы платежи
+        /// </summary>
+        /// <returns></returns>
         public string GetPaymentsTableName()
         {
             return "Платежи";
         }
 
+
+        /// <summary>
+        /// Поиск данных по таблице договоры
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(string searchLine)
         {
             DataTable table = new();
@@ -174,6 +209,12 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return table;
         }
 
+
+
+        /// <summary>
+        /// Получить список периодичностей оплаты
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetPaymentFrequencies()
         {
             List<string> paymentFrequencies = new();
@@ -187,6 +228,12 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return paymentFrequencies;
         }
 
+
+        /// <summary>
+        /// Получение индекса периодичности оплаты у выбранного значения договора
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetPaymentFrequencySelectedIndex(DataRow row) 
         {
             List<IHandbookDB> paymentFrequenciesDB = DataManager.GetInstance().PaymentFrequencyDB_Repository.Read().ToList();
@@ -194,6 +241,11 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return paymentFrequenciesDB.FindIndex((elem) => elem.Id == _dataDictionary[row].PaymentFrequencyId);
         }
 
+
+        /// <summary>
+        /// Получение сотрудников-менеджеров ( значения из базы данных )
+        /// </summary>
+        /// <returns></returns>
         public List<IEmployeeDB> GetEmployeeDB() 
         {
             List<IEmployeeDB> foundEmployees = new();
@@ -222,11 +274,21 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
+        /// <summary>
+        /// Получение индекса сотрудника у выбранного значения договора
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetEmployeeSelectedIndex(DataRow row)
         {
             return GetEmployeeDB().FindIndex((elem) => elem.Id == _dataDictionary[row].EmployeeId);
         }
 
+        /// <summary>
+        /// Получение индекса штрафа у выбранного значения договора
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetFineSelectedIndex(DataRow row)
         {
             List<IFineDB> finesDB = DataManager.GetInstance().FineDB_Repository.Read().ToList();
@@ -234,6 +296,11 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return finesDB.FindIndex((elem) => elem.Amount == _dataDictionary[row].Fine);
         }
 
+
+        /// <summary>
+        /// Получение списка сотрудников-менеджеров 
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetEmployees()
         {
             List<string> employees = new();
@@ -263,7 +330,10 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return employees;
         }
 
-
+        /// <summary>
+        /// Получение списка штрафов
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetFines()
         {
             List<string> fines = new();
@@ -277,6 +347,18 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             return fines;
         }
 
+        
+        
+        /// <summary>
+        /// Добавление договора
+        /// </summary>
+        /// <param name="employeeSelectedIndex"></param>
+        /// <param name="paymentFrequencySelectedIndex"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="beginOfAction"></param>
+        /// <param name="endOfAction"></param>
+        /// <param name="additionalConditions"></param>
+        /// <param name="fineSelectedIndex"></param>
         public void Add(int employeeSelectedIndex, int paymentFrequencySelectedIndex,
             string registrationNumber,
             DateTime beginOfAction, DateTime endOfAction, string additionalConditions,
@@ -295,11 +377,17 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 ));
         }
 
-
-        
-        
-
-
+        /// <summary>
+        /// Изменение договора
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="employeeSelectedIndex"></param>
+        /// <param name="paymentFrequencySelectedIndex"></param>
+        /// <param name="registrationNumber"></param>
+        /// <param name="beginOfAction"></param>
+        /// <param name="endOfAction"></param>
+        /// <param name="additionalConditions"></param>
+        /// <param name="fineSelectedIndex"></param>
         public void Update(DataRow row, int employeeSelectedIndex, 
             int paymentFrequencySelectedIndex,
             string registrationNumber,
@@ -320,24 +408,45 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 ));
         }
 
+
+        /// <summary>
+        /// Удаление договора
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().ContractDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 
+        /// <summary>
+        /// Получение заказов в таблице DataTable по выбранному договору
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public DataTable? GetOrdersByContract(DataRow row)
         {
             _selectedContract = row;
             return _orderService.GetOrdersByContractId(_dataDictionary[row].Id);
         }
 
+        /// <summary>
+        /// Получение заказов (значения из базы данных) по выбранному договору
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public List<IOrderDB> GetOrdersDBbyContract(DataRow row)
         {
             _selectedContract = row;
             return _orderService.GetOrdersDBbyContractId(_dataDictionary[row].Id);
         }
 
+
+        /// <summary>
+        /// Получение платежей в таблице DataTable по выбранному договору
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public DataTable? GetPaymentsByContract(DataRow row)
         {
             _selectedContract = row;
@@ -345,47 +454,84 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
         }
 
 
+        /// <summary>
+        /// Поиск данных по таблице заказы
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTableOrders(string searchLine)
         {
             return _orderService.SearchDataInTable(_dataDictionary[_selectedContract].Id, searchLine);
         }
 
+
+        /// <summary>
+        /// Поиск данных по таблице платежи
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTablePayments(string searchLine)
         {
             return _paymentService.SearchDataInTable(_dataDictionary[_selectedContract].Id, searchLine);
         }
 
-
-        
-
-
-
+        /// <summary>
+        /// Получение списка помещений
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetOrderPremises()
         {
             return _orderService.GetPremises();
         }
 
+        /// <summary>
+        /// Получение списка помещений для изменения данных
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public List<string> GetOrderPremisesForEdit(DataRow row)
         {
             return _orderService.GetPremisesForEdit(row);
         }
 
+        /// <summary>
+        /// Получение целей аренды
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetOrdersRentalPurposes()
         {
             return _orderService.GetRentalPurposes();
         }
 
+        /// <summary>
+        /// Получение индекса цели аренды у выбранного значения заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetOrdersRentalPurposesSelectedIndex(DataRow row)
         {
             return _orderService.GetRentalPurposesSelectedIndex(row);
         }
 
+        /// <summary>
+        /// Получение индекса помещения у выбранного значения заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetOrdersPremisesSelectedIndex(DataRow row)
         {
             return _orderService.GetPremisesSelectedIndex(row);
         }
 
 
+        /// <summary>
+        /// Добавление заказа
+        /// </summary>
+        /// <param name="premiseSelectedIndex"></param>
+        /// <param name="rentalPurposeSelectedIndex"></param>
+        /// <param name="beginOfRent"></param>
+        /// <param name="endOfRent"></param>
+        /// <param name="rentalPayment"></param>
         public void AddOrder(int premiseSelectedIndex,
             int rentalPurposeSelectedIndex,
             DateTime beginOfRent, DateTime endOfRent,
@@ -395,6 +541,16 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 rentalPurposeSelectedIndex, beginOfRent, endOfRent, rentalPayment);
         }
 
+
+        /// <summary>
+        /// Изменение заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="premiseSelectedIndex"></param>
+        /// <param name="rentalPurposeSelectedIndex"></param>
+        /// <param name="beginOfRent"></param>
+        /// <param name="endOfRent"></param>
+        /// <param name="rentalPayment"></param>
         public void UpdateOrder(DataRow row, int premiseSelectedIndex,
             int rentalPurposeSelectedIndex,
             DateTime beginOfRent, DateTime endOfRent,
@@ -405,13 +561,22 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 endOfRent, rentalPayment);
         }
 
+
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
+        /// <param name="row"></param>
         public void DeleteOrder(DataRow row)
         {
             _orderService.Delete(row);
         }
 
 
-
+        /// <summary>
+        /// Добавление платежа
+        /// </summary>
+        /// <param name="dateOfPayment"></param>
+        /// <param name="amountOfPayment"></param>
         public void AddPayment(DateTime dateOfPayment,
             float amountOfPayment)
         {
@@ -419,6 +584,12 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 amountOfPayment);
         }
 
+        /// <summary>
+        /// Изменение платежа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="dateOfPayment"></param>
+        /// <param name="amountOfPayment"></param>
         public void UpdatePayment(DataRow row, DateTime dateOfPayment,
             float amountOfPayment)
         {
@@ -426,18 +597,24 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
                 amountOfPayment);
         }
 
+        /// <summary>
+        /// Удаление платежа
+        /// </summary>
+        /// <param name="row"></param>
         public void DeletePayment(DataRow row)
         {
             _paymentService.Delete(row);
         }
-
-
 
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Экспорт в MS Word
+        /// </summary>
+        /// <param name="row"></param>
         public void ExportWord(DataRow row)
         {
             IJuridicalPersonDB juridicalPersonDB = null;
@@ -451,6 +628,10 @@ namespace DataBase1WPF.Models.Services.Tables.Contract
             ExportToWord.ExportContract(_dataDictionary[row], GetOrdersByContract(row), juridicalPersonDB);
         }
 
+        /// <summary>
+        /// Экспорт в MS Excel
+        /// </summary>
+        /// <param name="table"></param>
         public void ExportExcel(DataTable table)
         {
             ExportToExcel.ExportTable(table);

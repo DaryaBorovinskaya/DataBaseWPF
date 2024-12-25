@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Payment
 {
+    /// <summary>
+    /// Данные о платежах по договорам из базы данных
+    /// </summary>
     public class PaymentDB : IPaymentDB
     {
         public uint Id { get; set; }

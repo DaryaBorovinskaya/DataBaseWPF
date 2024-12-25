@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Order
 {
+    /// <summary>
+    /// Данные о заказах в договорах из базы данных
+    /// </summary>
     public class OrderDB : IOrderDB
     {
         public uint Id { get; set; }

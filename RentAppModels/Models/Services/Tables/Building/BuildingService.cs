@@ -6,12 +6,20 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Building
 {
+    /// <summary>
+    /// Сервис для зданий
+    /// </summary>
     public class BuildingService : IBuildingService, ITableService
     {
         private IPremiseService _premiseService;
         private DataRow _selectedBuilding;
         
         private Dictionary<DataRow, IBuildingDB> _dataDictionary;
+
+        /// <summary>
+        /// Получение данных зданий
+        /// </summary>
+        /// <returns></returns>
         private List<IBuildingDB> GetValues()
         {
             List<IBuildingDB> values = DataManager.GetInstance().BuildingDB_Repository.Read().ToList();
@@ -23,7 +31,10 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             _premiseService = new PremiseService();
         }
 
-
+        /// <summary>
+        /// Получение значений зданий в таблице DataTable
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetValuesTable()
         {
             List<IBuildingDB> values = GetValues();
@@ -41,15 +52,30 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             return table;
         }
 
+        /// <summary>
+        /// Получение имени таблицы здания
+        /// </summary>
+        /// <returns></returns>
         public string GetTableName()
         {
             return "Здания";
         }
 
+        /// <summary>
+        /// Получение имени таблицы помещения
+        /// </summary>
+        /// <returns></returns>
         public string GetOtherTableName()
         {
             return "Помещения";
         }
+
+
+        /// <summary>
+        /// Поиск данных по таблице здания
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(string searchLine)
         {
             List<IBuildingDB> values = GetValues().Where(item => item.DistrictTitle.Contains(searchLine) 
@@ -70,6 +96,11 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
 
 
+        /// <summary>
+        /// Получение прав пользователя к зданиям
+        /// </summary>
+        /// <param name="menuElemId"></param>
+        /// <returns></returns>
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
             UserAbilitiesType userAbilities = new();
@@ -92,6 +123,10 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
 
 
+        /// <summary>
+        /// Получение списка районов
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetDistricts()
         {
             List<string> districts = new();
@@ -105,6 +140,10 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             return districts;
         }
 
+        /// <summary>
+        /// Получение списка улиц
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetStreets()
         {
             List<string> streets = new();
@@ -120,7 +159,15 @@ namespace DataBase1WPF.Models.Services.Tables.Building
 
 
 
-
+        /// <summary>
+        /// Добавление нового здания
+        /// </summary>
+        /// <param name="districtSelectedIndex"></param>
+        /// <param name="streetSelectedIndex"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="numberOfFloors"></param>
+        /// <param name="countRentalPremises"></param>
+        /// <param name="commandantPhoneNumber"></param>
         public void Add(int districtSelectedIndex, int streetSelectedIndex, 
             string houseNumber, uint numberOfFloors, uint countRentalPremises, 
             string commandantPhoneNumber)
@@ -136,6 +183,11 @@ namespace DataBase1WPF.Models.Services.Tables.Building
         }
 
 
+        /// <summary>
+        /// Получение индекса района у выбранного  здания
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetDistrictSelectedIndex(DataRow row)
         {
             List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
@@ -144,6 +196,11 @@ namespace DataBase1WPF.Models.Services.Tables.Building
              
         }
 
+        /// <summary>
+        /// Получение индекса улицы у выбранного  здания
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetStreetsSelectedIndex(DataRow row)
         {
             List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
@@ -151,12 +208,28 @@ namespace DataBase1WPF.Models.Services.Tables.Building
             return streetsDB.FindIndex((elem) => elem.Id == _dataDictionary[row].StreetId);
 
         }
+
+        /// <summary>
+        /// Получение индекса вида отделки у выбранного значения здания
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetTypeOfFinishingSelectedIndex(DataRow row)
         {
             return _premiseService.GetTypeOfFinishingSelectedIndex(row);
         }
 
 
+        /// <summary>
+        /// Изменение данных здания
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="districtSelectedIndex"></param>
+        /// <param name="streetSelectedIndex"></param>
+        /// <param name="houseNumber"></param>
+        /// <param name="numberOfFloors"></param>
+        /// <param name="countRentalPremises"></param>
+        /// <param name="commandantPhoneNumber"></param>
         public void Update(DataRow row, int districtSelectedIndex, int streetSelectedIndex,
             string houseNumber, uint numberOfFloors, uint countRentalPremises,
             string commandantPhoneNumber)
@@ -172,17 +245,32 @@ namespace DataBase1WPF.Models.Services.Tables.Building
                 ));
         }
 
+
+        /// <summary>
+        /// Удаление здания
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().BuildingDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 
+        /// <summary>
+        /// Получение помещений по зданию
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public DataTable? GetPremisesByBuilding(DataRow row)
         {
             _selectedBuilding = row;
             return _premiseService.GetPremisesByBuilding(_dataDictionary[row].Id);
         }
+
+        /// <summary>
+        /// Получение частичных данных здания у выбранного помещения
+        /// </summary>
+        /// <returns></returns>
         public string GetSelectedBuildingText()
         {
             return _dataDictionary[_selectedBuilding].DistrictTitle + " "
@@ -190,19 +278,36 @@ namespace DataBase1WPF.Models.Services.Tables.Building
                 + _dataDictionary[_selectedBuilding].HouseNumber;
         }
 
+        /// <summary>
+        /// Поиск данных по таблице помещений
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTablePremises(string searchLine)
         {
             return _premiseService.SearchDataInTable(_dataDictionary[_selectedBuilding].Id,searchLine);
         }
 
 
+        /// <summary>
+        /// Получение видов отделки
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetTypesOfFinishing()
         {
            return _premiseService.GetTypesOfFinishing();
         }
 
 
-
+        /// <summary>
+        /// Добавление помещения
+        /// </summary>
+        /// <param name="typeOfFinishingIndex"></param>
+        /// <param name="premiseNumber"></param>
+        /// <param name="area"></param>
+        /// <param name="floorNumber"></param>
+        /// <param name="availAbilityOfPhoneNumber"></param>
+        /// <param name="tempRentalPayment"></param>
         public void AddPremises(int typeOfFinishingIndex, string premiseNumber,
             float area, int floorNumber, bool availAbilityOfPhoneNumber,
             float tempRentalPayment)
@@ -212,6 +317,17 @@ namespace DataBase1WPF.Models.Services.Tables.Building
                 tempRentalPayment);
         }
 
+
+        /// <summary>
+        /// Изменение данных помещения
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="typeOfFinishingIndex"></param>
+        /// <param name="premiseNumber"></param>
+        /// <param name="area"></param>
+        /// <param name="floorNumber"></param>
+        /// <param name="availAbilityOfPhoneNumber"></param>
+        /// <param name="tempRentalPayment"></param>
         public void UpdatePremises(DataRow row, int typeOfFinishingIndex, string premiseNumber,
             float area, int floorNumber, bool availAbilityOfPhoneNumber,
             float tempRentalPayment)
@@ -221,6 +337,11 @@ namespace DataBase1WPF.Models.Services.Tables.Building
                 tempRentalPayment);
         }
 
+
+        /// <summary>
+        /// Удаление помещения
+        /// </summary>
+        /// <param name="row"></param>
         public void DeletePremises(DataRow row)
         {
             _premiseService.Delete(row);

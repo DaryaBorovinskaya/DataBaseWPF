@@ -6,15 +6,27 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.UserManagement
 {
+    /// <summary>
+    /// Сервис для управления правами пользователей
+    /// </summary>
     public class UserManagementService : ITableService
     {
         private Dictionary<DataRow, IUserAbilitiesDB> _dataDictionary;
+
+        /// <summary>
+        /// Получение значений прав пользователей
+        /// </summary>
+        /// <returns></returns>
         private List<IUserAbilitiesDB> GetValues()
         {
             List<IUserAbilitiesDB> values = DataManager.GetInstance().UserAbilitiesDB_Repository.Read().ToList();
             return values;
         }
 
+        /// <summary>
+        /// Получение значений прав пользователей в таблице DataTable
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetValuesTable()
         {
             List<IUserAbilitiesDB> values = GetValues();
@@ -31,10 +43,21 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return table;
         }
 
+
+        /// <summary>
+        /// Получение имени таблицы права пользователей
+        /// </summary>
+        /// <returns></returns>
         public string GetTableName()
         {
             return "Права пользователей";
         }
+
+        /// <summary>
+        /// Поиск данных по таблице права пользователей
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(string searchLine)
         {
             List<IUserAbilitiesDB> values = GetValues().Where(item => 
@@ -57,8 +80,12 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return table;
         }
 
-        
 
+        /// <summary>
+        /// Получение индекса сотрудника у выбранного значения права пользователя
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetEmployeesSelectedIndex(DataRow row)
         {
             List<IEmployeeDB> employeesDB = DataManager.GetInstance().EmployeeDB_Repository.Read().ToList();
@@ -67,6 +94,11 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
         }
 
 
+        /// <summary>
+        /// Получение прав пользователя к разделу управления правами пользователя
+        /// </summary>
+        /// <param name="menuElemId"></param>
+        /// <returns></returns>
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
             UserAbilitiesType userAbilities = new();
@@ -88,7 +120,10 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return userAbilities;
         }
 
-
+        /// <summary>
+        /// Получение пользователей
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetUsers()
         {
             List<string> users = new();
@@ -103,7 +138,10 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return users;
         }
 
-
+        /// <summary>
+        /// Получение элементов меню ( возврат значений из базы данных )
+        /// </summary>
+        /// <returns></returns>
         public List<IMenuElemDB> GetMenuElemsDB()
         {
             List<IMenuElemDB> menuElems = new();
@@ -119,6 +157,10 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return menuElems;
         }
 
+        /// <summary>
+        /// Получение списка элементов меню (список строк)
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetMenuElems()
         {
             List<string> menuElems = new();
@@ -134,6 +176,11 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
             return menuElems;
         }
 
+        /// <summary>
+        /// Получение индекса пользователя у выбранного значения права пользователя
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetUserSelectedIndex(DataRow row)
         {
             List<IUserDB> usersDB = DataManager.GetInstance().UserDB_Repository.Read().ToList();
@@ -142,12 +189,27 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
 
         }
 
+        /// <summary>
+        /// Получение индекса элемента меню у выбранного значения права пользователя
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetMenuElemSelectedIndex(DataRow row)
         {
             return GetMenuElemsDB().FindIndex((elem) => elem.Id == _dataDictionary[row].MenuElemId);
 
         }
         
+
+        /// <summary>
+        /// Добавление права пользователя
+        /// </summary>
+        /// <param name="userSelectedIndex"></param>
+        /// <param name="menuElemSelectedIndex"></param>
+        /// <param name="canRead"></param>
+        /// <param name="canWrite"></param>
+        /// <param name="canEdit"></param>
+        /// <param name="canDelete"></param>
         public void Add(int userSelectedIndex,
             int menuElemSelectedIndex, bool canRead,
             bool canWrite, bool canEdit, bool canDelete)
@@ -162,6 +224,17 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
                 ));
         }
 
+
+        /// <summary>
+        /// Изменение права пользователя
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="userSelectedIndex"></param>
+        /// <param name="menuElemSelectedIndex"></param>
+        /// <param name="canRead"></param>
+        /// <param name="canWrite"></param>
+        /// <param name="canEdit"></param>
+        /// <param name="canDelete"></param>
         public void Update(DataRow row, int userSelectedIndex,
             int menuElemSelectedIndex, bool canRead,
             bool canWrite, bool canEdit, bool canDelete)
@@ -177,6 +250,10 @@ namespace DataBase1WPF.Models.Services.Tables.UserManagement
                 ));
         }
 
+        /// <summary>
+        /// Удаление права пользователя
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().UserAbilitiesDB_Repository.Delete(_dataDictionary[row].Id);

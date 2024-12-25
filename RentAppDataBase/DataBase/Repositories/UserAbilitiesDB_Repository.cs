@@ -3,10 +3,18 @@ using System.Data;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с правами пользователей из базы данных
+    /// </summary>
     public class UserAbilitiesDB_Repository : IRepositoryDB<IUserAbilitiesDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового права пользователя в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IUserAbilitiesDB entity)
         {
             _query = $"insert into users_abilities " +
@@ -15,6 +23,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"{entity.W}, {entity.E}, {entity.D})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о правах пользователей из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IUserAbilitiesDB> Read()
         {
             _query = "SELECT rentapp.users_abilities.id, " +
@@ -61,6 +74,11 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных права пользователя из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
+
         public void Update(IUserAbilitiesDB entity)
         {
             _query = $"update users_abilities set " +
@@ -70,6 +88,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление права пользователя из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from users_abilities where id={id}";

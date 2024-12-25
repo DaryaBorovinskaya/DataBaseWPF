@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace DataBase1WPF.DataBase.Entities.Handbook
 {
+    /// <summary>
+    /// Данные о справочной информации из базы данных
+    /// </summary>
     public class HandbookDB : IHandbookDB, IComparable
     {
         public uint Id { get; set; }

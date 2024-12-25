@@ -2,8 +2,15 @@
 
 namespace DataBase1WPF.Models.Services.Tables.Contract
 {
+    /// <summary>
+    /// Экспорт в MS Excel
+    /// </summary>
     public class ExportToExcel 
     {
+        /// <summary>
+        /// Экспортировать таблицу
+        /// </summary>
+        /// <param name="dataTable"></param>
         public static void ExportTable(DataTable dataTable)
         {
             if (dataTable.Rows.Count > 0)

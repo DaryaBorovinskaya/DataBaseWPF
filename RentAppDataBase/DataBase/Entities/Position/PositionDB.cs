@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Position
 {
+    /// <summary>
+    /// Данные о должностях из базы данных
+    /// </summary>
     public class PositionDB : IPositionDB
     {
         public uint Id { get ; set ; }

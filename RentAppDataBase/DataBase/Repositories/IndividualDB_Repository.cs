@@ -3,10 +3,18 @@ using System.Data;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с физическими лицами из базы данных
+    /// </summary>
     public class IndividualDB_Repository : IRepositoryDB<IIndividualDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового физического лица в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IIndividualDB entity)
         {
             _query = $"insert into individuals " +
@@ -18,6 +26,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"'{entity.DateOfIssue}', '{entity.IssuedBy}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о физических лицах из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IIndividualDB> Read()
         {
             _query = "select * from individuals";
@@ -40,6 +53,11 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+
+        /// <summary>
+        /// Изменение данных физического лица из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IIndividualDB entity)
         {
             _query = $"update individuals set " +
@@ -50,6 +68,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление физического лица из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from individuals where id={id}";

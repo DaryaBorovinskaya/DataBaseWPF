@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.Models.Services
 {
+    /// <summary>
+    /// Сервис О программе
+    /// </summary>
     public class AboutProgramService 
     {
         public string AboutProgramText => "О программе\n" +

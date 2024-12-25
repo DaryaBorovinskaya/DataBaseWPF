@@ -4,6 +4,9 @@ using DataBase1WPF.Models.Encryptors;
 
 namespace DataBase1WPF.Models.Services.Registration
 {
+    /// <summary>
+    /// Сервис для регистрации пользователя
+    /// </summary>
     public class RegistrationService 
     {
         private IEncryptor<string,  string> _encryptor;
@@ -13,6 +16,10 @@ namespace DataBase1WPF.Models.Services.Registration
             _encryptor = encryptor;
         }
 
+        /// <summary>
+        /// Получение списка всех сотрудников
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetEmployees()
         {
             List<string> employees = new();
@@ -26,6 +33,13 @@ namespace DataBase1WPF.Models.Services.Registration
             return employees;
         }
 
+        /// <summary>
+        /// Попытка регистрации
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <param name="employeeSelectedIndex"></param>
+        /// <returns></returns>
         public bool Registration(string login, string password, int employeeSelectedIndex)
         {
             IList<IUserDB> usersDB = DataManager.GetInstance().UserDB_Repository.Read();

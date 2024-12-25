@@ -8,10 +8,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с периодичностью оплаты из базы данных
+    /// </summary>
     public class PaymentFrequencyDB_Repository : IRepositoryDB<IHandbookDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление новой периодичности оплаты в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IHandbookDB entity)
         {
             _query = $"insert into payment_frequencies " +
@@ -19,6 +27,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"values ('{entity.Title}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о периодичностях оплаты из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IHandbookDB> Read()
         {
             _query = "select * from payment_frequencies";
@@ -34,6 +47,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных периодичностей оплаты из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IHandbookDB entity)
         {
             _query = $"update payment_frequencies set " +
@@ -41,6 +58,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление периодичности оплаты из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from payment_frequencies where id={id}";

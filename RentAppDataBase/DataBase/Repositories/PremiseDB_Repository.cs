@@ -10,10 +10,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с помещениями из базы данных
+    /// </summary>
     public class PremiseDB_Repository : IRepositoryDB<IPremiseDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового помещения в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IPremiseDB entity)
         {
             _query = $"insert into premises " +
@@ -30,6 +38,10 @@ namespace DataBase1WPF.DataBase.Repositories
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Изменение данных помещения из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IPremiseDB entity)
         {
             _query = $"update premises set " +
@@ -41,13 +53,22 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление помещения из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from premises where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
 
-
+        /// <summary>
+        /// Получение помещений по идентификатору здания
+        /// </summary>
+        /// <param name="building_id"></param>
+        /// <returns></returns>
         public IList<IPremiseDB> GetPremisesByBuildingId(uint building_id)
         {
             _query = $"SELECT  rentapp.premises.id, rentapp.premises.building_id, " +

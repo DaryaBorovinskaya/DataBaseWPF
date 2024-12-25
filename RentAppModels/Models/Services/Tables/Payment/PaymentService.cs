@@ -5,9 +5,17 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Payment
 {
+    /// <summary>
+    /// Сервис для платежей
+    /// </summary>
     public class PaymentService
     {
         private Dictionary<DataRow, IPaymentDB> _dataDictionary;
+        /// <summary>
+        /// Получение платежей в таблице DataTable по идентификатору договора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DataTable? GetPaymentsByContractId(uint id)
         {
             DataTable table = null;
@@ -28,6 +36,13 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
             return table;
         }
 
+
+        /// <summary>
+        /// Поиск данных по таблице платежи
+        /// </summary>
+        /// <param name="contractId"></param>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(uint contractId, string searchLine)
         {
             DataTable table = new();
@@ -49,21 +64,14 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
             return table;
         }
 
+        
 
-        public List<string> GetTypesOfFinishing()
-        {
-            List<string> typesOfFinishing = new();
-
-            List<IHandbookDB> typesOfFinishingDB = DataManager.GetInstance().TypeOfFinishingDB_Repository.Read().ToList();
-
-            foreach (IHandbookDB typeOfFinishingDB in typesOfFinishingDB)
-                typesOfFinishing.Add(typeOfFinishingDB.Title);
-
-
-            return typesOfFinishing;
-        }
-
-
+        /// <summary>
+        /// Добавление платежа
+        /// </summary>
+        /// <param name="contractId"></param>
+        /// <param name="dateOfPayment"></param>
+        /// <param name="amountOfPayment"></param>
         public void Add(uint contractId, DateTime dateOfPayment,
             float amountOfPayment)
         {
@@ -74,6 +82,14 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
                 ));
         }
 
+
+        /// <summary>
+        /// Изменение платежа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="contractId"></param>
+        /// <param name="dateOfPayment"></param>
+        /// <param name="amountOfPayment"></param>
         public void Update(DataRow row, uint contractId, DateTime dateOfPayment,
             float amountOfPayment)
         {
@@ -85,6 +101,10 @@ namespace DataBase1WPF.Models.Services.Tables.Payment
                 ));
         }
 
+        /// <summary>
+        /// Удаление платежа
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().PaymentDB_Repository.Delete(_dataDictionary[row].Id);

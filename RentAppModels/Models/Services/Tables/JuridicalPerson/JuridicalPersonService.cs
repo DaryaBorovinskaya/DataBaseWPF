@@ -5,6 +5,9 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 {
+    /// <summary>
+    /// Сервис для юридических лиц
+    /// </summary>
     public class JuridicalPersonService : ITableService
     {
         private Dictionary<DataRow, IJuridicalPersonDB> _dataDictionary;
@@ -12,12 +15,22 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
         private UserAbilitiesType _userAbilities;
 
         public UserAbilitiesType UserAbilities => _userAbilities;
+
+        /// <summary>
+        /// Получение данных юридических лиц
+        /// </summary>
+        /// <returns></returns>
         private List<IJuridicalPersonDB> GetValues()
         {
             List<IJuridicalPersonDB> values = DataManager.GetInstance().JuridicalPersonDB_Repository.Read().ToList();
             return values;
         }
 
+
+        /// <summary>
+        /// Получение данных юридических лиц в таблице DataTable
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetValuesTable()
         {
             List<IJuridicalPersonDB> values = GetValues();
@@ -35,10 +48,21 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
             return table;
         }
 
+
+        /// <summary>
+        /// Получение имени таблицы юридические лица
+        /// </summary>
+        /// <returns></returns>
         public string GetTableName()
         {
             return "Юридические лица";
         }
+
+        /// <summary>
+        /// Поиск данных по таблице юридические лица
+        /// </summary>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(string searchLine)
         {
             List<IJuridicalPersonDB> values = GetValues().Where(item => 
@@ -69,6 +93,11 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
         }
 
 
+        /// <summary>
+        /// Получение прав пользователя к юрдическим лицам
+        /// </summary>
+        /// <param name="menuElemId"></param>
+        /// <returns></returns>
         public UserAbilitiesType GetUserAbilities(uint menuElemId)
         {
             _userAbilities = new();
@@ -91,6 +120,10 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
         }
 
 
+        /// <summary>
+        /// Получение списка районов
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetDistricts()
         {
             List<string> districts = new();
@@ -104,6 +137,10 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
             return districts;
         }
 
+        /// <summary>
+        /// Получение списка улиц
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetStreets()
         {
             List<string> streets = new();
@@ -117,7 +154,10 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
             return streets;
         }
 
-
+        /// <summary>
+        /// Получение списка банков
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetBanks()
         {
             List<string> banks = new();
@@ -133,7 +173,11 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 
 
 
-
+        /// <summary>
+        /// Получение индекса района у выбранного  юридического лица
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetDistrictSelectedIndex(DataRow row)
         {
             List<IHandbookDB> districtsDB = DataManager.GetInstance().DistrictDB_Repository.Read().ToList();
@@ -142,6 +186,12 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 
         }
 
+
+        /// <summary>
+        /// Получение индекса улицы у выбранного  юридического лица
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetStreetsSelectedIndex(DataRow row)
         {
             List<IHandbookDB> streetsDB = DataManager.GetInstance().StreetDB_Repository.Read().ToList();
@@ -150,6 +200,12 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
 
         }
 
+
+        /// <summary>
+        /// Получение индекса банка у выбранного  юридического лица
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetBanksSelectedIndex(DataRow row)
         {
             List<IHandbookDB> banksDB = DataManager.GetInstance().BankDB_Repository.Read().ToList();
@@ -159,7 +215,20 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
         }
 
 
-
+        /// <summary>
+        /// Добавление юридического лица
+        /// </summary>
+        /// <param name="districtSelectedIndex"></param>
+        /// <param name="streetSelectedIndex"></param>
+        /// <param name="bankSelectedIndex"></param>
+        /// <param name="nameOfOrganization"></param>
+        /// <param name="directorSurname"></param>
+        /// <param name="directorName"></param>
+        /// <param name="directorPatronymic"></param>
+        /// <param name="organizationHouseNumber"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="paymentAccount"></param>
+        /// <param name="individualTaxpayerNumber"></param>
         public void Add(int districtSelectedIndex,
             int streetSelectedIndex, int bankSelectedIndex, string nameOfOrganization,
             string directorSurname, string directorName, string directorPatronymic,
@@ -181,6 +250,22 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
                 ));
         }
 
+
+        /// <summary>
+        /// Изменение юридического лица
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="districtSelectedIndex"></param>
+        /// <param name="streetSelectedIndex"></param>
+        /// <param name="bankSelectedIndex"></param>
+        /// <param name="nameOfOrganization"></param>
+        /// <param name="directorSurname"></param>
+        /// <param name="directorName"></param>
+        /// <param name="directorPatronymic"></param>
+        /// <param name="organizationHouseNumber"></param>
+        /// <param name="phoneNumber"></param>
+        /// <param name="paymentAccount"></param>
+        /// <param name="individualTaxpayerNumber"></param>
         public void Update(DataRow row, int districtSelectedIndex,
             int streetSelectedIndex, int bankSelectedIndex, string nameOfOrganization,
             string directorSurname, string directorName, string directorPatronymic,
@@ -203,12 +288,23 @@ namespace DataBase1WPF.Models.Services.Tables.JuridicalPerson
                 ));
         }
 
+
+
+        /// <summary>
+        /// Удаление юридического лица
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().JuridicalPersonDB_Repository.Delete(_dataDictionary[row].Id);
         }
 
 
+        /// <summary>
+        /// Получение идентификатора выбранного юридического лица
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public uint GetJuridicalPersonId(DataRow row)
         {
             return _dataDictionary[row].Id;

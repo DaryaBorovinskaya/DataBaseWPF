@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с  сотрудниками из базы данных
+    /// </summary>
     public class EmployeeDB_Repository : IRepositoryDB<IEmployeeDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового сотрудника в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IEmployeeDB entity)
         {
             _query = $"insert into employees " +
@@ -24,6 +32,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"'{entity.HouseNumber}', '{entity.FlatNumber}')";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о сотрудниках из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IEmployeeDB> Read()
         {
             _query = "SELECT  rentapp.employees.id, COALESCE(rentapp.employees.district_id, 0) AS district_id, " +
@@ -56,6 +69,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных сотрудника из базы данных 
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IEmployeeDB entity)
         {
             _query = $"update employees set " +
@@ -66,6 +83,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление сотрудника из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from employees where id={id}";

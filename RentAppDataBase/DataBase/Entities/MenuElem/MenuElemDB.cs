@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.MenuElem
 {
+    /// <summary>
+    /// Данные об элементах главного меню из базы данных
+    /// </summary>
     public class MenuElemDB : IMenuElemDB
     {
         public uint Id { get; set; }

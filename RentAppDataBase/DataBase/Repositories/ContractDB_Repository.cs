@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с договорами из базы данных
+    /// </summary>
     public class ContractDB_Repository :IRepositoryDB<IContractDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового договора в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IContractDB entity)
         {
             if (entity.IndividualId != null) 
@@ -38,6 +46,10 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"{entity.Fine})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+        /// <summary>
+        /// Чтение данных о договорах из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IContractDB> Read()
         {
             _query = $"SELECT  rentapp.contracts.id,   " +
@@ -101,6 +113,10 @@ namespace DataBase1WPF.DataBase.Repositories
 
         }
 
+        /// <summary>
+        /// Изменение данных договора из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IContractDB entity)
         {
             if (entity.IndividualId != null)
@@ -123,12 +139,24 @@ namespace DataBase1WPF.DataBase.Repositories
 
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Удаление договора из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from contracts where id={id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
 
+
+
+        /// <summary>
+        /// Получение договора из базы данных по идентификатору физического лица
+        /// </summary>
+        /// <param name="individual_id"></param>
+        /// <returns></returns>
         public IList<IContractDB> GetContractsByIndividualId(uint individual_id)
         {
             _query = $"SELECT  rentapp.contracts.id,   " +
@@ -192,6 +220,11 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Получение договора из базы данных по идентификатору юридического лица
+        /// </summary>
+        /// <param name="juridicalPerson_id"></param>
+        /// <returns></returns>
         public IList<IContractDB> GetContractsByJuridicalPersonId(uint juridicalPerson_id)
         {
             _query = $"SELECT  rentapp.contracts.id,   " +

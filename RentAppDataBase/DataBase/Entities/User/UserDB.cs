@@ -1,5 +1,8 @@
 ﻿namespace DataBase1WPF.DataBase.Entities.User
 {
+    /// <summary>
+    /// Данные о пользователях из базы данных
+    /// </summary>
     public class UserDB : IUserDB
     {
         public uint Id { get; set; }

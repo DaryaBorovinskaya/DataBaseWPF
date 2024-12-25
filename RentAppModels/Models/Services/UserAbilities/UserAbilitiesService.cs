@@ -3,6 +3,9 @@ using DataBase1WPF.DataBase.Entities.UserAbilities;
 
 namespace DataBase1WPF.Models.Services.UserAbilities
 {
+    /// <summary>
+    /// Сервис прав пользователей 
+    /// </summary>
     public class UserAbilitiesService
     {
         private IList<IMenuElemDB> _menuElems;
@@ -22,6 +25,12 @@ namespace DataBase1WPF.Models.Services.UserAbilities
             }
         }
 
+        /// <summary>
+        /// Получение прав пользователей  
+        /// </summary>
+        /// <param name="funcName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public IUserAbilitiesDB GetUserAbilitiesByFuncName(string funcName) 
         {
             foreach(IMenuElemDB menuElem in _menuElems) 

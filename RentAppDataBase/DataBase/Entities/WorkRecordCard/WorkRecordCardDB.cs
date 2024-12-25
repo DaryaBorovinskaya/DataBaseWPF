@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
 {
+    /// <summary>
+    /// Данные о трудовых книжках сотрудников из базы данных
+    /// </summary>
     public class WorkRecordCardDB : IWorkRecordCardDB
     {
         public uint Id { get; set; }
@@ -16,13 +19,13 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
 
         public string OrderNumber { get; set; }
 
-        public string/*DateTime*/ OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public string PositionName { get; set; }
 
         public string ReasonOfRecording { get; set; }
         
         public WorkRecordCardDB(uint id, uint employeeID, uint positionId, 
-            string positionName, string orderNumber, string /*DateTime*/ orderDate, 
+            string positionName, string orderNumber, string  orderDate, 
             string reasonOfRecording)
         {
             Id = id;
@@ -35,7 +38,7 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
         }
 
         public WorkRecordCardDB(uint id, uint employeeID, uint positionId,
-            string orderNumber, string /*DateTime*/ orderDate, string reasonOfRecording)
+            string orderNumber, string  orderDate, string reasonOfRecording)
         {
             Id = id;
             EmployeeID = employeeID;
@@ -47,7 +50,7 @@ namespace DataBase1WPF.DataBase.Entities.WorkRecordCard
 
 
         public WorkRecordCardDB(uint employeeID, uint positionId,
-            string orderNumber, string /*DateTime*/ orderDate, string reasonOfRecording)
+            string orderNumber, string  orderDate, string reasonOfRecording)
         {
             EmployeeID = employeeID;
             PositionId = positionId;

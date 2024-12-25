@@ -9,10 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Repositories
 {
+    /// <summary>
+    /// Взаимодействие с пользователями из базы данных
+    /// </summary>
     public class UserDB_Repository : IRepositoryDB <IUserDB>
     {
         private string _query;
         private string _exception = string.Empty;
+
+        /// <summary>
+        /// Добавление нового пользователя в базу данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Create(IUserDB entity)
         {
             _query = $"insert into users " +
@@ -20,6 +28,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"values ('{entity.Login}', '{entity.Password}', {entity.EmployeeId})";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о пользователях из базы данных
+        /// </summary>
+        /// <returns></returns>
         public IList<IUserDB> Read()
         {
             _query = "SELECT rentapp.users.id ,\r\nrentapp.users.login, " +
@@ -47,6 +60,10 @@ namespace DataBase1WPF.DataBase.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Изменение данных пользователя из базы данных
+        /// </summary>
+        /// <param name="entity"></param>
         public void Update(IUserDB entity)
         {
             _query = $"update users set " +
@@ -54,6 +71,11 @@ namespace DataBase1WPF.DataBase.Repositories
                      $"where id={entity.Id}";
             RentappSQLConnection.GetInstance().ExecuteRequest(_query, ref _exception);
         }
+
+        /// <summary>
+        /// Чтение данных о пользователе из базы данных
+        /// </summary>
+        /// <param name="id"></param>
         public void Delete(uint id)
         {
             _query = $"delete from users where id={id}";

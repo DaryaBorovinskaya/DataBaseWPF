@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase1WPF.DataBase.Entities.Employee
 {
+    /// <summary>
+    /// Данные о сотрудниках из базы данных
+    /// </summary>
     public class EmployeeDB : IEmployeeDB
     {
         public uint Id { get; set; }

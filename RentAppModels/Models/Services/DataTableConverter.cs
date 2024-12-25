@@ -3,8 +3,17 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services
 {
+    /// <summary>
+    /// Преобразователь в таблицу DataTable
+    /// </summary>
     public static class DataTableConverter
     {
+        /// <summary>
+        /// Создание таблицы DataTable по данных типа List
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public static DataTable ToDataTable<T>(List<T> list)
         {
             PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));

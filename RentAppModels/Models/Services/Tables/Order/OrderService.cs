@@ -7,11 +7,20 @@ using System.Data;
 
 namespace DataBase1WPF.Models.Services.Tables.Order
 {
+    /// <summary>
+    /// Сервис для заказов
+    /// </summary>
     public class OrderService 
     {
         private Dictionary<DataRow, IOrderDB> _dataDictionary;
         private uint _contractId;
         private DataRow _rowForEdit;
+
+        /// <summary>
+        /// Получение заказов в таблице DataTable по идентификатору договора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DataTable? GetOrdersByContractId(uint id)
         {
             _contractId = id;
@@ -38,6 +47,12 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return table;
         }
 
+
+        /// <summary>
+        /// Получение заказов (значения из базы данных) по идентификатору договора
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<IOrderDB> GetOrdersDBbyContractId(uint id)
         {
             if (DataManager.GetInstance().OrderDB_Repository is OrderDB_Repository repository)
@@ -46,6 +61,15 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             }
             else return null;
         }
+
+
+
+        /// <summary>
+        /// Поиск данных по таблице заказов
+        /// </summary>
+        /// <param name="buildingId"></param>
+        /// <param name="searchLine"></param>
+        /// <returns></returns>
         public DataTable SearchDataInTable(uint buildingId, string searchLine)
         {
             DataTable table = new();
@@ -83,7 +107,10 @@ namespace DataBase1WPF.Models.Services.Tables.Order
 
         
 
-
+        /// <summary>
+        /// Получение списка свободных помещений
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetPremises()
         {
             List<string> premises = new();
@@ -123,6 +150,11 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         }
 
 
+        /// <summary>
+        /// Получение помещений (значения из базы данных) при изменении помещения в заказе
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public List<IPremiseDB> GetPremisesDBForEdit(DataRow row)
         {
             List<IPremiseDB> premises = new();
@@ -159,6 +191,12 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return premises;
         }
 
+
+        /// <summary>
+        /// Получение списка помещений при изменении помещения в заказе
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public List<string> GetPremisesForEdit(DataRow row)
         {
             _rowForEdit = row;
@@ -207,6 +245,11 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return premises;
         }
 
+
+        /// <summary>
+        /// Получение помещений (значения из базы данных)
+        /// </summary>
+        /// <returns></returns>
         private List<IPremiseDB> GetPremisesDB()
         {
             List<IPremiseDB> premises = new();
@@ -241,6 +284,10 @@ namespace DataBase1WPF.Models.Services.Tables.Order
         }
 
 
+        /// <summary>
+        /// Получение списка целей аренды
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetRentalPurposes()
         {
             List<string> rentalPurposes = new();
@@ -254,6 +301,11 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return rentalPurposes;
         }
 
+        /// <summary>
+        /// Получение индекса цели аренды у выбранного  заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetRentalPurposesSelectedIndex(DataRow row)
         {
             List<IHandbookDB> rentalPurposes = DataManager.GetInstance().RentalPurposeDB_Repository.Read().ToList();
@@ -261,13 +313,26 @@ namespace DataBase1WPF.Models.Services.Tables.Order
             return rentalPurposes.FindIndex((elem) => elem.Id == _dataDictionary[row].RentalPurposeId);
         }
 
-
+        /// <summary>
+        /// Получение индекса помещения у выбранного  заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public int GetPremisesSelectedIndex(DataRow row)
         {
             return GetPremisesDBForEdit(_rowForEdit).FindIndex((elem) => elem.Id == _dataDictionary[row].PremiseID);
         }
 
 
+        /// <summary>
+        /// Добавление заказа
+        /// </summary>
+        /// <param name="contractId"></param>
+        /// <param name="premiseSelectedIndex"></param>
+        /// <param name="rentalPurposeSelectedIndex"></param>
+        /// <param name="beginOfRent"></param>
+        /// <param name="endOfRent"></param>
+        /// <param name="rentalPayment"></param>
         public void Add(uint contractId, int premiseSelectedIndex, 
             int rentalPurposeSelectedIndex,
             DateTime beginOfRent, DateTime endOfRent,
@@ -283,6 +348,17 @@ namespace DataBase1WPF.Models.Services.Tables.Order
                 ));
         }
 
+
+        /// <summary>
+        /// Изменение заказа
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="contractId"></param>
+        /// <param name="premiseSelectedIndex"></param>
+        /// <param name="rentalPurposeSelectedIndex"></param>
+        /// <param name="beginOfRent"></param>
+        /// <param name="endOfRent"></param>
+        /// <param name="rentalPayment"></param>
         public void Update(DataRow row, uint contractId, int premiseSelectedIndex,
             int rentalPurposeSelectedIndex,
             DateTime beginOfRent, DateTime endOfRent,
@@ -299,6 +375,10 @@ namespace DataBase1WPF.Models.Services.Tables.Order
                 ));
         }
 
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
+        /// <param name="row"></param>
         public void Delete(DataRow row)
         {
             DataManager.GetInstance().OrderDB_Repository.Delete(_dataDictionary[row].Id);

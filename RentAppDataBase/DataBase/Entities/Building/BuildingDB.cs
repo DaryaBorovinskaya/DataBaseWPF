@@ -2,6 +2,9 @@
 
 namespace DataBase1WPF.DataBase.Entities.Building
 {
+    /// <summary>
+    /// Данные о здании из базы данных
+    /// </summary>
     public class BuildingDB :IBuildingDB
     {
         public uint Id { get; set; }
