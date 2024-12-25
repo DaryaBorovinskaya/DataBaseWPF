@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна SQLqueryWindow
+    /// </summary>
     public class SQLqueryVM : BasicVM
     {
         private DataTable _dataTable = new();
@@ -30,6 +33,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
         
+        /// <summary>
+        /// Выполнение запроса
+        /// </summary>
         public ICommand ClickExecuteQuery
         {
             get

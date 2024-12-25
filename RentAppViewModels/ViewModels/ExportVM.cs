@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна ExportWindow
+    /// </summary>
     public class ExportVM : BasicVM
     {
         private ITableService _tableService;
@@ -103,6 +106,9 @@ namespace DataBase1WPF.ViewModels
         }
 
 
+        /// <summary>
+        /// Экспорт в MS Word
+        /// </summary>
         public ICommand ClickExportWord
         {
             get
@@ -115,6 +121,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Экспорт в MS Excel
+        /// </summary>
         public ICommand ClickExportExcel
         {
             get
@@ -127,6 +136,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             ExportWordVisibility =  Visibility.Visible;

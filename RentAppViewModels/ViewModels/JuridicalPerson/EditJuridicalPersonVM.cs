@@ -12,6 +12,9 @@ using DataBase1WPF.Models.Services.Tables.JuridicalPerson;
 
 namespace DataBase1WPF.ViewModels.JuridicalPerson
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditJuridicalPersonWindow
+    /// </summary>
     public class EditJuridicalPersonVM : BasicVM
     {
         private ITableService _tableService;
@@ -205,7 +208,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
 
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -243,6 +248,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is JuridicalPersonService service)

@@ -17,6 +17,12 @@ namespace DataBase1WPF.Views
         Assembly assembly = Assembly.GetExecutingAssembly();
 
         
+
+        /// <summary>
+        /// Обработчик события загрузки окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             timerForWindow.Interval = new System.TimeSpan(100);
@@ -35,11 +41,21 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события Успешная смена пароля
+        /// </summary>
         private void SuccessChangePassword()
         {
             this.Close();
         }
 
+
+        /// <summary>
+        /// Обработчик события Таймер
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, System.EventArgs e)
         {
             if (Console.CapsLock)
@@ -58,6 +74,13 @@ namespace DataBase1WPF.Views
             textBlockRusEng.Text = "Язык ввода " + newLanguageName;
         }
 
+
+
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxOldPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxOldPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
@@ -66,6 +89,12 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxNewPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxNewPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
@@ -74,6 +103,12 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxConfirmPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
@@ -82,6 +117,12 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события нажатия на кнопку Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             textBoxOldPassword.Clear();

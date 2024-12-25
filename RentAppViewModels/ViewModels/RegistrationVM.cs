@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна RegistrationWindow
+    /// </summary>
     public class RegistrationVM : BasicVM
     {
         private RegistrationService _service;
@@ -57,6 +60,10 @@ namespace DataBase1WPF.ViewModels
             _employeesComboBox = _service.GetEmployees();
         }
 
+
+        /// <summary>
+        /// Регистрация
+        /// </summary>
         public ICommand ClickRegistrate
         {
             get

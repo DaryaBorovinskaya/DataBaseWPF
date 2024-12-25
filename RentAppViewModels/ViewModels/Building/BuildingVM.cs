@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Building
 {
+    /// <summary>
+    /// Обработка и получение данных из окна BuildingWindow
+    /// </summary>
     public class BuildingVM : BasicVM
     {
         private ITableService _tableService;
@@ -156,7 +159,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -164,12 +169,19 @@ namespace DataBase1WPF.ViewModels.Building
 
         }
 
+        /// <summary>
+        /// Нажатие на DataTablePremises
+        /// </summary>
         public void DataTablePremisesMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
             DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
         }
 
+
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTable
+        /// </summary>
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -177,6 +189,9 @@ namespace DataBase1WPF.ViewModels.Building
 
         }
 
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTablePremises
+        /// </summary>
         public void DataTablePremisesMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -215,6 +230,10 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+
+        /// <summary>
+        /// Нажатие на Добавить
+        /// </summary>
         public ICommand ClickAdd
         {
             get
@@ -226,6 +245,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить
+        /// </summary>
         public ICommand ClickEdit
         {
             get
@@ -239,7 +261,9 @@ namespace DataBase1WPF.ViewModels.Building
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Удалить
+        /// </summary>
         public ICommand ClickDelete
         {
             get
@@ -252,7 +276,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на Добавить (помещение)
+        /// </summary>
         public ICommand ClickAddPremises
         {
             get
@@ -264,6 +290,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить (помещение)
+        /// </summary>
         public ICommand ClickEditPremises
         {
             get
@@ -277,7 +306,9 @@ namespace DataBase1WPF.ViewModels.Building
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Удалить (помещение)
+        /// </summary>
         public ICommand ClickDeletePremises
         {
             get
@@ -292,7 +323,9 @@ namespace DataBase1WPF.ViewModels.Building
 
 
 
-
+        /// <summary>
+        /// Удаление
+        /// </summary>
         public void Delete()
         {
             PremisesVisibility = Visibility.Collapsed;
@@ -300,11 +333,18 @@ namespace DataBase1WPF.ViewModels.Building
             UpdateDataTable();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы
+        /// </summary>
         public void UpdateDataTable()
         {
             DataTableBuildings = _tableService.GetValuesTable();
         }
 
+
+        /// <summary>
+        /// Удаление (помещение)
+        /// </summary>
         public void DeletePremises()
         {
             if (_tableService is BuildingService service) 
@@ -312,6 +352,9 @@ namespace DataBase1WPF.ViewModels.Building
             UpdateDataTablePremises();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы помещения
+        /// </summary>
         public void UpdateDataTablePremises()
         {
             if (_tableService is BuildingService service)

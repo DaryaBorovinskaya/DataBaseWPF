@@ -16,10 +16,7 @@ namespace DataBase1WPF.Views
            
         }
 
-        void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            
-        }
+        
 
         
     }

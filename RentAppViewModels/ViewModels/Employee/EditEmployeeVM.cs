@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditEmployeeWindow
+    /// </summary>
     public class EditEmployeeVM : BasicVM
     {
         private ITableService _tableService;
@@ -150,6 +153,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -181,6 +187,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (FlatNumberText == null)

@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Building
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditBuildingWindow
+    /// </summary>
     public class AddBuildingVM : BasicVM
     {
         private ITableService _tableService;
@@ -118,7 +121,11 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
-
+        /// <summary>
+        /// Валидация ( тип данных uint)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private uint CheckValuesUint(string line)
         {
             try
@@ -140,6 +147,11 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Проверка значения количества этажей
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private bool CheckValueNumberOfFloors(uint value)
         {
             if (value <= 255)
@@ -147,6 +159,11 @@ namespace DataBase1WPF.ViewModels.Building
             return false;
         }
 
+        /// <summary>
+        /// Проверка значения количества помещений для аренды
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private bool CheckValueCountRentalPremises(uint value)
         {
             if (value <= 65535)
@@ -154,7 +171,9 @@ namespace DataBase1WPF.ViewModels.Building
             return false;
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -198,6 +217,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is BuildingService service)

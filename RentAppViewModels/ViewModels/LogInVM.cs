@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна LogInWindow
+    /// </summary>
     public class LogInVM : BasicVM
     {
         private string _name;
@@ -24,6 +27,9 @@ namespace DataBase1WPF.ViewModels
         }
 
 
+        /// <summary>
+        /// Отмена
+        /// </summary>
         public ICommand ClickCancellation
         {
             get 
@@ -35,6 +41,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Аутентификация
+        /// </summary>
         public ICommand ClickLogIn
         {
             get

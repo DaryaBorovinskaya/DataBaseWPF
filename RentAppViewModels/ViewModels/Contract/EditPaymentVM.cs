@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditPaymentWindow
+    /// </summary>
     public class EditPaymentVM : BasicVM
     {
         private DataRow _row;
@@ -61,6 +64,11 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Валидация ( тип данных float)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private float CheckValuesFloat(string line)
         {
             try
@@ -82,7 +90,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -107,6 +117,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is ContractService service)

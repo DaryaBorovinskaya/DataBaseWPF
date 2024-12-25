@@ -12,6 +12,9 @@ using DataBase1WPF.Models.Services.Tables.Individual;
 
 namespace DataBase1WPF.ViewModels.Individual
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditIndividualWindow
+    /// </summary>
     public class EditIndividualVM : BasicVM
     {
         private ITableService _tableService;
@@ -129,7 +132,9 @@ namespace DataBase1WPF.ViewModels.Individual
             _issuedByText = _row[7].ToString();
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -160,6 +165,9 @@ namespace DataBase1WPF.ViewModels.Individual
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is IndividualService service)

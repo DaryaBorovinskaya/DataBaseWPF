@@ -13,6 +13,9 @@ using DataBase1WPF.Models.Services.Tables.JuridicalPerson;
 
 namespace DataBase1WPF.ViewModels.JuridicalPerson
 {
+    // <summary>
+    /// Обработка и получение данных из окна JuridicalPersonWindow
+    /// </summary>
     public class JuridicalPersonVM : BasicVM
     {
         private ITableService _tableService;
@@ -129,6 +132,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
             _selectedIndex = -1;
         }
 
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -136,6 +142,10 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
 
         }
 
+
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTable
+        /// </summary>
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -143,7 +153,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
 
         }
 
-
+        /// <summary>
+        /// Нажатие на Добавить
+        /// </summary>
         public ICommand ClickAdd
         {
             get
@@ -155,6 +167,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить
+        /// </summary>
         public ICommand ClickEdit
         {
             get
@@ -168,7 +183,9 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Удалить
+        /// </summary>
         public ICommand ClickDelete
         {
             get
@@ -181,6 +198,10 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
             }
         }
 
+
+        /// <summary>
+        /// Нажатие на Договоры
+        /// </summary>
         public ICommand ClickContracts
         {
             get
@@ -198,12 +219,18 @@ namespace DataBase1WPF.ViewModels.JuridicalPerson
             }
         }
 
+        /// <summary>
+        /// Удаление
+        /// </summary>
         public void Delete()
         {
             _tableService.Delete(DataTableJuridicalPersons.Rows[SelectedIndex]);
             UpdateDataTable();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы
+        /// </summary>
         public void UpdateDataTable()
         {
             DataTableJuridicalPersons = _tableService.GetValuesTable();

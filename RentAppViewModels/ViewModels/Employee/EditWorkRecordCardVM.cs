@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditWorkRecordCardWindow
+    /// </summary>
     public class EditWorkRecordCardVM : BasicVM
     {
         private DataRow _row;
@@ -107,7 +110,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -134,7 +139,9 @@ namespace DataBase1WPF.ViewModels.Employee
         }
 
 
-
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is EmployeeService service)

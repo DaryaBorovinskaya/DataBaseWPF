@@ -4,6 +4,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна ConfirmWindow
+    /// </summary>
     public class ConfirmVM : BasicVM
     {
         private string _confirmLine;
@@ -34,6 +37,9 @@ namespace DataBase1WPF.ViewModels
             _tableService = tableService;
         }
 
+        /// <summary>
+        /// Подтверждение 
+        /// </summary>
         public ICommand ClickConfirm
         {
             get
@@ -46,7 +52,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Отмена
+        /// </summary>
         public ICommand ClickCancellation
         {
             get

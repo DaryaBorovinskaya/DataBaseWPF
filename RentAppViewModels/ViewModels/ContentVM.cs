@@ -3,6 +3,9 @@ using RentAppModels.Models.Services;
 
 namespace RentAppViewModels.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна ContentWindow
+    /// </summary>
     public class ContentVM : BasicVM
     {
         private string _contentText;

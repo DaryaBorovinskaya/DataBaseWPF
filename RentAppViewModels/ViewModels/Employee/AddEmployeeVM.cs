@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditEmployeeWindow
+    /// </summary>
     public class AddEmployeeVM : BasicVM
     {
         private ITableService _tableService;
@@ -140,7 +143,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-        
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -172,6 +177,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (FlatNumberText == null) 

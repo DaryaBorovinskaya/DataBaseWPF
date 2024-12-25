@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditPaymentWindow
+    /// </summary>
     public class AddPaymentVM : BasicVM
     {
         private ITableService _tableService;
@@ -58,6 +61,11 @@ namespace DataBase1WPF.ViewModels.Contract
             _dateOfPayment = DateTime.Now;
         }
 
+        /// <summary>
+        /// Валидация ( тип данных float)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private float CheckValuesFloat(string line)
         {
             try
@@ -79,7 +87,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -103,6 +113,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is ContractService service)

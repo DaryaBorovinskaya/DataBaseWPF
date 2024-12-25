@@ -17,6 +17,11 @@ namespace DataBase1WPF.Views
             
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на элемент DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is ExportVM exportVM)

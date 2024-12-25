@@ -11,6 +11,9 @@ using DataBase1WPF.Models.Services.Tables.Individual;
 
 namespace DataBase1WPF.ViewModels.Individual
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditIndividualWindow
+    /// </summary>
     public class AddIndividualVM : BasicVM
     {
         private ITableService _tableService;
@@ -120,6 +123,9 @@ namespace DataBase1WPF.ViewModels.Individual
             _dateOfIssue = DateTime.Now;
         }
 
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -151,6 +157,9 @@ namespace DataBase1WPF.ViewModels.Individual
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is IndividualService service)

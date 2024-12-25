@@ -40,6 +40,10 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события Применить
+        /// </summary>
         public void Apply()
         {
             if (_confirmWindow.DataContext is HandbooksVM handbooksVM)
@@ -173,6 +177,10 @@ namespace DataBase1WPF.Views
                 editUserManagementVM.Edit();
             }
         }
+
+        /// <summary>
+        /// Обработчик события Выход
+        /// </summary>
         public void Exit()
         {
             Close();

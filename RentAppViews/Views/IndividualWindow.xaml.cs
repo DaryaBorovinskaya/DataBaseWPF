@@ -25,18 +25,33 @@ namespace DataBase1WPF.Views
             }
         }
 
+        /// <summary>
+        /// Обработчик события Добавление
+        /// </summary>
+        /// <param name="tableService"></param>
         public void Add(ITableService tableService)
         {
             AddOrEditIndividualWindow window = new(AddEditDeleteEnum.Add, tableService, this);
             window.ShowDialog();
         }
 
+        /// <summary>
+        /// Обработчик события Изменение
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="tableService"></param>
         public void Edit(DataRow row, ITableService tableService)
         {
             AddOrEditIndividualWindow window = new(AddEditDeleteEnum.Edit, tableService, this, row);
             window.ShowDialog();
         }
 
+
+        /// <summary>
+        /// Обработчик события Удаление
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="tableService"></param>
         public void Delete(DataRow row, ITableService tableService)
         {
             ConfirmWindow window = new(AddEditDeleteEnum.Delete, tableService, this, 
@@ -45,6 +60,13 @@ namespace DataBase1WPF.Views
         }
 
 
+        /// <summary>
+        /// Обработчик события Договоры
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="clientService"></param>
+        /// <param name="tableService"></param>
+        /// <param name="individual_id"></param>
         public void Contracts(DataRow row, ITableService clientService, ITableService tableService,  
             uint individual_id)
         {
@@ -53,13 +75,22 @@ namespace DataBase1WPF.Views
         }
 
 
+        /// <summary>
+        /// Обработчик события нажатия на элемент DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is IndividualVM individualVM)
                 individualVM.DataTableMouseDown();
         }
 
-
+        /// <summary>
+        /// Обработчик события нажатия на элемент TextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is IndividualVM individualVM)

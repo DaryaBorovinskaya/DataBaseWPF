@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Building
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditPremiseWindow
+    /// </summary>
     public class AddPremiseVM : BasicVM
     {
         private ITableService _tableService;
@@ -120,6 +123,11 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Валидация ( тип данных float)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private float CheckValuesFloat(string line)
         {
             try
@@ -140,6 +148,12 @@ namespace DataBase1WPF.ViewModels.Building
                 return 0;
             }
         }
+
+        /// <summary>
+        /// Валидация ( тип данных int)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private int CheckValuesInt(string line)
         {
             try
@@ -154,6 +168,11 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Проверка значения номера этажа
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private bool CheckValueFloorNumber(int value)
         {
             if (value <= 255)
@@ -161,7 +180,9 @@ namespace DataBase1WPF.ViewModels.Building
             return false;
         }
 
-
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -203,6 +224,9 @@ namespace DataBase1WPF.ViewModels.Building
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is BuildingService service)

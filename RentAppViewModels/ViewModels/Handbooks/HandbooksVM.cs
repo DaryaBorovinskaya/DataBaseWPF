@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Handbooks
 {
+    /// <summary>
+    /// Обработка и получение данных из окна UserManagementWindow
+    /// </summary>
     public class HandbooksVM : BasicVM
     {
         private ITableService _tableService;
@@ -81,6 +84,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -88,6 +95,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
 
         }
 
+
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTable
+        /// </summary>
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -126,6 +137,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+
+        /// <summary>
+        /// Нажатие на Добавить
+        /// </summary>
         public ICommand ClickAdd
         {
             get
@@ -137,6 +152,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+
+        /// <summary>
+        /// Нажатие на Изменить
+        /// </summary>
         public ICommand ClickEdit
         {
             get
@@ -149,8 +168,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
-        
 
+        /// <summary>
+        /// Нажатие на Удалить
+        /// </summary>
         public ICommand ClickDelete
         {
             get
@@ -163,12 +184,20 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+
+        /// <summary>
+        /// Удаление
+        /// </summary>
         public void Delete()
         {
             _tableService.Delete(DataTableHandbooks.Rows[SelectedIndex]);
             UpdateDataTable();
         }
 
+
+        /// <summary>
+        /// Обновление данных таблицы
+        /// </summary>
         public void UpdateDataTable()
         {
             DataTableHandbooks = _tableService.GetValuesTable();

@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditContractWindow
+    /// </summary>
     public class EditContractVM : BasicVM
     {
         private ITableService _tableService;
@@ -162,6 +165,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -189,6 +195,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is ContractService service)

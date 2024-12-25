@@ -2,6 +2,9 @@
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AboutProgramWindow
+    /// </summary>
     public class AboutProgramVM : BasicVM
     {
         private string _aboutProgramText;

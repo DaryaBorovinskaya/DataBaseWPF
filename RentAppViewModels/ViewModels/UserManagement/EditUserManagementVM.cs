@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.UserManagement
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditUserManagementWindow
+    /// </summary>
     public class EditUserManagementVM : BasicVM
     {
         private ITableService _tableService;
@@ -131,6 +134,9 @@ namespace DataBase1WPF.ViewModels.UserManagement
         }
 
 
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -151,6 +157,9 @@ namespace DataBase1WPF.ViewModels.UserManagement
             }
         }
 
+        /// <summary>
+        /// Изменение
+        /// </summary>
         public void Edit()
         {
             if (_tableService is UserManagementService service)

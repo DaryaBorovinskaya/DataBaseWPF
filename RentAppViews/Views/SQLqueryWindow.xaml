@@ -74,7 +74,6 @@
             <DataGrid  Height="250"  
                   Width="650" x:Name="dataSQL" FontSize="16"
                   ItemsSource="{Binding DataBaseTable}"
-                  LoadingRow="DataGrid_LoadingRow"
                   IsReadOnly="True" VerticalAlignment="Center">
                 <!--
     <DataGrid.Columns>

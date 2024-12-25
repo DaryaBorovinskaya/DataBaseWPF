@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна MainWindow
+    /// </summary>
     public class MainVM : BasicVM
     {
         private IMenuElemsService _menuElemsService = new MenuElemsService();
@@ -41,6 +44,9 @@ namespace DataBase1WPF.ViewModels
         public Action OnContent;
 
 
+        /// <summary>
+        /// Обработка нажатия Регистрация
+        /// </summary>
         public ICommand ClickRegistration
         {
             get
@@ -52,7 +58,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Обработка нажатия Управление пользователями
+        /// </summary>
         public ICommand ClickUserManagement
         {
             get
@@ -66,6 +74,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия Смена пароля
+        /// </summary>
         public ICommand ClickChangePassword
         {
             get
@@ -77,6 +88,10 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Обработка нажатия Запросы к базе данных
+        /// </summary>
         public ICommand ClickSQLquery
         {
             get
@@ -88,6 +103,10 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+
+        /// <summary>
+        /// Обработка нажатия Экспорт
+        /// </summary>
         public ICommand ClickExport
         {
             get
@@ -101,6 +120,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия Районы
+        /// </summary>
         public ICommand ClickDistricts
         {
             get
@@ -113,6 +135,10 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+        /// <summary>
+        /// Обработка нажатия Улицы
+        /// </summary>
         public ICommand ClickStreets
         {
             get
@@ -125,6 +151,10 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+        /// <summary>
+        /// Обработка нажатия Банки
+        /// </summary>
         public ICommand ClickBanks
         {
             get
@@ -137,6 +167,10 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+        /// <summary>
+        /// Обработка нажатия Должности
+        /// </summary>
         public ICommand ClickPositions
         {
             get
@@ -149,6 +183,10 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+        /// <summary>
+        /// Обработка нажатия Периодичность оплаты
+        /// </summary>
         public ICommand ClickPaymentFrequency
         {
             get
@@ -161,6 +199,13 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+
+        /// <summary>
+        /// /// <summary>
+        /// Обработка нажатия Цели аренды
+        /// </summary>
+        /// </summary>
         public ICommand ClickRentalPurposes
         {
             get
@@ -173,6 +218,11 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+
+        /// <summary>
+        /// Обработка нажатия Виды отделки
+        /// </summary>
         public ICommand ClickTypesOfFinishing
         {
             get
@@ -185,6 +235,11 @@ namespace DataBase1WPF.ViewModels
                 });
             }
         }
+
+
+        /// <summary>
+        /// Обработка нажатия Штраф
+        /// </summary>
         public ICommand ClickFine
         {
             get
@@ -198,9 +253,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-
-
-
+        /// <summary>
+        /// Обработка нажатия Здания
+        /// </summary>
         public ICommand ClickBuildings
         {
             get
@@ -214,6 +269,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия О программе
+        /// </summary>
         public ICommand ClickAboutProgram
         {
             get
@@ -225,6 +283,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия Содержание
+        /// </summary>
         public ICommand ClickContent
         {
             get
@@ -236,7 +297,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Обработка нажатия Сотрудники
+        /// </summary>
         public ICommand ClickEmployees
         {
             get
@@ -250,6 +313,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия Физические лица
+        /// </summary>
         public ICommand ClickIndividuals
         {
             get
@@ -263,6 +329,9 @@ namespace DataBase1WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Обработка нажатия Юридические лица
+        /// </summary>
         public ICommand ClickJuridicalPersons
         {
             get

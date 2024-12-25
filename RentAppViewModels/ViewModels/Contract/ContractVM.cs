@@ -8,6 +8,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
+    /// <summary>
+    /// Обработка и получение данных из окна ContractWindow
+    /// </summary>
     public class ContractVM : BasicVM
     {
         private ITableService _tableService;
@@ -268,7 +271,9 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Добавить
+        /// </summary>
         public ICommand ClickAdd
         {
             get
@@ -280,6 +285,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить
+        /// </summary>
         public ICommand ClickEdit
         {
             get
@@ -292,6 +300,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на Удалить
+        /// </summary>
         public ICommand ClickDelete
         {
             get
@@ -304,7 +315,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на Добавить (заказы)
+        /// </summary>
         public ICommand ClickAddOrders
         {
             get
@@ -316,6 +329,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить (заказы)
+        /// </summary>
         public ICommand ClickEditOrders
         {
             get
@@ -328,6 +344,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на Удалить (заказы)
+        /// </summary>
         public ICommand ClickDeleteOrders
         {
             get
@@ -341,7 +360,9 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Добавить (платежи)
+        /// </summary>
         public ICommand ClickAddPayments
         {
             get
@@ -353,6 +374,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить (платежи)
+        /// </summary>
         public ICommand ClickEditPayments
         {
             get
@@ -365,7 +389,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на Удалить (платежи)
+        /// </summary>
         public ICommand ClickDeletePayments
         {
             get
@@ -379,7 +405,9 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
-
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -387,6 +415,9 @@ namespace DataBase1WPF.ViewModels.Contract
 
         }
 
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTable
+        /// </summary>
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -395,7 +426,9 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
-
+        /// <summary>
+        /// Удаление
+        /// </summary>
         public void Delete()
         {
             OrdersVisibility = Visibility.Collapsed;
@@ -404,11 +437,17 @@ namespace DataBase1WPF.ViewModels.Contract
             UpdateDataTable();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы
+        /// </summary>
         public void UpdateDataTable()
         {
             DataTableContracts = _tableService.GetValuesTable();
         }
 
+        /// <summary>
+        /// Удаление заказа
+        /// </summary>
         public void DeleteOrder()
         {
             if (_tableService is ContractService service)
@@ -416,12 +455,18 @@ namespace DataBase1WPF.ViewModels.Contract
             UpdateDataTableOrders();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы заказы
+        /// </summary>
         public void UpdateDataTableOrders()
         {
             if (_tableService is ContractService service)
                 DataTableOrders = service.GetOrdersByContract(DataTableContracts.Rows[SelectedIndex]);
         }
 
+        /// <summary>
+        /// Удаление платежа
+        /// </summary>
         public void DeletePayment()
         {
             if (_tableService is ContractService service)
@@ -429,6 +474,9 @@ namespace DataBase1WPF.ViewModels.Contract
             UpdateDataTablePayments();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы платежи
+        /// </summary>
         public void UpdateDataTablePayments()
         {
             if (_tableService is ContractService service)

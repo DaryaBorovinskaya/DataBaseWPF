@@ -36,6 +36,11 @@ namespace DataBase1WPF.Views.AddOrEdit
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события Применить
+        /// </summary>
+        /// <param name="confirmText"></param>
         private void Apply(string confirmText)
         {
             if (_addOrEditWindow.DataContext is JuridicalPersonVM juridicalPersonVM

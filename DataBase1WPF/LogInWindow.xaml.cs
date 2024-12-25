@@ -25,8 +25,12 @@ namespace DataBase1WPF.Views
             }
         }
 
-       
 
+        /// <summary>
+        /// Обработчик события загрузки окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             timerForWindow.Interval = new System.TimeSpan(100);
@@ -37,7 +41,11 @@ namespace DataBase1WPF.Views
         }
 
 
-
+        /// <summary>
+        /// Обработчик события Таймер
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, System.EventArgs e)
         {
             if (Console.CapsLock)
@@ -56,7 +64,11 @@ namespace DataBase1WPF.Views
             textBlockRusEng.Text = "Язык ввода " + newLanguageName;
         }
 
-
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
@@ -65,7 +77,9 @@ namespace DataBase1WPF.Views
             }
         }
 
-        
+        /// <summary>
+        /// Обработчик события успешной аутентификации пользователя
+        /// </summary>
         private void LogInSuccess()
         {
             MainWindow window = new();
@@ -73,6 +87,11 @@ namespace DataBase1WPF.Views
             this.Close();
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             textBoxPassword.Clear();

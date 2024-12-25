@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Handbooks
 {
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditHandbookWindow
+    /// </summary>
     public class AddHandbookVM : BasicVM
     {
         private ITableService _tableService;
@@ -73,7 +76,11 @@ namespace DataBase1WPF.ViewModels.Handbooks
                 : "Наименование";
         }
 
-
+        /// <summary>
+        /// Валидация ( тип данных float)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private float CheckValuesFloat(string line)
         {
             try
@@ -95,13 +102,10 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
-        private bool CheckLengthString(string line)
-        {
-            if (line.Length > 50 )
-                return false;
-            return true;
-        }
-
+        
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -137,6 +141,9 @@ namespace DataBase1WPF.ViewModels.Handbooks
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is PositionsService positionsService)

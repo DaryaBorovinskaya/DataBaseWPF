@@ -2,6 +2,9 @@
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Реализация интерфейса ICommand
+    /// </summary>
     public class DelegateCommand : ICommand
     {
         private Action<object> _action;
@@ -20,11 +23,20 @@ namespace DataBase1WPF.ViewModels
             _canExecute = canExecute;
         }
 
+        /// <summary>
+        /// Возможность выполнения
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public bool CanExecute(object? parameter)
         {
             return _canExecute == null || _canExecute(parameter);
         }
 
+        /// <summary>
+        /// Выполнение
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object? parameter)
         {
             _action(parameter);

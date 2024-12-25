@@ -19,11 +19,20 @@ namespace DataBase1WPF.Views
             }
         }
 
+        /// <summary>
+        /// Обработчик события успешной регистрации
+        /// </summary>
         private void SuccessRegistration()
         {
             this.Close();
         }
 
+
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)
@@ -32,6 +41,11 @@ namespace DataBase1WPF.Views
             }
         }
 
+        /// <summary>
+        /// Обработчик события изменения пароля у элемента textBoxRepeatedPassword
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxRepeatedPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (this.DataContext != null)

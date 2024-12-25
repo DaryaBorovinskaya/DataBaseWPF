@@ -34,6 +34,11 @@ namespace DataBase1WPF.Views
             }
         }
 
+
+        /// <summary>
+        /// Обработчик события Применить
+        /// </summary>
+        /// <param name="confirmText"></param>
         private void Apply(string confirmText)
         {
             if (_addOrEditWindow.DataContext is BuildingVM buildingVM

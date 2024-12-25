@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels
 {
+    /// <summary>
+    /// Обработка и получение данных из окна ChangePasswordWindow
+    /// </summary>
     public class ChangePasswordVM : BasicVM
     {
         private string _oldPassword;
@@ -31,7 +34,9 @@ namespace DataBase1WPF.ViewModels
         }
 
         
-
+        /// <summary>
+        /// Изменение пароля
+        /// </summary>
         public ICommand ClickChange
         {
             get

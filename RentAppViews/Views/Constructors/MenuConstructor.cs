@@ -7,11 +7,17 @@ using System.Windows.Data;
 
 namespace DataBase1WPF.Views.Constructors
 {
+    /// <summary>
+    /// Конструктор главного мменю
+    /// </summary>
     public class MenuConstructor
     {
         private List<IMenuElemDB> _menuElems;
         private IList<IUserAbilitiesDB> _userAbilities;
 
+        /// <summary>
+        /// Получение прав пользователя
+        /// </summary>
         private void GetUserAbilities()
         {
             IList<IUserAbilitiesDB> allUserAbilities = 
@@ -24,6 +30,12 @@ namespace DataBase1WPF.Views.Constructors
             }
         }
 
+
+        /// <summary>
+        /// Создание элемента меню
+        /// </summary>
+        /// <param name="menuElemDB"></param>
+        /// <returns></returns>
         private MenuItem CreateMenuItem(IMenuElemDB menuElemDB)
         {
             MenuItem menuItem = new MenuItem
@@ -60,6 +72,11 @@ namespace DataBase1WPF.Views.Constructors
             return menuItem;
         }
 
+        /// <summary>
+        /// Добавление элемента меню в главное меню
+        /// </summary>
+        /// <param name="parentMenuItem"></param>
+        /// <param name="parentId"></param>
         private void AddMenuItems(MenuItem parentMenuItem, uint parentId)
         {
             List<IMenuElemDB> menuElems = _menuElems.FindAll(item =>  item.ParentId == parentId);
@@ -81,6 +98,11 @@ namespace DataBase1WPF.Views.Constructors
             GetUserAbilities();
         }
 
+
+        /// <summary>
+        /// Конструирование меню
+        /// </summary>
+        /// <returns></returns>
         public Menu Construct()
         {
             Menu menu = new ();

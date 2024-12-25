@@ -6,6 +6,9 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Employee
 {
+    /// <summary>
+    /// Обработка и получение данных из окна EmployeeWindow
+    /// </summary>
     public class EmployeeVM : BasicVM
     {
         private ITableService _tableService;
@@ -152,7 +155,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на DataTable
+        /// </summary>
         public void DataTableMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
@@ -160,12 +165,19 @@ namespace DataBase1WPF.ViewModels.Employee
 
         }
 
+        /// <summary>
+        /// Нажатие на DataTableWordRecordCard
+        /// </summary>
         public void DataTableWordRecordCardMouseDown()
         {
             EditVisibility = _userAbilities.CanEdit ? Visibility.Visible : Visibility.Collapsed;
             DeleteVisibility = _userAbilities.CanDelete ? Visibility.Visible : Visibility.Collapsed;
         }
 
+
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTable
+        /// </summary>
         public void DataTableMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -173,6 +185,9 @@ namespace DataBase1WPF.ViewModels.Employee
 
         }
 
+        /// <summary>
+        /// Указатель мыши выходит из элемента DataTableWordRecordCard
+        /// </summary>
         public void DataTableWordRecordCardMouseLeave()
         {
             EditVisibility = Visibility.Collapsed;
@@ -211,6 +226,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Нажатие на Добавить
+        /// </summary>
         public ICommand ClickAdd
         {
             get
@@ -222,6 +240,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить
+        /// </summary>
         public ICommand ClickEdit
         {
             get
@@ -235,7 +256,9 @@ namespace DataBase1WPF.ViewModels.Employee
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Удалить
+        /// </summary>
         public ICommand ClickDelete
         {
             get
@@ -248,7 +271,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
-
+        /// <summary>
+        /// Нажатие на Добавить (запись из трудовой книжки)
+        /// </summary>
         public ICommand ClickAddWorkRecordCard
         {
             get
@@ -260,6 +285,9 @@ namespace DataBase1WPF.ViewModels.Employee
             }
         }
 
+        /// <summary>
+        /// Нажатие на Изменить (запись из трудовой книжки)
+        /// </summary>
         public ICommand ClickEditWorkRecordCard
         {
             get
@@ -273,7 +301,9 @@ namespace DataBase1WPF.ViewModels.Employee
         }
 
 
-
+        /// <summary>
+        /// Нажатие на Удалить (запись из трудовой книжки)
+        /// </summary>
         public ICommand ClickDeleteWorkRecordCard
         {
             get
@@ -288,7 +318,9 @@ namespace DataBase1WPF.ViewModels.Employee
 
 
 
-
+        /// <summary>
+        /// Удаление
+        /// </summary>
         public void Delete()
         {
             WorkRecordCardVisibility = Visibility.Collapsed;
@@ -296,11 +328,17 @@ namespace DataBase1WPF.ViewModels.Employee
             UpdateDataTable();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы
+        /// </summary>
         public void UpdateDataTable()
         {
             DataTableEmployees = _tableService.GetValuesTable();
         }
 
+        /// <summary>
+        /// Удаление (записи из трудовой книжки)
+        /// </summary>
         public void DeleteWorkRecordCard()
         {
             if (_tableService is EmployeeService service)
@@ -308,6 +346,9 @@ namespace DataBase1WPF.ViewModels.Employee
             UpdateDataTableWorkRecordCard();
         }
 
+        /// <summary>
+        /// Обновление данных таблицы записей в трудовой книжке
+        /// </summary>
         public void UpdateDataTableWorkRecordCard()
         {
             if (_tableService is EmployeeService service)

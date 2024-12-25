@@ -5,7 +5,10 @@ using System.Windows.Input;
 
 namespace DataBase1WPF.ViewModels.Contract
 {
-    public  class AddOrderVM : BasicVM
+    /// <summary>
+    /// Обработка и получение данных из окна AddOrEditOrderWindow
+    /// </summary>
+    public class AddOrderVM : BasicVM
     {
         private ITableService _tableService;
         private string _windowTitle;
@@ -120,7 +123,11 @@ namespace DataBase1WPF.ViewModels.Contract
             _endOfRentDate = DateTime.Now;
         }
 
-
+        /// <summary>
+        /// Валидация ( тип данных float)  
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         private float CheckValuesFloat(string line)
         {
             try
@@ -143,6 +150,9 @@ namespace DataBase1WPF.ViewModels.Contract
         }
 
 
+        /// <summary>
+        /// Нажатие на кнопку
+        /// </summary>
         public ICommand Click
         {
             get
@@ -173,6 +183,9 @@ namespace DataBase1WPF.ViewModels.Contract
             }
         }
 
+        /// <summary>
+        /// Добавление
+        /// </summary>
         public void Add()
         {
             if (_tableService is ContractService service)
